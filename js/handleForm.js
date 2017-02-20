@@ -2,9 +2,18 @@
 
   var newRecipeNameInput = document.querySelector("input[name='recipe_name']");
   var newRecipeNamePreview = document.querySelector(".recipeName");
-  var hasTyped = false;
+
+  window.addEventListener("scroll", function(e) {
+    console.log(this.scrollY);
+  });
+
+
   newRecipeNameInput.addEventListener("blur", function(e) {
     newRecipeNamePreview.textContent = this.value;
+  });
+  var recipeImageInput = document.querySelector("input[name='recipe_image']");
+  recipeImageInput.addEventListener("blur", function(e) {
+    document.querySelector(".recipeImg").src = this.value;
   });
 
   var addIngredientBtn = document.querySelector(".addIngredient");
@@ -25,6 +34,7 @@
       console.log(res);
       addRecipeToDom(res);
     });
+    // window.location = "/";
   });
 
   function sendIngredientData() {

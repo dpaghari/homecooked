@@ -31,6 +31,7 @@ body {
     flex-direction: column;
     width: 100%;
     min-height: 400px;
+    // height: 30%;
     padding: $space;
     width: 100%;
     position: relative;
@@ -94,14 +95,16 @@ body {
 
     form[name="addRecipeForm"] {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
       flex-direction: column;
       padding: $space;
-      width: 40%;
+      width: 38%;
       border-right: 1px solid #cdcdcd;
       button{
         @include theme_button(rgb(8, 168, 34));
+        &.addRecipe{
+          width: 300px;
+          margin: 0 auto;
+        }
       }
       input[type=text] {
         @include theme_input();
@@ -112,12 +115,17 @@ body {
         display: block;
         border-width: 0;
         width: 100%;
+        border-bottom: 1px solid #cdcdcd;
+        padding-bottom: $space;
+        margin-bottom: $space;
         label {
           // float: left;
           border: 1px solid #cdcdcd;
           padding: $space/2;
           display: inline-flex;
-          width: 50%;
+          width: 45%;
+          margin: $space/2;
+          box-shadow: 0px 1px 1px 1px #cdcdcd;
         }
         select {
           height: $space * 1.5;
@@ -134,6 +142,7 @@ body {
         align-items: center;
         justify-content: space-between;
         padding: $space/2;
+        margin: $space/2 0;
         input[name="qty"], input[name="recipe_servsize"], input[name="recipe_cooktime"]{
           width: $space * 2;
           flex-grow: 0;
@@ -147,6 +156,7 @@ body {
       flex-grow: 1;
       width: 60%;
       padding: $space;
+      overflow: auto;
       .preview-header {
         display: flex;
         padding: $space/2;
@@ -154,6 +164,16 @@ body {
         .left {
           padding: $space/2;
           width: 400px;
+          h2 {
+            margin: $space/2 0;
+          }
+          .header-info {
+            border: 1px solid #cdcdcd;
+            padding: $space/3;
+            box-shadow: 0px 1px 1px 1px #cdcdcd;
+            width: 50%;
+            margin: $space 0 $space/2;
+          }
           p {
             padding: $space/2;
             i{
@@ -166,16 +186,39 @@ body {
           margin: 0 auto;
           width: 360px;
           height: 256px;
-          float: right;
+          // float: right;
           box-shadow: 0px 1px 2px 2px #cdcdcd;
           border: 1px solid #cdcdcd;
         }
       }
       .preview-body {
         display: flex;
-        padding: $space/2;
+        padding: $space/3;
         justify-content: center;
         flex-direction: column;
+
+        h3 {
+          margin: $space/2 0;
+          padding: $space/6;
+        }
+        ul.ingredients {
+          display: flex;
+          flex-wrap: wrap;
+          flex-direction: column;
+          padding: $space/3;
+          max-height: 280px;
+          li {
+            padding: $space/3;
+            margin: 0 $space/3;
+          }
+        }
+        ol.directions{
+          padding: $space/3;
+          li {
+            padding: $space/3;
+            margin: 0 $space/3;
+          }
+        }
       }
     }
 }
