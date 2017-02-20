@@ -7,17 +7,19 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: [
     'babel-polyfill',
-    './stylesheets/style.scss',
-    './js/index.js',
-    'webpack-dev-server/client?http://127.0.0.1:8080'
+    // './stylesheets/style.scss',
+    // './js/index.js',
+    // './index.js',
+    './public/handleForm.js'
+    // 'webpack-dev-server/client?http://127.0.0.1:8080'
   ],
   watch: true,
   output: {
     path: path.join(__dirname, 'public'),
-    filename: 'bundle.js'
+    filename: '*.js'
   },
   resolve: {
-    modulesDirectories: ['node_modules', 'src'],
+    modulesDirectories: ['node_modules', 'public'],
     extensions: ['', '.js']
   },
   module: {
