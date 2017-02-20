@@ -1,8 +1,11 @@
-console.log("ay");
-
 (function() {
 
-
+  var newRecipeNameInput = document.querySelector("input[name='recipe_name']");
+  var newRecipeNamePreview = document.querySelector(".recipeName");
+  var hasTyped = false;
+  newRecipeNameInput.addEventListener("blur", function(e) {
+    newRecipeNamePreview.textContent = this.value;
+  });
 
   var addIngredientBtn = document.querySelector(".addIngredient");
   addIngredientBtn.addEventListener("click", function(e){

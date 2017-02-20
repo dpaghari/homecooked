@@ -39,6 +39,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    box-shadow: 0px 2px 2px 2px #cdcdcd;
     h1 {
       font-size: 4em;
       font-family: $header-font-stack;
@@ -56,33 +57,30 @@ body {
       }
     }
     .overlay{
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      flex-direction: column;
       background: #D4F2D2;
-      opacity: 0.3;
+      opacity: 0.1;
       position: absolute;
       top:0;
       right:0;
       bottom:0;
       left:0;
       width: 100%;
-
-      ul.nav{
-        list-style-type: none;
-        display: flex;
-        justify-content: space-around;
-        width: 100%;
-        li{
-          a {
-            font: 1.2em;
-            display: block;
-            padding: $space $space*1.5;
-            text-align: center;
-            text-decoration: none;
-            color: white;
-          }
+    }
+    ul.nav{
+      list-style-type: none;
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      li{
+        a {
+          font: 1.2em;
+          display: block;
+          padding: $space $space*1.5;
+          text-align: center;
+          text-decoration: none;
+          color: white;
         }
       }
     }
@@ -114,12 +112,20 @@ body {
         display: block;
         border-width: 0;
         width: 100%;
-        label{
+        label {
           // float: left;
           border: 1px solid #cdcdcd;
           padding: $space/2;
           display: inline-flex;
           width: 50%;
+        }
+        select {
+          height: $space * 1.5;
+          width: $space * 1.5;
+          padding: $space/2;
+          border-width: 0;
+          border: 1px solid #cdcdcd;
+          box-shadow: 0px 1px 1px 1px #cdcdcd;
         }
       }
       label {
@@ -129,7 +135,7 @@ body {
         justify-content: space-between;
         padding: $space/2;
         input[name="qty"], input[name="recipe_servsize"], input[name="recipe_cooktime"]{
-          width: $space * 1.5;
+          width: $space * 2;
           flex-grow: 0;
         }
       }
@@ -161,6 +167,8 @@ body {
           width: 360px;
           height: 256px;
           float: right;
+          box-shadow: 0px 1px 2px 2px #cdcdcd;
+          border: 1px solid #cdcdcd;
         }
       }
       .preview-body {
