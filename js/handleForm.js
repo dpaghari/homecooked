@@ -85,6 +85,8 @@ console.log("ay");
 
   function addRecipeToDom(recipe) {
     console.log(recipe);
+    var preview = document.querySelector(".preview");
+
     var newEntry = "<div><p>"+ recipe.recipe_name +"</p><img src='"+ recipe.recipe_image+"'/></div>";
     document.querySelector("form").insertAdjacentHTML("afterend", newEntry);
   }

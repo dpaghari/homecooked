@@ -1,0 +1,20 @@
+@mixin theme_input() {
+  border-width: 0;
+  border-color: #cdcdcd;
+  padding: $space/2;
+  box-shadow: 0px 1px 1px 1px #cdcdcd;
+}
+
+@mixin theme_button($btnColor) {
+  background: $btnColor;
+  color: #fff;
+  padding: $space/2 $space;
+  transition: 0.3s all;
+  box-shadow: 0px 1px 1px 1px #cdcdcd;
+  border-width: 0;
+  border: 1px solid darken($btnColor, 5%);
+  cursor: pointer;
+  &:hover{
+    background: darken($btnColor, 5%);
+  }
+}

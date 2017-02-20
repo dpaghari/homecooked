@@ -48,7 +48,7 @@ app.get('/create_recipe', function(req, res) {
   // connection.connect();
   // connection.query();
   // connection.end();
-  res.render('create_event');
+  res.render('create_recipe');
 });
 
 app.post('/add_recipe', upload.array(), function(req, res, next) {

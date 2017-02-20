@@ -1,0 +1,173 @@
+@import "vars";
+@import "colors";
+@import "mixins";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  font-family: $font-stack;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  color: $notSoDark;
+  .header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    min-height: 400px;
+    padding: $space;
+    width: 100%;
+    position: relative;
+    color: white;
+    background: url('../public/img/cooking.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    h1 {
+      font-size: 4em;
+      font-family: $header-font-stack;
+    }
+    input[name="recipe_search"]{
+      @include theme_input();
+      width: 40%;
+      padding: $space/2;
+      z-index: 10;
+      font-size: 1em;
+      font-family: $font-stack;
+      margin-top: $space;
+      &:focus{
+        outline: none;
+      }
+    }
+    .overlay{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex-direction: column;
+      background: #D4F2D2;
+      opacity: 0.3;
+      position: absolute;
+      top:0;
+      right:0;
+      bottom:0;
+      left:0;
+      width: 100%;
+
+      ul.nav{
+        list-style-type: none;
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        li{
+          a {
+            font: 1.2em;
+            display: block;
+            padding: $space $space*1.5;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+          }
+        }
+      }
+    }
+
+  }
+
+
+  .content{
+    display: flex;
+  }
+
+    form[name="addRecipeForm"] {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      padding: $space;
+      width: 40%;
+      border-right: 1px solid #cdcdcd;
+      button{
+        @include theme_button(rgb(8, 168, 34));
+      }
+      input[type=text] {
+        @include theme_input();
+        flex-grow: 1;
+        margin: 0 $space/3;
+      }
+      fieldset {
+        display: block;
+        border-width: 0;
+        width: 100%;
+        label{
+          // float: left;
+          border: 1px solid #cdcdcd;
+          padding: $space/2;
+          display: inline-flex;
+          width: 50%;
+        }
+      }
+      label {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $space/2;
+        input[name="qty"], input[name="recipe_servsize"], input[name="recipe_cooktime"]{
+          width: $space * 1.5;
+          flex-grow: 0;
+        }
+      }
+    }
+    .preview {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      flex-grow: 1;
+      width: 60%;
+      padding: $space;
+      .preview-header {
+        display: flex;
+        padding: $space/2;
+        justify-content: space-between;
+        .left {
+          padding: $space/2;
+          width: 400px;
+          p {
+            padding: $space/2;
+            i{
+              margin-right: $space/2;
+            }
+          }
+        }
+        // align-items: center;
+        img {
+          margin: 0 auto;
+          width: 360px;
+          height: 256px;
+          float: right;
+        }
+      }
+      .preview-body {
+        display: flex;
+        padding: $space/2;
+        justify-content: center;
+        flex-direction: column;
+      }
+    }
+}
