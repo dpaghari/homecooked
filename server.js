@@ -20,9 +20,9 @@ app.set('view engine', 'jade');
 // ROUTING
 //############
 app.get('/', function(req, res) {
-  ApiManager.getUsers(function(data) {
-    console.log(data);
-  });
+  // ApiManager.getUsers(function(data) {
+  //   console.log(data);
+  // });
   res.render('index', {currentPage: "Home"});
 });
 
