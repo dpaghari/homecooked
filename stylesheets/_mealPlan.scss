@@ -1,0 +1,35 @@
+ul.mealPlan {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: $space*2 auto;
+  width: 100%;
+  li.weekday {
+    display: block;
+    width: 13%;
+    padding: $space $space * 1.2;
+    border: 1px solid black;
+    min-height: 25%;
+    transition: 0.2s transform;
+    transform: scale(1);
+    background: white;
+    h3 {
+
+    }
+    .placeholder {
+      padding: $space*2;
+      margin: $space/2 auto;
+      border: 2px dashed $notSoDark;
+    }
+    .recipe-mini {
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+    &:hover {
+      transform: scale(1.1);
+      z-index: 3;
+    }
+  }
+}
