@@ -78,6 +78,6 @@ app.post('/add_ingredient', upload.array(), function(req, res, next) {
 
 });
 
-app.listen(3000, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log('Homecooked listening on port 3000!');
 });
