@@ -1,8 +1,19 @@
+- var page = currentPage;
+
 html
   head
-    title= title
+    title= page
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Great+Vibes|Lato")
   body
-    h1= name
-    h2= password
-    img(src= profile_picture)
-    p= signup_date
+    .wrapper
+      include header  
+      .content
+        if page == "Home"
+          |Hello
+        if page == "AddRecipe"
+          include addRecipeForm
+          include recipe
+        if page == "Pantry"
+          |Asuhdude
+    script(type="text/javascript" src="client.min.js")

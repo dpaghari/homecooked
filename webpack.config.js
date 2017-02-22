@@ -6,17 +6,13 @@ require('babel-loader');
 module.exports = {
   devtool: 'inline-source-map',
   entry: [
-    'babel-polyfill',
     './stylesheets/style.scss',
-    // './js/index.js',
-    // './index.js',
-    './js/handleForm.js'
-    // 'webpack-dev-server/client?http://127.0.0.1:8080'
+    './js/client.js'
   ],
   watch: true,
   output: {
     path: path.join(__dirname, 'public'),
-    filename: 'bundle.min.js'
+    filename: 'client.min.js'
   },
   resolve: {
     modulesDirectories: ['node_modules', 'js', 'stylesheets'],
