@@ -149,7 +149,7 @@ body {
         }
       }
     }
-    .preview {
+    .recipe {
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -157,7 +157,7 @@ body {
       width: 60%;
       padding: $space;
       overflow: auto;
-      .preview-header {
+      .recipe-header {
         display: flex;
         padding: $space/2;
         justify-content: space-between;
@@ -191,7 +191,7 @@ body {
           border: 1px solid #cdcdcd;
         }
       }
-      .preview-body {
+      .recipe-body {
         display: flex;
         padding: $space/3;
         justify-content: center;

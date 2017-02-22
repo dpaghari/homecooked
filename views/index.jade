@@ -10,7 +10,9 @@ html
       include header  
       .content
         if page == "Home"
-          |Hello
+          |Hola
+        if page == "MyRecipes"
+          include recipeList
         if page == "AddRecipe"
           include addRecipeForm
           include recipe

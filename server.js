@@ -20,12 +20,15 @@ app.set('view engine', 'jade');
 // ROUTING
 //############
 app.get('/', function(req, res) {
-  // ApiManager.getUsers(function(data) {
-  //   console.log(data);
-  // });
+  ApiManager.getUsers(function(data) {
+    console.log(data);
+  });
   res.render('index', {currentPage: "Home"});
 });
 
+app.get('/my_recipes', function(req, res) {
+  res.render('index', {currentPage: "MyRecipes"});
+});
 app.get('/create_recipe', function(req, res) {
   res.render('index', {currentPage: "AddRecipe"});
 });
@@ -42,7 +45,7 @@ app.get('/pantry', function(req, res) {
 app.get('/get_users', function(req, res) {
   ApiManager.getUsers(function(data) {
     console.log(data);
-    res.render('index', data);
+    res.render('index', {users: data});
   });
 });
 
@@ -59,8 +62,8 @@ app.post('/add_recipe', upload.array(), function(req, res, next) {
 
   var recipe_info = req.body;
   // console.log(recipe_info.recipe_name, recipe_info.recipe_image);
-  ApiManager.addRecipe((recipe_info) => {
-    res.send("");
+  ApiManager.addRecipe((recipe_id) => {
+    res.send(recipe_id);
   });
 
 });
