@@ -11,7 +11,7 @@ var upload = multer(); // for parsing multipart/form-data
 var ApiManager = require("./ApiManager.js");
 
 const appState = {
-  loggedIn: false,
+  loggedIn: true,
   currentUser: {}
 };
 

@@ -1,5 +1,5 @@
 (function() {
-
+  console.log(currentPage);
   var newRecipeNameInput = document.querySelector("input[name='recipe_name']");
   var newRecipeNamePreview = document.querySelector(".recipeName");
 
