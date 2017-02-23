@@ -1,5 +1,4 @@
 - var page = currentPage;
-
 html
   head
     title= page
@@ -11,8 +10,11 @@ html
       .content
         if page == "Home"
           .home
-            h1 Your Meal Plan
-            include mealPlan
+            if loggedIn
+              h1 Your Meal Plan
+              include mealPlan
+            else
+              include loginForm
         if page == "MyRecipes"
           include recipeList
         if page == "AddRecipe"

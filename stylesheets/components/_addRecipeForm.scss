@@ -1,0 +1,56 @@
+form[name="addRecipeForm"] {
+  display: flex;
+  flex-direction: column;
+  padding: $space;
+  width: 38%;
+  border-right: 1px solid #cdcdcd;
+  button{
+    @include theme_button(rgb(8, 168, 34));
+    &.addRecipe{
+      width: 300px;
+      margin: 0 auto;
+    }
+  }
+  input[type=text] {
+    @include theme_input();
+    flex-grow: 1;
+    margin: 0 $space/3;
+  }
+  fieldset {
+    display: block;
+    border-width: 0;
+    width: 100%;
+    border-bottom: 1px solid #cdcdcd;
+    padding-bottom: $space;
+    margin-bottom: $space;
+    label {
+      // float: left;
+      border: 1px solid #cdcdcd;
+      padding: $space/2;
+      display: inline-flex;
+      width: 45%;
+      margin: $space/2;
+      box-shadow: 0px 1px 1px 1px #cdcdcd;
+    }
+    select {
+      height: $space * 1.5;
+      width: $space * 1.5;
+      padding: $space/2;
+      border-width: 0;
+      border: 1px solid #cdcdcd;
+      box-shadow: 0px 1px 1px 1px #cdcdcd;
+    }
+  }
+  label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space/2;
+    margin: $space/2 0;
+    input[name="qty"], input[name="recipe_servsize"], input[name="recipe_cooktime"]{
+      width: $space * 2;
+      flex-grow: 0;
+    }
+  }
+}

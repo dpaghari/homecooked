@@ -1,0 +1,9 @@
+.login
+  form.loginForm(action="/auth_user" method="GET")
+    label Username
+      input(type="text" name="username" placeholder="Username")
+    label Password
+      input(type="password" name="password")
+    a(href="/" class="loginBtn") Login
+    a(href="/" class="registerBtn") Register
+    a(href="/" class="forgotPwd") Forgot password?
