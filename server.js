@@ -43,39 +43,39 @@ app.get('/pantry', function(req, res) {
   appState = Object.assign({}, appState, {currentPage: "Pantry"});
   res.render('index', appState);
 });
-app.get('/create_user', function(req, res) {
-  appState = Object.assign({}, appState, {currentPage: "Register"});
-  res.render('index', appState);
-});
-
-
 
 //############
 // SERVICES
 //############
 app.get('/get_users', function(req, res) {
   ApiManager.getUsers(function(data) {
-    console.log(data);
     res.send('index', {users: data});
   });
 });
 app.get('/get_user', function(req, res) {
   ApiManager.getUser(function(data) {
-    console.log(data);
     res.send('index', {user: data});
   });
 });
 // Authentication or registration
 app.post('/', upload.array(), function(req, res, next) {
   var userInfo = req.body;
+
   if(userInfo.action === "login") {
+
     ApiManager.authUser(userInfo, function(data) {
       if(data === false) {
+
         res.send(false);
       }
       else {
         appState = Object.assign({}, appState, {currentPage: "Home", loggedIn: true, currentUser: data});
-        res.redirect("/");
+        var response = {
+          appState,
+          redirect: "/"
+        };
+
+        res.json(response);
       }
     });
   }
@@ -88,20 +88,28 @@ app.post('/', upload.array(), function(req, res, next) {
         };
         appState = Object.assign({}, appState, {currentPage: "Home", loggedIn: true, currentUser});
         // res.render('index', appState);
-        res.redirect("/");
+        var response = {
+          appState,
+          redirect: "/"
+        };
+        res.json(response);
     });
   }
 });
 
 app.get('/get_recipes', function(req, res) {
   ApiManager.getRecipes(function(data) {
-    console.log(data);
     // res.send('index', data);
   });
 });
+app.get('/get_app_state', function(req, res) {
+  // ApiManager.getRecipes(function(data) {
+    res.json(appState);
+    // res.send('index', data);
+  // });
+});
 app.get('/get_recipe', function(req, res) {
   ApiManager.getRecipe(function(data) {
-    console.log(data);
   });
 });
 

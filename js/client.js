@@ -1,32 +1,24 @@
-// var $$ = document.querySelector;
+const axios = require("axios");
+const Homecooked = require("./Homecooked.js");
 
+console.log(Homecooked);
 (function() {
-  var currState = {
-    loggedIn: false,
-    currentUser: {}
-  };
+  Homecooked.init((appState)=> {
+    let { currentUser, loggedIn, currentPage } = appState.data;
+    switch(currentPage){
+      case "Home":
+      Homecooked.handleLogin();
+      Homecooked.handleRegister();
+      break;
+      case "MyRecipes":
+      case "AddRecipe":
+      case "Pantry":
+    }
 
-
-
-
-  var registerBtn = document.querySelector("form.loginForm .registerBtn");
-  if(registerBtn) {
-    registerBtn.addEventListener("click", function(e) {
-      e.preventDefault();
-      var forms = document.querySelectorAll("form.registerForm, form.loginForm");
-      forms.forEach(function(el, idx) {
-        el.classList.toggle("active");
-      });
-    });
-  }
-
+  });
 
   var newRecipeNameInput = document.querySelector("input[name='recipe_name']");
   var newRecipeNamePreview = document.querySelector(".recipeName");
-
-  // window.addEventListener("scroll", function(e) {
-  //   console.log(this.scrollY);
-  // });
 
   if(newRecipeNameInput){
     newRecipeNameInput.addEventListener("blur", function(e) {
