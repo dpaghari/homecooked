@@ -1,5 +1,3 @@
-@import "mealPlan";
-
-.home {
-  padding: $space;
-}
+@import "components/mealPlan";
+@import "components/header";
+@import "components/login";

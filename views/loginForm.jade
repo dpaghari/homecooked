@@ -1,9 +1,34 @@
 .login
-  form.loginForm(action="/auth_user" method="GET")
-    label Username
-      input(type="text" name="username" placeholder="Username")
-    label Password
-      input(type="password" name="password")
-    a(href="/" class="loginBtn") Login
-    a(href="/" class="registerBtn") Register
-    a(href="/" class="forgotPwd") Forgot password?
+  .overlay
+  .right
+    .headline
+      h1 Homecooked
+      h2 The sexy way to meal plan
+    
+  
+  .left
+    form.loginForm.active(action="/" method="POST")
+      fieldset
+        label 
+          span Username
+          input(type="text" name="user_name")
+        label 
+          span Password
+          input(type="password" name="password")
+      button(type="submit" class="loginBtn") Login
+      a(href="/" class="forgotPwd") Forgot password?
+      button(type="button" class="registerBtn") Register
+      input(type="hidden" name="action" value="login")
+    form.registerForm(action="/" method="POST")
+      label Username
+        input(type="text" name="name" placeholder="Username")
+      label Password
+        input(type="password" name="password")
+      label Password
+        input(type="password" name="confirm_password")
+      label Profile Picture
+        input(type="text" name="profile_picture")
+      button(type="submit" class="registerBtn") Register
+      input(type="hidden" name="action" value="register")
+      
+  

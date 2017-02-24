@@ -14,8 +14,11 @@
   border-width: 0;
   border: 1px solid darken($btnColor, 5%);
   cursor: pointer;
+  text-decoration: none;
   font-size: 1em;
+  text-align: center;
   &:hover{
     background: darken($btnColor, 5%);
+    box-shadow: none;
   }
 }

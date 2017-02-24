@@ -1,5 +1,26 @@
+// var $$ = document.querySelector;
+
 (function() {
-  console.log(currentPage);
+  var currState = {
+    loggedIn: false,
+    currentUser: {}
+  };
+
+
+
+
+  var registerBtn = document.querySelector("form.loginForm .registerBtn");
+  if(registerBtn) {
+    registerBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      var forms = document.querySelectorAll("form.registerForm, form.loginForm");
+      forms.forEach(function(el, idx) {
+        el.classList.toggle("active");
+      });
+    });
+  }
+
+
   var newRecipeNameInput = document.querySelector("input[name='recipe_name']");
   var newRecipeNamePreview = document.querySelector(".recipeName");
 
@@ -7,35 +28,42 @@
     console.log(this.scrollY);
   });
 
-
-  newRecipeNameInput.addEventListener("blur", function(e) {
-    newRecipeNamePreview.textContent = this.value;
-  });
+  if(newRecipeNameInput){
+    newRecipeNameInput.addEventListener("blur", function(e) {
+      newRecipeNamePreview.textContent = this.value;
+    });
+  }
   var recipeImageInput = document.querySelector("input[name='recipe_image']");
-  recipeImageInput.addEventListener("blur", function(e) {
-    document.querySelector(".recipeImg").src = this.value;
-  });
+  if(recipeImageInput) {
+    recipeImageInput.addEventListener("blur", function(e) {
+      document.querySelector(".recipeImg").src = this.value;
+    });
+  }
 
   var addIngredientBtn = document.querySelector(".addIngredient");
-  addIngredientBtn.addEventListener("click", function(e){
-    e.preventDefault();
-    var sent = sendIngredientData();
-    sent.then(function(res) {
-      console.log(res);
-      addIngredientToDom(res);
+  if(addIngredientBtn) {
+    addIngredientBtn.addEventListener("click", function(e){
+      e.preventDefault();
+      var sent = sendIngredientData();
+      sent.then(function(res) {
+        console.log(res);
+        addIngredientToDom(res);
+      });
     });
-  });
+  }
 
   var addRecipeBtn = document.querySelector(".addRecipe");
-  addRecipeBtn.addEventListener("click", function(e) {
-    e.preventDefault();
-    var sent = sendRecipeData();
-    sent.then(function(res) {
-      console.log(res);
-      addRecipeToDom(res);
+  if(addRecipeBtn) {
+    addRecipeBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      var sent = sendRecipeData();
+      sent.then(function(res) {
+        console.log(res);
+        addRecipeToDom(res);
+      });
+      // window.location = "/";
     });
-    // window.location = "/";
-  });
+  }
 
   function sendIngredientData() {
     var ingredientInput = document.querySelector("input[name='ingredient']");
@@ -79,6 +107,22 @@
       xhr.send(JSON.stringify(data));
     });
     return p;
+  }
+
+
+  function checkLogin(credentials) {
+    var success;
+    credentials = JSON.stringify(credentials);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/auth_user");
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        success = xhr.responseText;
+        return success;
+      }
+    };
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(credentials);
   }
 
   function processData(inputs){

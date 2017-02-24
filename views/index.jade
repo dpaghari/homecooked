@@ -1,25 +1,26 @@
-- var page = currentPage;
-html
+html(lang="en")
   head
-    title= page
+    title= currentPage 
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Great+Vibes|Lato")
   body
     .wrapper
-      include header  
+      if currentPage == "Home" && loggedIn == true
+        include header  
       .content
-        if page == "Home"
-          .home
-            if loggedIn
-              h1 Your Meal Plan
-              include mealPlan
-            else
-              include loginForm
-        if page == "MyRecipes"
+        
+        if currentPage == "Home"
+          if loggedIn
+            h1 Your Meal Plan
+            include mealPlan
+          else
+            include loginForm
+        if currentPage == "MyRecipes"
           include recipeList
-        if page == "AddRecipe"
+        if currentPage == "AddRecipe"
           include addRecipeForm
           include recipe
-        if page == "Pantry"
+        if currentPage == "Pantry"
           |Asuhdude
+          
     script(type="text/javascript" src="client.min.js")

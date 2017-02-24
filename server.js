@@ -10,38 +10,44 @@ var upload = multer(); // for parsing multipart/form-data
 // Includes
 var ApiManager = require("./ApiManager.js");
 
-const appState = {
-  loggedIn: true,
-  currentUser: {}
+let appState = {
+  loggedIn: false,
+  currentUser: {},
+  currentPage: "Home"
 };
 
 
+// App Settings
 app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true})); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-// App Settings
 app.set('view engine', 'jade');
+
+
 //############
 // ROUTING
 //############
 app.get('/', function(req, res) {
-  ApiManager.getUsers(function(data) {
-    console.log(data);
-  });
-  res.render('index', {currentPage: "Home", loggedIn: appState.loggedIn});
+  appState = Object.assign({}, appState, {currentPage: "Home"});
+  res.render('index', appState);
 });
-
 app.get('/my_recipes', function(req, res) {
-  res.render('index', {currentPage: "MyRecipes"});
+  appState = Object.assign({}, appState, {currentPage: "MyRecipes"});
+  res.render('index', appState);
 });
 app.get('/create_recipe', function(req, res) {
-  res.render('index', {currentPage: "AddRecipe"});
+  appState = Object.assign({}, appState, {currentPage: "AddRecipe"});
+  res.render('index', appState);
 });
 app.get('/pantry', function(req, res) {
-  res.render('index', {currentPage: "Pantry"});
+  appState = Object.assign({}, appState, {currentPage: "Pantry"});
+  res.render('index', appState);
 });
-
+app.get('/create_user', function(req, res) {
+  appState = Object.assign({}, appState, {currentPage: "Register"});
+  res.render('index', appState);
+});
 
 
 
@@ -60,25 +66,43 @@ app.get('/get_user', function(req, res) {
     res.send('index', {user: data});
   });
 });
-app.post('/auth_user', function(req, res) {
+// Authentication or registration
+app.post('/', upload.array(), function(req, res, next) {
   var userInfo = req.body;
-  ApiManager.authUser(function(data) {
-    console.log(data);
-    res.send('index', {status: data});
-  });
+  if(userInfo.action === "login") {
+    ApiManager.authUser(userInfo, function(data) {
+      if(data === false) {
+        res.send(false);
+      }
+      else {
+        appState = Object.assign({}, appState, {currentPage: "Home", loggedIn: true, currentUser: data});
+        res.redirect("/");
+      }
+    });
+  }
+  else if(userInfo.action === "register") {
+    ApiManager.createNewUser(userInfo, function(data) {
+        let currentUser = {
+          id: data,
+          name: userInfo.name,
+          profile_picture: userInfo.profile_picture
+        };
+        appState = Object.assign({}, appState, {currentPage: "Home", loggedIn: true, currentUser});
+        // res.render('index', appState);
+        res.redirect("/");
+    });
+  }
 });
-
 
 app.get('/get_recipes', function(req, res) {
   ApiManager.getRecipes(function(data) {
     console.log(data);
-    res.send('index', data);
+    // res.send('index', data);
   });
 });
 app.get('/get_recipe', function(req, res) {
   ApiManager.getRecipe(function(data) {
     console.log(data);
-    res.send('index', data);
   });
 });
 

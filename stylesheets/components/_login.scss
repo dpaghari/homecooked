@@ -1,0 +1,109 @@
+.login {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: url('../public/img/cover.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  // right side
+  .right {
+    width: 100%;
+    height: 100%;
+    .headline {
+      position: absolute;
+      top: 30%;
+      left: 10%;
+      width: 100%;
+      color: white;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      h1 {
+        font-family: $header-font-stack;
+        font-size: 6em;
+        margin: $space auto;
+      }
+      h2 {
+        font-size: 1.5em;
+        font-family: $font-stack;
+      }
+    }
+  }
+
+  // Right Side
+  .left {
+    position: absolute;
+    left: 20%;
+    top: 50%;
+    width: 20%;
+    display: block;
+    background: white;
+    transform: translateY(-50%);
+    form {
+      width: 100%;
+      height: 100%;
+      padding: $space;
+      // display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      fieldset {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        border-width: 0;
+      }
+      label {
+        width: 100%;
+        margin: $space/3 auto;
+        span {
+          margin-right: $space/2;
+        }
+        input[type="text"], input[type="password"] {
+          @include theme_input();
+          width: 100%;
+          margin: $space/2 0;
+        }
+      }
+      .loginBtn {
+        @include theme_button(rgb(235, 169, 42));
+        width: 60%;
+        margin: $space/2 auto;
+      }
+      .registerBtn {
+        @include theme_button(rgb(161, 173, 217));
+        width: 60%;
+        margin: $space*2 auto;
+      }
+    }
+  }
+
+  .loginForm {
+    display: none;
+    &.active {
+      display: flex;
+    }
+  }
+  .registerForm {
+    display: none;
+    &.active {
+      display: flex;
+    }
+  }
+  .overlay {
+    background: rgba(0,0,0,0.3);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+
+}
