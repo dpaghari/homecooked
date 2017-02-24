@@ -16,7 +16,6 @@ let appState = {
   currentPage: "Home"
 };
 
-
 // App Settings
 app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json

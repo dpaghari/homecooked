@@ -24,9 +24,9 @@
   var newRecipeNameInput = document.querySelector("input[name='recipe_name']");
   var newRecipeNamePreview = document.querySelector(".recipeName");
 
-  window.addEventListener("scroll", function(e) {
-    console.log(this.scrollY);
-  });
+  // window.addEventListener("scroll", function(e) {
+  //   console.log(this.scrollY);
+  // });
 
   if(newRecipeNameInput){
     newRecipeNameInput.addEventListener("blur", function(e) {

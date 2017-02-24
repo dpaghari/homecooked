@@ -5,22 +5,22 @@ html(lang="en")
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Great+Vibes|Lato")
   body
     .wrapper
-      if currentPage == "Home" && loggedIn == true
+      if loggedIn == true
         include header  
-      .content
-        
-        if currentPage == "Home"
-          if loggedIn
+        .content
+          if currentPage == "Home"
             h1 Your Meal Plan
             include mealPlan
-          else
-            include loginForm
-        if currentPage == "MyRecipes"
-          include recipeList
-        if currentPage == "AddRecipe"
-          include addRecipeForm
-          include recipe
-        if currentPage == "Pantry"
-          |Asuhdude
+          if currentPage == "MyRecipes"
+            include recipeList
+          if currentPage == "AddRecipe"
+            include addRecipeForm
+            include recipe
+          if currentPage == "Pantry"
+            |Asuhdude
+      
+      else
+        include loginForm
+        
           
     script(type="text/javascript" src="client.min.js")
