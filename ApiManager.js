@@ -69,11 +69,10 @@ var ApiManager = (function(dbWrapper) {
       }
     });
   }
-
   function getRecipe(recipe_id, callback) {
     let user;
     let { db } = dbWrapper;
-    db.query("SELECT * from `recipes` where id = ?", [recipe_id], (err, rows, fields) => {
+    db.query("SELECT * from `recipes` where `id` = ?", [recipe_id], (err, rows, fields) => {
       if(err) throw err;
       if(typeof row !== "undefined" && typeof row[0] !== "undefined"){
         user = row[0];
@@ -82,9 +81,23 @@ var ApiManager = (function(dbWrapper) {
     });
   }
 
+  function getUserRecipes(userInfo, callback) {
+    let recipes = [];
+    let { user_id } = userInfo;
+    let { db } = dbWrapper;
+    db.query('SELECT * from `recipes` where `owner_id` = ?', [user_id], (err, rows, fields) => {
+      if(err) throw err;
+      recipes = rows;
+      if(typeof callback === "function") {
+        callback(recipes);
+      }
+    });
+  }
+
   function addRecipe(recipe_info, callback) {
     let { db } = dbWrapper;
-    db.query('INSERT INTO `recipes` SET ?', {name: recipe_info.name, recipe_image: recipe_info.recipe_image}, function (err, rows, fields) {
+    let { name, recipe_image, owner_id } = recipe_info;
+    db.query('INSERT INTO `recipes` SET ?', {name, recipe_image, owner_id}, function (err, rows, fields) {
       if(err) throw err;
       if(typeof callback === "function") {
         // return last insert id
@@ -110,6 +123,7 @@ var ApiManager = (function(dbWrapper) {
     createNewUser,
     getRecipes,
     getRecipe,
+    getUserRecipes,
     addRecipe,
     addIngredient
   };

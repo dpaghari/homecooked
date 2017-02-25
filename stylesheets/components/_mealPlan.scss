@@ -7,7 +7,7 @@ ul.mealPlan {
   li.weekday {
     display: block;
     width: 13%;
-    padding: $space $space * 1.2;
+    padding: $space/2;
     border: 1px solid black;
     min-height: 25%;
     transition: 0.2s transform;
@@ -17,12 +17,17 @@ ul.mealPlan {
 
     }
     .placeholder {
+      width: 100%;
       padding: $space*2;
       margin: $space/2 auto;
+      text-align: center;
       border: 2px dashed $notSoDark;
     }
     .recipe-mini {
+      margin: 0 auto;
+      width: 100%;
       img {
+        margin: 0 auto;
         width: 100px;
         height: 100px;
       }

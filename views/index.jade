@@ -9,13 +9,14 @@ html(lang="en")
         include header  
         .content
           if currentPage == "Home"
-            h1 Your Meal Plan
-            include mealPlan
+            .home
+              h1 Your Meal Plan
+              include mealPlan
           if currentPage == "MyRecipes"
             include recipeList
           if currentPage == "AddRecipe"
             include addRecipeForm
-            include recipe
+            //- include recipe
           if currentPage == "Pantry"
             |Asuhdude
       

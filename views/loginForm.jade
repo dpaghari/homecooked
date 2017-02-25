@@ -3,11 +3,13 @@
   .right
     .headline
       h1 Homecooked
-      h2 The sexy way to meal plan
+      h2 Weekly Meal Planning made easy
     
   
   .left
     form.loginForm.active(action="/" method="POST")
+      if error
+        span.errorMsg= error
       fieldset
         label 
           span Username

@@ -8,13 +8,68 @@ const Homecooked = (function() {
     });
   }
 
+  function getMyRecipes(user_id) {
+    let data = {
+      user_id
+    };
+    axios.post("/get_user_recipes", data).then((response) => {
+      // let { redirect } = response.data;
+      console.log("response", response.data);
+      // window.location.href = redirect;
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
+  }
+
+
   function handleAddToMealPlan() {
 
   }
 
 
-  function handleCreateRecipe() {
+  function handleCreateRecipe(user_id) {
+    let recipeForm = document.querySelector("form[name=addRecipeForm]");
+    let recipeName = document.querySelector("form[name=addRecipeForm] input[name=recipe_name]");
+    let recipeImage = document.querySelector("form[name=addRecipeForm] input[name=recipe_image]");
+    let required_fields = [
+      recipeName,
+      recipeImage
+    ];
 
+    let ingredients = [];
+    let directions = [];
+
+    recipeForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      let invalidInputs = required_fields.filter(function(el,idx){
+        if(el.name === "recipe_name")
+          return validator.isEmpty(el.value);
+        else if(el.name === "recipe_image");
+          return validator.isEmpty(el.value) || validator.contains(el.value, " ");
+      });
+      if(invalidInputs.length < 1) {
+        console.log(user_id);
+        let data = {
+          owner_id : user_id,
+          name: recipeName.value,
+          recipe_image: recipeImage.value,
+          ingredients,
+          directions
+        };
+        console.log(data);
+        axios.post("/add_recipe", data).then((response) => {
+          console.log("let's do it!");
+          let { redirect } = response.data;
+          console.log("response", response.data);
+          window.location.href = redirect;
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+      }
+    });
   }
 
   function handleAddIngredient() {
@@ -98,12 +153,9 @@ const Homecooked = (function() {
     }
   }
 
-
-
-
-
   return {
     init,
+    getMyRecipes,
     handleAddToMealPlan,
     handleCreateRecipe,
     handleAddIngredient,

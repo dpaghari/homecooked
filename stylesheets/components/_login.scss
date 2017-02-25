@@ -42,6 +42,9 @@
     background: white;
     transform: translateY(-50%);
     form {
+      .errorMsg {
+        color: $errorRed;
+      }
       width: 100%;
       height: 100%;
       padding: $space;

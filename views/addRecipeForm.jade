@@ -12,7 +12,7 @@ form(name="addRecipeForm")
       select(class="cooktime_measure")
         option h
         option m
-  p Add Ingredient
+  p Add Ingredients
   label(class="ingredient_field") 
     |Name
     input(name="ingredient" type="text" placeholder="Carrots")
@@ -20,10 +20,10 @@ form(name="addRecipeForm")
     input(name="qty" type="text" placeholder="4")
     button(type="button" class="addIngredient")
       |+
-  p Add a step
+  p Add Directions
   label Directions
     input(name="step" type="text" placeholder="Add a step")
     button(type="button" class="addStep")
       |+
-  button(type="button" class="addRecipe")
+  button(type="submit" class="addRecipe")
     |Add Recipe

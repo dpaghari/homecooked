@@ -11,7 +11,7 @@ var upload = multer(); // for parsing multipart/form-data
 var ApiManager = require("./ApiManager.js");
 
 let appState = {
-  loggedIn: false,
+  loggedIn: true,
   currentUser: {},
   currentPage: "Home"
 };
@@ -62,19 +62,23 @@ app.post('/', upload.array(), function(req, res, next) {
   var userInfo = req.body;
 
   if(userInfo.action === "login") {
-
+    var response;
     ApiManager.authUser(userInfo, function(data) {
       if(data === false) {
-
-        res.send(false);
-      }
-      else {
-        appState = Object.assign({}, appState, {currentPage: "Home", loggedIn: true, currentUser: data});
-        var response = {
+        appState = Object.assign({}, appState, {error: "Username or password is incorrect"});
+        response = {
           appState,
           redirect: "/"
         };
+        res.json(response);
+      }
+      else {
 
+        appState = Object.assign({}, appState, {currentPage: "Home", loggedIn: true, currentUser: data, error: undefined});
+        response = {
+          appState,
+          redirect: "/"
+        };
         res.json(response);
       }
     });
@@ -87,7 +91,6 @@ app.post('/', upload.array(), function(req, res, next) {
           profile_picture: userInfo.profile_picture
         };
         appState = Object.assign({}, appState, {currentPage: "Home", loggedIn: true, currentUser});
-        // res.render('index', appState);
         var response = {
           appState,
           redirect: "/"
@@ -102,11 +105,17 @@ app.get('/get_recipes', function(req, res) {
     // res.send('index', data);
   });
 });
+
+app.post('/get_user_recipes', upload.array(), function(req, res, next) {
+  var userInfo = req.body;
+  ApiManager.getUserRecipes(userInfo, function(data) {
+    res.json(data);
+  });
+});
+
+
 app.get('/get_app_state', function(req, res) {
-  // ApiManager.getRecipes(function(data) {
-    res.json(appState);
-    // res.send('index', data);
-  // });
+  res.json(appState);
 });
 app.get('/get_recipe', function(req, res) {
   ApiManager.getRecipe(function(data) {
@@ -119,7 +128,13 @@ app.post('/add_recipe', upload.array(), function(req, res, next) {
   var recipe_info = req.body;
   // console.log(recipe_info.recipe_name, recipe_info.recipe_image);
   ApiManager.addRecipe(recipe_info, (recipe_id) => {
-    res.send(recipe_id);
+    var response = {
+      recipe_id,
+      appState,
+      redirect: "/my_recipes"
+    };
+    res.json(response);
+    // res.send(recipe_id);
   });
 
 });
