@@ -13,14 +13,56 @@ const Homecooked = (function() {
       user_id
     };
     axios.post("/get_user_recipes", data).then((response) => {
-      // let { redirect } = response.data;
-      console.log("response", response.data);
-      // window.location.href = redirect;
+      let recipes = response.data;
+      console.log(recipes);
+      addRecipesToDOM(recipes);
     })
     .catch((err) => {
       console.log("error", err);
     });
   }
+
+
+  function addRecipesToDOM(recipes) {
+    console.log(recipes);
+    let recipeList = document.querySelector(".recipeList");
+    let recipeListStr = "";
+    recipes.forEach((el, idx) => {
+      let {
+        name,
+        cooking_time,
+        ingredients,
+        instructions,
+        recipe_image,
+        serving_size } = el;
+      let recipeEntryHTML = `
+      <li class="recipe">
+        <div class="recipe-header">
+          <div class="left">
+            <h2 class="recipeName">${name}</h2>
+            <div class="recipe-info">
+              <p class="recipeServing">
+              <i class="fa fa-users"></i>
+              ${serving_size}
+              <p class="cookingTime">
+              <i class="fa fa-clock-o"></i>
+              ${cooking_time}
+              </p>
+            </div>
+          </div>
+          <img class="recipeImg" src=${recipe_image} alt="recipe image"/>
+        </div>
+        <div class="recipe-body">
+        <p class="blurb"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+      </li>
+      `;
+      recipeList.insertAdjacentHTML('beforeend', recipeEntryHTML);
+    });
+
+
+  }
+
 
 
   function handleAddToMealPlan() {
@@ -29,31 +71,81 @@ const Homecooked = (function() {
 
 
   function handleCreateRecipe(user_id) {
+    // addRecipeForm
     let recipeForm = document.querySelector("form[name=addRecipeForm]");
+    // Inputs
     let recipeName = document.querySelector("form[name=addRecipeForm] input[name=recipe_name]");
     let recipeImage = document.querySelector("form[name=addRecipeForm] input[name=recipe_image]");
-    let required_fields = [
-      recipeName,
-      recipeImage
+    let servingSize = document.querySelector("form[name=addRecipeForm] input[name=recipe_servsize]");
+    let cookTime = document.querySelector("form[name=addRecipeForm] input[name=recipe_cooktime]");
+    let cookTimeMeasure = document.querySelector("form[name=addRecipeForm] select.cooktime_measure");
+
+    let ingredientName = document.querySelector("form[name=addRecipeForm] input[name=ingredient]");
+    let quantity = document.querySelector("form[name=addRecipeForm] input[name=qty]");
+
+    let step = document.querySelector("form[name=addRecipeForm] input[name=step]");
+
+    let fields = [
+      {field: recipeName, required: true},
+      {field: recipeImage, required: true},
+      {field: ingredientName, required: false},
+      {field: step, required: false},
+      {field: cookTime, required: false},
+      {field: cookTimeMeasure, required: false},
+      {field: quantity, required: false}
     ];
 
-    let ingredients = [];
-    let directions = [];
+    let ingredients = []; // hold ingredient objects { name, quantity }
+    let directions = [];  // hold directions objects { step }
+
+
+    let invalidInputs = [];
 
     recipeForm.addEventListener("submit", function(e) {
       e.preventDefault();
 
-      let invalidInputs = required_fields.filter(function(el,idx){
-        if(el.name === "recipe_name")
-          return validator.isEmpty(el.value);
-        else if(el.name === "recipe_image");
-          return validator.isEmpty(el.value) || validator.contains(el.value, " ");
+      invalidInputs = fields.filter((el, idx) => {
+        let valid = false;
+        let { field, required } =  el;
+        if(required)
+          if(validator.isEmpty(field.value)) return el;
+
+        if(field.name === "ingredient") {
+          console.log(field.value);
+        }
+
+        if(field.name === "step") {
+          console.log(field.value);
+        }
+
+        if(field.name === "qty" || field.name === "cookTime")
+          if(!validator.isNumeric(field.value) && validator.isEmpty(field.value) && validator.contains(field.value, " ")) return el;
+
+
+
+
+
       });
+
+      console.log(invalidInputs);
+
+      // let invalidInputs = required_fields.filter(function(el,idx){
+      //   if(el.name === "recipe_name")
+      //     return validator.isEmpty(el.value);
+      //   else if(el.name === "recipe_image");
+      //     return validator.isEmpty(el.value) || validator.contains(el.value, " ");
+      // });
+
+
+
+
       if(invalidInputs.length < 1) {
         console.log(user_id);
         let data = {
           owner_id : user_id,
           name: recipeName.value,
+          cooking_time: cookTime.value + cookTimeMeasure.value,
+          serving_size: servingSize.value,
           recipe_image: recipeImage.value,
           ingredients,
           directions
@@ -156,6 +248,7 @@ const Homecooked = (function() {
   return {
     init,
     getMyRecipes,
+    addRecipesToDOM,
     handleAddToMealPlan,
     handleCreateRecipe,
     handleAddIngredient,

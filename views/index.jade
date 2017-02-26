@@ -13,12 +13,14 @@ html(lang="en")
               h1 Your Meal Plan
               include mealPlan
           if currentPage == "MyRecipes"
-            include recipeList
+            .myRecipes
+              ul.recipeList
           if currentPage == "AddRecipe"
-            include addRecipeForm
-            //- include recipe
+            .addRecipeForm
+              include addRecipeForm
           if currentPage == "Pantry"
-            |Asuhdude
+            .pantry
+              |Asuhdude
       
       else
         include loginForm

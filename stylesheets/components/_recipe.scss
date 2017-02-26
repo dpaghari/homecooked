@@ -1,4 +1,4 @@
-.recipe {
+.recipe, .preview {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -6,6 +6,7 @@
   width: 60%;
   padding: $space;
   overflow: auto;
+  margin: 0 auto;
   .recipe-header {
     display: flex;
     padding: $space/2;

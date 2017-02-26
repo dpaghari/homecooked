@@ -32,8 +32,13 @@ app.get('/', function(req, res) {
   res.render('index', appState);
 });
 app.get('/my_recipes', function(req, res) {
+  // ApiManager.getUserRecipes(appState.currentUser.id, function(recipes) {
+  //   console.log(appState);
+  // });
   appState = Object.assign({}, appState, {currentPage: "MyRecipes"});
   res.render('index', appState);
+
+
 });
 app.get('/create_recipe', function(req, res) {
   appState = Object.assign({}, appState, {currentPage: "AddRecipe"});
