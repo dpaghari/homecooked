@@ -111,7 +111,7 @@ const Homecooked = (function() {
 
     let ingredientName = document.querySelector(".addRecipeForm input[name=ingredient]");
     let quantity = document.querySelector(".addRecipeForm input[name=qty]");
-
+    let measure = document.querySelector(".addRecipeForm input[name=measure]");
     let stepInput = document.querySelector(".addRecipeForm input[name=step]");
 
     let fields = [
@@ -137,13 +137,14 @@ const Homecooked = (function() {
       e.preventDefault();
       let ingredient = ingredientName.value;
 
-      if(!validator.isEmpty(quantity.value) && validator.isNumeric(quantity.value) && !validator.isEmpty(ingredient)){
+      if(!validator.isEmpty(quantity.value) && validator.isNumeric(quantity.value) && !validator.isEmpty(ingredient) && !validator.isEmpty(measure.value)){
         let newIngredient = {
           name: ingredient,
-          quantity: quantity.value
+          quantity: quantity.value,
+          measure: measure.value
         };
         let newIngHTML = `
-          <li class="newIngredient"><span>${newIngredient.name}</span><span>${newIngredient.quantity}</span></li>
+          <li class="newIngredient"><span>${newIngredient.name}</span><span>${newIngredient.quantity}</span><span>${newIngredient.measure}</span></li>
         `;
         document.querySelector(".recipePrep ul.ingredientsList").insertAdjacentHTML("beforeend", newIngHTML);
         ingredients.push(newIngredient);
