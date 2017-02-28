@@ -26,8 +26,8 @@ var ApiManager = (function(dbWrapper) {
 
       connection.query("SELECT * from users where `id` = ?", [user_id], (err, rows, fields) => {
         if(err) throw err;
-        if(typeof row !== "undefined" && typeof row[0] !== "undefined"){
-          user = row[0];
+        if(typeof rows !== "undefined" && typeof rows[0] !== "undefined"){
+          user = rows[0];
           connection.release();
           callback(user);
         }
