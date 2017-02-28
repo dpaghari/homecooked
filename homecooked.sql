@@ -48,15 +48,17 @@ DROP TABLE IF EXISTS `recipes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recipes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) DEFAULT NULL,
-  `ingredients` varchar(256) DEFAULT NULL,
-  `instructions` varchar(2048) DEFAULT NULL,
+  `ingredients` mediumtext,
+  `instructions` mediumtext,
   `recipe_image` varchar(8000) DEFAULT NULL,
   `serving_size` int(11) DEFAULT NULL,
-  `cooking_time` time DEFAULT NULL,
+  `cooking_time` varchar(256) DEFAULT NULL,
+  `owner_id` int(255) DEFAULT NULL,
+  `blurb` mediumtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +67,7 @@ CREATE TABLE `recipes` (
 
 LOCK TABLES `recipes` WRITE;
 /*!40000 ALTER TABLE `recipes` DISABLE KEYS */;
-INSERT INTO `recipes` VALUES (14,'chicken parmesan',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `recipes` VALUES (14,'chicken parmesan',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,NULL,NULL,NULL,'http://img.sndimg.com/food/image/upload/w_555,h_416,c_fit,fl_progressive,q_95/v1/img/recipes/22/78/2/pic4IW8Lh.jpg',NULL,NULL,NULL,NULL),(16,'Spaghetti',NULL,NULL,'http://img.sndimg.com/food/image/upload/w_555,h_416,c_fit,fl_progressive,q_95/v1/img/recipes/22/78/2/pic4IW8Lh.jpg',NULL,NULL,NULL,NULL),(17,'Chicken Soup',NULL,NULL,'http://clv.h-cdn.co/assets/cm/15/10/1600x800/54f4a5bf1042a_-_chicken-noodle-soup-recipe.jpg',NULL,NULL,15,NULL),(18,'Lasagna',NULL,NULL,'https://static01.nyt.com/images/2015/10/15/dining/15RECIPE20DIN/15RECIPE20DIN-superJumbo.jpg',NULL,NULL,15,NULL),(19,'Ramen',NULL,NULL,'https://www.chowstatic.com/blog-media/2015/09/phpThumb_generated_thumbnail-17.jpeg',NULL,NULL,15,NULL),(20,'Sushi Bowl',NULL,NULL,'https://www.budgetbytes.com/wp-content/uploads/2016/06/Sushi-Bowls-Vs.jpg',NULL,NULL,15,NULL),(21,'Garlic Butter Shrimp','[{\"name\":\"Garlic\",\"quantity\":\"4\"},{\"name\":\"Butter\",\"quantity\":\"4\"},{\"name\":\"Shrimp\",\"quantity\":\"4\"}]','[{\"step\":\"Do stuff\"},{\"step\":\"cook it\"},{\"step\":\"eat it\"}]','http://damndelicious.net/wp-content/uploads/2014/04/IMG_5261edit.jpg',4,'40h',15,NULL),(22,'Beef Wellington','[{\"name\":\"Steak\",\"quantity\":\"1\"},{\"name\":\"Bread\",\"quantity\":\"1\"}]','[{\"step\":\"Put the steak in the bread\"},{\"step\":\"cook it\"}]','http://food.fnr.sndimg.com/content/dam/images/food/fullset/2008/12/30/0/TU0602_Beef-Wellington.jpg.rend.hgtvcom.1280.960.jpeg',4,'2h',15,'[object Object]'),(23,'Some salad','[{\"name\":\"Green things\",\"quantity\":\"10\"}]','[{\"step\":\"Throw em together\"}]','https://s-media-cache-ak0.pinimg.com/564x/20/6d/0a/206d0a27c4f3b5fcd4e5fe206f02602a.jpg',4,'30m',15,'You gotta eat healthy and stuff so eat this green stuff');
 /*!40000 ALTER TABLE `recipes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +85,7 @@ CREATE TABLE `users` (
   `profile_picture` varchar(256) DEFAULT NULL,
   `signup_date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +94,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Dan','test1','https://scontent-lax3-1.xx.fbcdn.net/v/t1.0-9/16388255_10210218147264942_1918002017892138131_n.jpg?oh=3028091cf661abc009bde8f87a842ae2&oe=58FE1DCE','2017-02-19');
+INSERT INTO `users` VALUES (15,'Daniel','sup','sup',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -105,4 +107,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-02-22 23:55:03
+-- Dump completed on 2017-02-27 22:35:03
