@@ -2,7 +2,7 @@ var mysql = require('mysql');
 
 var dbWrapper = (function(mysql) {
   // if(process.env.NODE_ENV === "production") {
-    var connection = mysql.createConnection({
+    var pool = mysql.createPool({
       host : 'us-cdbr-iron-east-04.cleardb.net',
       user : 'b13efb3091028d',
       password: '5be8e122',
@@ -10,7 +10,7 @@ var dbWrapper = (function(mysql) {
     });
   // }
   // else {
-    // var connection = mysql.createConnection({
+    // var pool = mysql.createPool({
     //   host : 'localhost',
     //   user : 'root',
     //   password: 'root',
@@ -21,7 +21,7 @@ var dbWrapper = (function(mysql) {
 
 
   return {
-    db: connection
+    db: pool
   };
 
 })(mysql);

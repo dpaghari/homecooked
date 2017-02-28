@@ -19,10 +19,27 @@
     label(class="ingredient_field") 
       |Name
       input(name="ingredient" type="text" placeholder="Carrots")
-      p Qty
+      |Qty
       input(name="qty" type="text" placeholder="4")
+      |Measure
+      input(list="measure" name="measure" type="text" placeholder="tbsp" autoComplete="off")
+      datalist(id="measure")
+        option(value="tsp")
+        option(value="tbsp")
+        option(value="cup")
+        option(value="pinch")
+        option(value="lbs")
+        option(value="quart")
+        option(value="pint")
+        option(value="oz")
+        option(value="ml")
+        option(value="dash")
+      
+        
+        
       button(type="submit" class="addIngredient")
         |+
+      
   p Add Directions
   form.addDirectionsForm
     label Directions
