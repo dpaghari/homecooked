@@ -44,7 +44,7 @@ const Homecooked = (function() {
 
       if(formatted_ingredients !== null){
         formatted_ingredients.forEach((el, idx) => {
-          let new_list_item = `<li class="ingredient">${el.name} ${el.quantity}</li>`;
+          let new_list_item = `<li class="ingredient">${el.name} ${el.quantity} ${el.measure}</li>`;
           ing_string = ing_string.concat(new_list_item);
         });
       }
