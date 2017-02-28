@@ -29,6 +29,7 @@ app.set('view engine', 'jade');
 //############
 app.get('/', function(req, res) {
   appState = Object.assign({}, appState, {currentPage: "Home"});
+  console.log(appState);
   res.render('index', appState);
 });
 app.get('/my_recipes', function(req, res) {
@@ -36,16 +37,19 @@ app.get('/my_recipes', function(req, res) {
   //   console.log(appState);
   // });
   appState = Object.assign({}, appState, {currentPage: "MyRecipes"});
+  console.log(appState);
   res.render('index', appState);
 
 
 });
 app.get('/create_recipe', function(req, res) {
   appState = Object.assign({}, appState, {currentPage: "AddRecipe"});
+  console.log(appState);
   res.render('index', appState);
 });
 app.get('/pantry', function(req, res) {
   appState = Object.assign({}, appState, {currentPage: "Pantry"});
+  console.log(appState);
   res.render('index', appState);
 });
 
@@ -65,6 +69,7 @@ app.get('/get_user', function(req, res) {
 // Authentication or registration
 app.post('/', upload.array(), function(req, res, next) {
   var userInfo = req.body;
+  console.log(userInfo);
 
   if(userInfo.action === "login") {
     var response;
@@ -114,6 +119,7 @@ app.get('/get_recipes', function(req, res) {
 app.post('/get_user_recipes', upload.array(), function(req, res, next) {
   var userInfo = req.body;
   ApiManager.getUserRecipes(userInfo, function(data) {
+    console.log(data);
     res.json(data);
   });
 });

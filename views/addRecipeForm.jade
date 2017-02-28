@@ -1,4 +1,4 @@
-form(name="addRecipeForm")
+.addRecipeForm
   label Recipe Name
     input(name="recipe_name" type="text" placeholder="Recipe Name")
   label Recipe Image
@@ -12,18 +12,22 @@ form(name="addRecipeForm")
       select(class="cooktime_measure")
         option h
         option m
-  p Add Ingredients
-  label(class="ingredient_field") 
-    |Name
-    input(name="ingredient" type="text" placeholder="Carrots")
-    p Qty
-    input(name="qty" type="text" placeholder="4")
-    button(type="button" class="addIngredient")
-      |+
+    label Blurb
+      textarea(name="blurb" rows="5" cols="50")
+  form.addIngredientForm
+    p Add Ingredients
+    label(class="ingredient_field") 
+      |Name
+      input(name="ingredient" type="text" placeholder="Carrots")
+      p Qty
+      input(name="qty" type="text" placeholder="4")
+      button(type="submit" class="addIngredient")
+        |+
   p Add Directions
-  label Directions
-    input(name="step" type="text" placeholder="Add a step")
-    button(type="button" class="addStep")
-      |+
-  button(type="submit" class="addRecipe")
+  form.addDirectionsForm
+    label Directions
+      input(name="step" type="text" placeholder="Add a step")
+      button(type="submit" class="addStep")
+        |+
+  button(type="button" class="addRecipe")
     |Add Recipe

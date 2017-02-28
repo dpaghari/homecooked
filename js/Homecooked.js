@@ -33,8 +33,29 @@ const Homecooked = (function() {
         cooking_time,
         ingredients,
         instructions,
+        blurb,
         recipe_image,
         serving_size } = el;
+        console.log(el);
+
+      let formatted_ingredients = JSON.parse(ingredients);
+      let formatted_directions = JSON.parse(instructions);
+      let ing_string = "", dir_string = "";
+
+      if(formatted_ingredients !== null){
+        formatted_ingredients.forEach((el, idx) => {
+          let new_list_item = `<li class="ingredient">${el.name} ${el.quantity}</li>`;
+          ing_string = ing_string.concat(new_list_item);
+        });
+      }
+      if(formatted_directions !== null) {
+        formatted_directions.forEach((el, idx) => {
+          let new_list_item = `<li class="step">${el.step}</li>`;
+          dir_string = dir_string.concat(new_list_item);
+        });
+      }
+
+
       let recipeEntryHTML = `
       <li class="recipe">
         <div class="recipe-header">
@@ -53,7 +74,9 @@ const Homecooked = (function() {
           <img class="recipeImg" src=${recipe_image} alt="recipe image"/>
         </div>
         <div class="recipe-body">
-        <p class="blurb"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p class="blurb"> ${blurb}</p>
+        <ul class="ingredients">${ing_string}</ul>
+        <ol class="directions">${dir_string}</ol>
         </div>
       </li>
       `;
@@ -71,28 +94,35 @@ const Homecooked = (function() {
 
 
   function handleCreateRecipe(user_id) {
-    // addRecipeForm
-    let recipeForm = document.querySelector("form[name=addRecipeForm]");
+    // Forms
+    let addIngredientForm = document.querySelector(".addRecipeForm form.addIngredientForm");
+    let addDirectionsForm = document.querySelector(".addRecipeForm form.addDirectionsForm");
+    let addRecipeBtn = document.querySelector(".addRecipeForm button.addRecipe");
+
     // Inputs
-    let recipeName = document.querySelector("form[name=addRecipeForm] input[name=recipe_name]");
-    let recipeImage = document.querySelector("form[name=addRecipeForm] input[name=recipe_image]");
-    let servingSize = document.querySelector("form[name=addRecipeForm] input[name=recipe_servsize]");
-    let cookTime = document.querySelector("form[name=addRecipeForm] input[name=recipe_cooktime]");
-    let cookTimeMeasure = document.querySelector("form[name=addRecipeForm] select.cooktime_measure");
+    let recipeName = document.querySelector(".addRecipeForm input[name=recipe_name]");
+    let recipeImage = document.querySelector(".addRecipeForm input[name=recipe_image]");
+    let servingSize = document.querySelector(".addRecipeForm input[name=recipe_servsize]");
+    let cookTime = document.querySelector(".addRecipeForm input[name=recipe_cooktime]");
+    let cookTimeMeasure = document.querySelector(".addRecipeForm select.cooktime_measure");
+    let blurb = document.querySelector(".addRecipeForm textarea[name=blurb]");
 
-    let ingredientName = document.querySelector("form[name=addRecipeForm] input[name=ingredient]");
-    let quantity = document.querySelector("form[name=addRecipeForm] input[name=qty]");
 
-    let step = document.querySelector("form[name=addRecipeForm] input[name=step]");
+
+    let ingredientName = document.querySelector(".addRecipeForm input[name=ingredient]");
+    let quantity = document.querySelector(".addRecipeForm input[name=qty]");
+
+    let stepInput = document.querySelector(".addRecipeForm input[name=step]");
 
     let fields = [
       {field: recipeName, required: true},
       {field: recipeImage, required: true},
       {field: ingredientName, required: false},
-      {field: step, required: false},
-      {field: cookTime, required: false},
-      {field: cookTimeMeasure, required: false},
-      {field: quantity, required: false}
+      {field: stepInput, required: false},
+      {field: cookTime, required: true},
+      {field: cookTimeMeasure, required: true},
+      {field: quantity, required: false},
+      {field: blurb, required: false}
     ];
 
     let ingredients = []; // hold ingredient objects { name, quantity }
@@ -101,7 +131,45 @@ const Homecooked = (function() {
 
     let invalidInputs = [];
 
-    recipeForm.addEventListener("submit", function(e) {
+
+    // Ingredient Handler
+    addIngredientForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      let ingredient = ingredientName.value;
+
+      if(!validator.isEmpty(quantity.value) && validator.isNumeric(quantity.value) && !validator.isEmpty(ingredient)){
+        let newIngredient = {
+          name: ingredient,
+          quantity: quantity.value
+        };
+        let newIngHTML = `
+          <li class="newIngredient"><span>${newIngredient.name}</span><span>${newIngredient.quantity}</span></li>
+        `;
+        document.querySelector(".recipePrep ul.ingredientsList").insertAdjacentHTML("beforeend", newIngHTML);
+        ingredients.push(newIngredient);
+      }
+    });
+    // Directions Handler
+    addDirectionsForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      let step = stepInput.value;
+
+      if(!validator.isEmpty(step)){
+        let newDirection = {
+          step
+        };
+        let newDirHTML = `
+          <li class="newIngredient"><span>${newDirection.step}</span></li>
+        `;
+        document.querySelector(".recipePrep ol.directionsList").insertAdjacentHTML("beforeend", newDirHTML);
+        directions.push(newDirection);
+      }
+    });
+
+
+
+    // Form submission handler
+    addRecipeBtn.addEventListener("click", function(e) {
       e.preventDefault();
 
       invalidInputs = fields.filter((el, idx) => {
@@ -110,20 +178,8 @@ const Homecooked = (function() {
         if(required)
           if(validator.isEmpty(field.value)) return el;
 
-        if(field.name === "ingredient") {
-          console.log(field.value);
-        }
-
-        if(field.name === "step") {
-          console.log(field.value);
-        }
-
-        if(field.name === "qty" || field.name === "cookTime")
+        if(field.name === "cookTime")
           if(!validator.isNumeric(field.value) && validator.isEmpty(field.value) && validator.contains(field.value, " ")) return el;
-
-
-
-
 
       });
 
@@ -148,11 +204,12 @@ const Homecooked = (function() {
           serving_size: servingSize.value,
           recipe_image: recipeImage.value,
           ingredients,
-          directions
+          directions,
+          blurb: blurb.value
         };
-        console.log(data);
+
         axios.post("/add_recipe", data).then((response) => {
-          console.log("let's do it!");
+
           let { redirect } = response.data;
           console.log("response", response.data);
           window.location.href = redirect;
@@ -163,6 +220,13 @@ const Homecooked = (function() {
       }
     });
   }
+
+
+  function addIngredientToList(ingredient) {
+
+  }
+
+
 
   function handleAddIngredient() {
 

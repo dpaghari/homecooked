@@ -1,2 +1,9 @@
 @import "../components/addRecipeForm";
 @import "../components/recipe";
+@import "../components/recipePrep";
+
+
+.addRecipeWrapper {
+  display: flex;
+  justify-content: space-around;
+}

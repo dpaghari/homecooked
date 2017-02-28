@@ -96,8 +96,10 @@ var ApiManager = (function(dbWrapper) {
 
   function addRecipe(recipe_info, callback) {
     let { db } = dbWrapper;
-    let { name, recipe_image, owner_id } = recipe_info;
-    db.query('INSERT INTO `recipes` SET ?', {name, recipe_image, owner_id}, function (err, rows, fields) {
+    let { owner_id, name, cooking_time, serving_size, recipe_image, ingredients, directions, blurb } = recipe_info;
+    ingredients = JSON.stringify(ingredients);
+    directions = JSON.stringify(directions);
+    db.query('INSERT INTO `recipes` SET ?', {owner_id, name, cooking_time, serving_size, recipe_image, ingredients, instructions: directions, blurb}, function (err, rows, fields) {
       if(err) throw err;
       if(typeof callback === "function") {
         // return last insert id

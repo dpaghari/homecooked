@@ -16,8 +16,9 @@ html(lang="en")
             .myRecipes
               ul.recipeList
           if currentPage == "AddRecipe"
-            .addRecipeForm
+            .addRecipeWrapper
               include addRecipeForm
+              include recipePrep
           if currentPage == "Pantry"
             .pantry
               |Asuhdude
