@@ -125,7 +125,21 @@ var ApiManager = (function(dbWrapper) {
         }
       });
     });
-
+  }
+  function getUserMealPlan(userInfo, callback) {
+    let mealplan = [];
+    let { user_id } = userInfo;
+    let { db } = dbWrapper;
+    db.getConnection(function(err, connection) {
+      connection.query('SELECT * from `mealplans` where `owner_id` = ?', [user_id], (err, rows, fields) => {
+        if(err) throw err;
+        mealplan = rows;
+        connection.release();
+        if(typeof callback === "function") {
+          callback(mealplan);
+        }
+      });
+    });
   }
 
   function addRecipe(recipe_info, callback) {
@@ -170,6 +184,7 @@ var ApiManager = (function(dbWrapper) {
     getRecipes,
     getRecipe,
     getUserRecipes,
+    getUserMealPlan,
     addRecipe,
     addIngredient
   };

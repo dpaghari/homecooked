@@ -1,3 +1,6 @@
 $notSoDark: #555;
 $shadows: #cdcdcd;
-$errorRed: rgb(186, 49, 45)
+$errorRed: rgb(186, 49, 45);
+$coolRed: lighten($errorRed, 11%);
+
+$successGreen: rgb(11, 193, 62);

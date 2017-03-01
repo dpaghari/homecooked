@@ -1,9 +1,32 @@
 .recipePrep {
-  ul.ingredientsList {
-    border: 1px solid black;
+  width: 38%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  h4 {
+    margin: $space/2 auto;
+    padding: $space/3;
+    border-bottom: 1px solid #cdcdcd;
+  }
+  ul.ingredientsList, ol.directionsList {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-direction: column;
+    min-height: 30%;
+    max-height: 50%;
   }
 
-  ol.directionsList {
-    border: 1px solid black;
+  ul.ingredientsList {
+    li.newIngredient {
+      margin: $space/6 $space/4;
+      span.ing_name {
+        margin-right: $space/2;
+      }
+
+    }
+
   }
 }

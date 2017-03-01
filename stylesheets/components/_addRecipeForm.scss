@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   padding: $space;
-  width: 38%;
+  width: 60%;
   border-right: 1px solid #cdcdcd;
   button{
     @include theme_button(rgb(8, 168, 34));
@@ -13,28 +13,32 @@
   }
   input[type=text] {
     @include theme_input();
-    flex-grow: 1;
     margin: 0 $space/3;
   }
 
   textarea[name="blurb"] {
     resize: none;
+    @include theme_input;
+    margin: 0 $space/3;
+    font-size: 1em;
   }
-  fieldset {
-    display: block;
-    border-width: 0;
+  label {
     width: 100%;
-    border-bottom: 1px solid #cdcdcd;
-    padding-bottom: $space;
-    margin-bottom: $space;
-    label {
-      // float: left;
-      border: 1px solid #cdcdcd;
-      padding: $space/2;
-      display: inline-flex;
-      width: 45%;
-      margin: $space/2;
-      box-shadow: 0px 1px 1px 1px #cdcdcd;
+    display: flex;
+    align-items: center;
+    padding: $space/2;
+    margin: $space/2 0;
+    input[name="qty"], input[name="recipe_servsize"], input[name="recipe_cooktime"]{
+      width: $space * 2;
+    }
+    input[name="measure"] {
+      width: $space * 3;
+    }
+    datalist {
+      overflow: auto;
+    }
+    input[name="recipe_servsize"], input[name="recipe_cooktime"] {
+      margin-left: $space/2;
     }
     select {
       height: $space * 1.5;
@@ -43,18 +47,6 @@
       border-width: 0;
       border: 1px solid #cdcdcd;
       box-shadow: 0px 1px 1px 1px #cdcdcd;
-    }
-  }
-  label {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: $space/2;
-    margin: $space/2 0;
-    input[name="qty"], input[name="recipe_servsize"], input[name="recipe_cooktime"]{
-      width: $space * 2;
-      flex-grow: 0;
     }
   }
 }

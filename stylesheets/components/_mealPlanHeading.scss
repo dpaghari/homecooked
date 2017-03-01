@@ -1,0 +1,23 @@
+.mealPlanHeading {
+  ul.controls {
+    list-style-type: none;
+    display: flex;
+    li.ctrl-btn {
+      padding: $space;
+      margin: 0 $space;
+      cursor: pointer;
+      i {
+        font-size: 3em;
+        transform: scale(1);
+        transition: 0.2s transform;
+        &:hover {
+          transform: scale(1.2);
+        }
+        &.fa-check-circle-o {
+
+          color: $successGreen;
+        }
+      }
+    }
+  }
+}

@@ -12,15 +12,35 @@ const Homecooked = (function() {
     let data = {
       user_id
     };
-    axios.post("/get_user_recipes", data).then((response) => {
-      let recipes = response.data;
-      console.log(recipes);
-      addRecipesToDOM(recipes);
+    return axios.post("/api/get_user_recipes", data);
+  }
+
+  function addRecipesToMealPlan(recipes) {
+    console.log(recipes);
+  }
+
+
+  function getMyMealPlan(user_id) {
+    let data = {
+      user_id
+    };
+    axios.post("/api/get_user_mealplan", data).then((response) => {
+      let mealplan = response.data;
+      console.log(mealplan);
+      addMealPlanToDOM(mealplan);
     })
     .catch((err) => {
       console.log("error", err);
     });
+
   }
+
+  function addMealPlanToDOM(mealplan) {
+
+  }
+
+
+
 
 
   function addRecipesToDOM(recipes) {
@@ -144,10 +164,18 @@ const Homecooked = (function() {
           measure: measure.value
         };
         let newIngHTML = `
-          <li class="newIngredient"><span>${newIngredient.name}</span><span>${newIngredient.quantity}</span><span>${newIngredient.measure}</span></li>
+          <li class="newIngredient">
+            <span class="ing_name">${newIngredient.name}</span>
+            <span class="ing_qty">${newIngredient.quantity}</span>
+            <span class="ing_mea">${newIngredient.measure}</span>
+          </li>
         `;
         document.querySelector(".recipePrep ul.ingredientsList").insertAdjacentHTML("beforeend", newIngHTML);
         ingredients.push(newIngredient);
+        ingredientName.value = "";
+        quantity.value = "";
+        measure.value = "";
+        ingredientName.focus();
       }
     });
     // Directions Handler
@@ -164,6 +192,8 @@ const Homecooked = (function() {
         `;
         document.querySelector(".recipePrep ol.directionsList").insertAdjacentHTML("beforeend", newDirHTML);
         directions.push(newDirection);
+        stepInput.value = "";
+        stepInput.focus();
       }
     });
 
@@ -209,7 +239,7 @@ const Homecooked = (function() {
           blurb: blurb.value
         };
 
-        axios.post("/add_recipe", data).then((response) => {
+        axios.post("/api/add_recipe", data).then((response) => {
 
           let { redirect } = response.data;
           console.log("response", response.data);
@@ -313,7 +343,10 @@ const Homecooked = (function() {
   return {
     init,
     getMyRecipes,
+    getMyMealPlan,
+    addMealPlanToDOM,
     addRecipesToDOM,
+    addRecipesToMealPlan,
     handleAddToMealPlan,
     handleCreateRecipe,
     handleAddIngredient,

@@ -11,8 +11,12 @@ var upload = multer(); // for parsing multipart/form-data
 var ApiManager = require("./ApiManager.js");
 
 let appState = {
-  loggedIn: false,
-  currentUser: {},
+  loggedIn: true,
+  currentUser: {
+    name: "Daniel",
+    id: 15,
+    profile_picture: "sup"
+  },
   currentPage: "Home"
 };
 
@@ -56,12 +60,12 @@ app.get('/pantry', function(req, res) {
 //############
 // SERVICES
 //############
-app.get('/get_users', function(req, res) {
+app.get('/api/get_users', function(req, res) {
   ApiManager.getUsers(function(data) {
     res.send('index', {users: data});
   });
 });
-app.get('/get_user', function(req, res) {
+app.get('/api/get_user', function(req, res) {
   ApiManager.getUser(function(data) {
     res.send('index', {user: data});
   });
@@ -110,15 +114,22 @@ app.post('/', upload.array(), function(req, res, next) {
   }
 });
 
-app.get('/get_recipes', function(req, res) {
+app.get('/api/get_recipes', function(req, res) {
   ApiManager.getRecipes(function(data) {
     // res.send('index', data);
   });
 });
 
-app.post('/get_user_recipes', upload.array(), function(req, res, next) {
+app.post('/api/get_user_recipes', upload.array(), function(req, res, next) {
   var userInfo = req.body;
   ApiManager.getUserRecipes(userInfo, function(data) {
+    console.log(data);
+    res.json(data);
+  });
+});
+app.post('/api/get_user_mealplan', upload.array(), function(req, res, next) {
+  var userInfo = req.body;
+  ApiManager.getUserMealPlan(userInfo, function(data) {
     console.log(data);
     res.json(data);
   });
@@ -128,13 +139,13 @@ app.post('/get_user_recipes', upload.array(), function(req, res, next) {
 app.get('/get_app_state', function(req, res) {
   res.json(appState);
 });
-app.get('/get_recipe', function(req, res) {
+app.get('/api/get_recipe', function(req, res) {
   ApiManager.getRecipe(function(data) {
   });
 });
 
 
-app.post('/add_recipe', upload.array(), function(req, res, next) {
+app.post('/api/add_recipe', upload.array(), function(req, res, next) {
 
   var recipe_info = req.body;
   // console.log(recipe_info.recipe_name, recipe_info.recipe_image);
@@ -149,7 +160,7 @@ app.post('/add_recipe', upload.array(), function(req, res, next) {
   });
 
 });
-app.post('/add_ingredient', upload.array(), function(req, res, next) {
+app.post('/api/add_ingredient', upload.array(), function(req, res, next) {
   var ingredient_info = req.body;
   ApiManager.addIngredient(ingredient_info, (ingredient_id) => {
     res.send(ingredient_id);

@@ -2,7 +2,7 @@ html(lang="en")
   head
     title= currentPage 
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
-    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Great+Vibes|Lato")
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Great+Vibes|Lato|BioRhyme")
   body
     .wrapper
       if loggedIn == true
@@ -11,6 +11,7 @@ html(lang="en")
           if currentPage == "Home"
             .home
               h1 Your Meal Plan
+              include mealPlanHeading
               include mealPlan
           if currentPage == "MyRecipes"
             .myRecipes
