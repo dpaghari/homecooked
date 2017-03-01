@@ -65,7 +65,6 @@ const Homecooked = (function() {
 
       let formatted_ingredients = JSON.parse(ingredients);
       let formatted_directions = JSON.parse(instructions);
-      blurb = typeof blurb === "string" ? JSON.parse(blurb) : blurb;
       let ing_string = "", dir_string = "";
 
       if(formatted_ingredients !== null){
