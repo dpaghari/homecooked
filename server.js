@@ -11,11 +11,11 @@ var upload = multer(); // for parsing multipart/form-data
 var ApiManager = require("./ApiManager.js");
 
 let appState = {
-  loggedIn: true,
+  loggedIn: false,
   currentUser: {
-    name: "Daniel",
-    id: 15,
-    profile_picture: "sup"
+    // name: "Daniel",
+    // id: 15,
+    // profile_picture: "sup"
   },
   currentPage: "Home"
 };
