@@ -95,14 +95,15 @@ var ApiManager = (function(dbWrapper) {
     });
 
   }
-  function getRecipe(recipe_id, callback) {
-    let user;
+  function getRecipe(recipeInfo, callback) {
+    let { recipe_id } = recipeInfo;
     let { db } = dbWrapper;
     db.getConnection(function(err, connection) {
       connection.query("SELECT * from `recipes` where `id` = ?", [recipe_id], (err, rows, fields) => {
         if(err) throw err;
-        if(typeof row !== "undefined" && typeof row[0] !== "undefined"){
-          user = row[0];
+
+        if(typeof rows !== "undefined" && typeof rows[0] !== "undefined"){
+          user = rows[0];
           connection.release();
           callback(user);
         }

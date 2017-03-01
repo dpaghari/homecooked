@@ -139,8 +139,12 @@ app.post('/api/get_user_mealplan', upload.array(), function(req, res, next) {
 app.get('/get_app_state', function(req, res) {
   res.json(appState);
 });
-app.get('/api/get_recipe', function(req, res) {
-  ApiManager.getRecipe(function(data) {
+app.post('/api/get_recipe', upload.array(), function(req, res, next) {
+  var recipeInfo = req.body;
+  console.log(recipeInfo);
+  ApiManager.getRecipe(recipeInfo, function(data) {
+    console.log("recipe_info: ", data);
+    res.json(data);
   });
 });
 

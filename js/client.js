@@ -8,8 +8,11 @@ const Homecooked = require("./Homecooked.js");
     switch(currentPage){
       case "Home":
       recipes.then((response) => {
-        Homecooked.getMyMealPlan();
-        Homecooked.addRecipesToMealPlan(response.data);
+      Homecooked.getMyMealPlan();
+      Homecooked.addRecipesToDOM(response.data, document.querySelector("ul.menu"));
+      Homecooked.handleToggleMenu();
+      Homecooked.handleAddMealToDay();
+      // Homecooked.addRecipesToMealPlan(response.data);
       });
       Homecooked.handleLogin();
       Homecooked.handleRegister();

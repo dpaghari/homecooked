@@ -2,6 +2,9 @@ const axios = require("axios");
 const validator = require("validator");
 const Homecooked = (function() {
 
+  var clickedEmptyMeal;
+
+
   function init(callback) {
     axios.get("/get_app_state").then((res)=> {
       callback(res);
@@ -43,12 +46,14 @@ const Homecooked = (function() {
 
 
 
-  function addRecipesToDOM(recipes) {
+  function addRecipesToDOM(recipes, target) {
     console.log(recipes);
-    let recipeList = document.querySelector(".recipeList");
+    let recipeList = target || document.querySelector(".recipeList");
+    // let recipeList = document.querySelector(".recipeList");
     let recipeListStr = "";
     recipes.forEach((el, idx) => {
       let {
+        id,
         name,
         cooking_time,
         ingredients,
@@ -60,6 +65,7 @@ const Homecooked = (function() {
 
       let formatted_ingredients = JSON.parse(ingredients);
       let formatted_directions = JSON.parse(instructions);
+      blurb = JSON.parse(blurb);
       let ing_string = "", dir_string = "";
 
       if(formatted_ingredients !== null){
@@ -77,7 +83,7 @@ const Homecooked = (function() {
 
 
       let recipeEntryHTML = `
-      <li class="recipe">
+      <li data-recipe_id=${id} class="recipe">
         <div class="recipe-header">
           <div class="left">
             <h2 class="recipeName">${name}</h2>
@@ -102,15 +108,68 @@ const Homecooked = (function() {
       `;
       recipeList.insertAdjacentHTML('beforeend', recipeEntryHTML);
     });
+  }
+
+  function handleToggleMenu() {
+    document.addEventListener("click", function(e) {
+      if(e.target.classList.contains("placeholder")) {
+        clickedEmptyMeal = e.target;
+        toggleRecipeMenu();
+      }
+    });
+  }
+
+  function handleAddMealToDay() {
+    let recipes = document.querySelectorAll(".recipe");
+    for (var i = 0; i < recipes.length; i++) {
+      recipes[i].addEventListener("click", addMealToDay, true);
+    }
+  }
+
+  function addMealToDay(e) {
+    if(e.target.classList.contains("recipe")) {
+
+      let { recipe_id } = e.target.dataset;
+      recipe_id = parseInt(recipe_id);
+      console.log(recipe_id);
+      let data = {
+        recipe_id
+      };
+      axios.post("/api/get_recipe", data).then((response) => {
+        console.log(data);
+        let miniRecipe = getMiniRecipeHTML(response.data);
+        clickedEmptyMeal.outerHTML = miniRecipe;
+        toggleRecipeMenu();
+      });
+    }
+
+  }
+
+  function toggleRecipeMenu() {
+    let recipeMenu = document.querySelector(".recipeMenu");
+    recipeMenu.classList.toggle("active");
+  }
 
 
+  function getMiniRecipeHTML(recipeInfo) {
+    let { name, recipe_image } = recipeInfo;
+    let miniRecipe = `
+      <div class="recipe-mini">
+        <img src=${recipe_image}/>
+        <div class="overlay">
+          <h4>${name}</h4>
+          <div class="cta">
+            <i class="fa fa-check"></i>
+            <i class="fa fa-times"></i>
+          </div>
+        </div>
+      </div>
+    `;
+    return miniRecipe;
   }
 
 
 
-  function handleAddToMealPlan() {
-
-  }
 
 
   function handleCreateRecipe(user_id) {
@@ -126,23 +185,20 @@ const Homecooked = (function() {
     let cookTime = document.querySelector(".addRecipeForm input[name=recipe_cooktime]");
     let cookTimeMeasure = document.querySelector(".addRecipeForm select.cooktime_measure");
     let blurb = document.querySelector(".addRecipeForm textarea[name=blurb]");
-
-
-
     let ingredientName = document.querySelector(".addRecipeForm input[name=ingredient]");
     let quantity = document.querySelector(".addRecipeForm input[name=qty]");
     let measure = document.querySelector(".addRecipeForm input[name=measure]");
     let stepInput = document.querySelector(".addRecipeForm input[name=step]");
 
     let fields = [
-      {field: recipeName, required: true},
-      {field: recipeImage, required: true},
-      {field: ingredientName, required: false},
-      {field: stepInput, required: false},
-      {field: cookTime, required: true},
-      {field: cookTimeMeasure, required: true},
-      {field: quantity, required: false},
-      {field: blurb, required: false}
+      { field: recipeName, required: true },
+      { field: recipeImage, required: true },
+      { field: ingredientName, required: false },
+      { field: stepInput, required: false },
+      { field: cookTime, required: true },
+      { field: cookTimeMeasure, required: true },
+      { field: quantity, required: false },
+      { field: blurb, required: false }
     ];
 
     let ingredients = []; // hold ingredient objects { name, quantity }
@@ -214,19 +270,7 @@ const Homecooked = (function() {
 
       });
 
-      console.log(invalidInputs);
-
-      // let invalidInputs = required_fields.filter(function(el,idx){
-      //   if(el.name === "recipe_name")
-      //     return validator.isEmpty(el.value);
-      //   else if(el.name === "recipe_image");
-      //     return validator.isEmpty(el.value) || validator.contains(el.value, " ");
-      // });
-
-
-
-
-      if(invalidInputs.length < 1) {
+        if(invalidInputs.length < 1) {
         console.log(user_id);
         let data = {
           owner_id : user_id,
@@ -250,17 +294,6 @@ const Homecooked = (function() {
         });
       }
     });
-  }
-
-
-  function addIngredientToList(ingredient) {
-
-  }
-
-
-
-  function handleAddIngredient() {
-
   }
 
   function handleLogin() {
@@ -344,12 +377,15 @@ const Homecooked = (function() {
     init,
     getMyRecipes,
     getMyMealPlan,
+    addMealToDay,
     addMealPlanToDOM,
+    getMiniRecipeHTML,
     addRecipesToDOM,
     addRecipesToMealPlan,
-    handleAddToMealPlan,
+    toggleRecipeMenu,
+    handleToggleMenu,
+    handleAddMealToDay,
     handleCreateRecipe,
-    handleAddIngredient,
     handleLogin,
     handleRegister
   };

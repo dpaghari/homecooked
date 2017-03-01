@@ -49,13 +49,19 @@ ul.mealPlan {
         display: flex;
         justify-content: center;
         align-items: center;
+        background: white;
         width: 30%;
         height: 100%;
         padding: $space*2;
         border: 2px dashed $notSoDark;
         margin: 0 $space/2;
+        transition: 0.2 background;
         i {
           font-size: 3em;
+        }
+
+        &:hover {
+          background: #ddd;
         }
       }
       .recipe-mini {
@@ -73,12 +79,13 @@ ul.mealPlan {
         }
         &:hover {
           .overlay {
-            display: flex;
+            opacity: 0.8;
           }
         }
 
         .overlay {
-          display: none;
+          opacity: 0;
+          display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
@@ -91,6 +98,7 @@ ul.mealPlan {
           width: 100%;
           height: 100%;
           background: rgba(0,0,0,0.3);
+          transition: 0.2s opacity;
           h4 {
             font-size: 1.5em;
           }
