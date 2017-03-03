@@ -15,7 +15,7 @@ module.exports = {
     filename: 'client.min.js'
   },
   resolve: {
-    modulesDirectories: ['node_modules', 'js', 'stylesheets'],
+    modulesDirectories: ['node_modules', 'client', 'stylesheets'],
     extensions: ['', '.js', '.scss']
   },
   module: {
