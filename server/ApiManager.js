@@ -6,7 +6,7 @@ var ApiManager = (function(dbWrapper) {
     let { db } = dbWrapper;
     db.getConnection(function(err, connection) {
 
-      connection.query('SELECT * from `users`', (error, rows, fields) => {
+      connection.query('SELECT `name`, `profile_picture`, `signup_date` from `users`', (error, rows, fields) => {
         if(error) throw error;
         users = rows;
         connection.release();
@@ -24,7 +24,7 @@ var ApiManager = (function(dbWrapper) {
     let { db } = dbWrapper;
     db.getConnection(function(err, connection) {
 
-      connection.query("SELECT * from users where `id` = ?", [user_id], (err, rows, fields) => {
+      connection.query("SELECT `name`, `profile_picture`, `signup_date` from `users` where `id` = ?", [user_id], (err, rows, fields) => {
         if(err) throw err;
         if(typeof rows !== "undefined" && typeof rows[0] !== "undefined"){
           user = rows[0];
@@ -37,20 +37,15 @@ var ApiManager = (function(dbWrapper) {
 
   }
   function authUser(user_info, callback) {
-    let status;
     let { db } = dbWrapper;
     // let queryString = "SELECT name, password FROM users WHERE name = ? AND password = ?";
     let { user_name, password } = user_info;
     db.getConnection(function(err, connection) {
-    connection.query("SELECT * FROM `users` WHERE `name` = ? AND `password` = ?", [user_name, password], (err, rows, fields) => {
+    connection.query("SELECT `id`, `name`, `profile_picture` FROM `users` WHERE `name` = ? AND `password` = ?", [user_name, password], (err, rows, fields) => {
       if(err) throw err;
 
       if(typeof rows !== "undefined" && typeof rows[0] !== "undefined"){
-        user = {
-          id: rows[0].id,
-          name: rows[0].name,
-          profile_picture: rows[0].profile_picture
-        };
+        let user = rows[0];
         connection.release();
         callback(user);
       }

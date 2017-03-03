@@ -1,14 +1,14 @@
-var express = require('express');
-var mysql = require('mysql');
-var app = express();
+const express = require('express');
+const mysql = require('mysql');
+const app = express();
 
 // Middleware
-var bodyParser = require('body-parser');
-var multer = require('multer'); // v1.0.5
-var upload = multer(); // for parsing multipart/form-data
+const bodyParser = require('body-parser');
+const multer = require('multer'); // v1.0.5
+const upload = multer(); // for parsing multipart/form-data
 
 // Includes
-var ApiManager = require("./ApiManager.js");
+const ApiManager = require("./ApiManager.js");
 
 let appState = {
   loggedIn: false,
@@ -33,7 +33,7 @@ app.set('view engine', 'jade');
 //############
 app.get('/', function(req, res) {
   appState = Object.assign({}, appState, {currentPage: "Home"});
-  console.log(appState);
+  //console.log(appState);
   res.render('index', appState);
 });
 app.get('/my_recipes', function(req, res) {
@@ -41,30 +41,33 @@ app.get('/my_recipes', function(req, res) {
   //   console.log(appState);
   // });
   appState = Object.assign({}, appState, {currentPage: "MyRecipes"});
-  console.log(appState);
+  //console.log(appState);
   res.render('index', appState);
 
 
 });
 app.get('/create_recipe', function(req, res) {
   appState = Object.assign({}, appState, {currentPage: "AddRecipe"});
-  console.log(appState);
+  //console.log(appState);
   res.render('index', appState);
 });
 app.get('/pantry', function(req, res) {
   appState = Object.assign({}, appState, {currentPage: "Pantry"});
-  console.log(appState);
+  // console.log(appState);
   res.render('index', appState);
 });
 
 //############
 // SERVICES
 //############
+// Get All user info
 app.get('/api/get_users', function(req, res) {
   ApiManager.getUsers(function(data) {
     res.send('index', {users: data});
   });
 });
+
+// Get Single User Info
 app.get('/api/get_user', function(req, res) {
   ApiManager.getUser(function(data) {
     res.send('index', {user: data});
@@ -72,8 +75,8 @@ app.get('/api/get_user', function(req, res) {
 });
 // Authentication or registration
 app.post('/', upload.array(), function(req, res, next) {
-  var userInfo = req.body;
-  console.log(userInfo);
+  let userInfo = req.body;
+  //console.log(userInfo);
 
   if(userInfo.action === "login") {
     var response;
@@ -123,14 +126,14 @@ app.get('/api/get_recipes', function(req, res) {
 app.post('/api/get_user_recipes', upload.array(), function(req, res, next) {
   var userInfo = req.body;
   ApiManager.getUserRecipes(userInfo, function(data) {
-    console.log(data);
+    //console.log(data);
     res.json(data);
   });
 });
 app.post('/api/get_user_mealplan', upload.array(), function(req, res, next) {
   var userInfo = req.body;
   ApiManager.getUserMealPlan(userInfo, function(data) {
-    console.log(data);
+    //console.log(data);
     res.json(data);
   });
 });
@@ -141,9 +144,9 @@ app.get('/get_app_state', function(req, res) {
 });
 app.post('/api/get_recipe', upload.array(), function(req, res, next) {
   var recipeInfo = req.body;
-  console.log(recipeInfo);
+  //console.log(recipeInfo);
   ApiManager.getRecipe(recipeInfo, function(data) {
-    console.log("recipe_info: ", data);
+    //console.log("recipe_info: ", data);
     res.json(data);
   });
 });

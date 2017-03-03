@@ -7,7 +7,7 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: [
     './stylesheets/style.scss',
-    './js/client.js'
+    './client/client.js'
   ],
   watch: true,
   output: {

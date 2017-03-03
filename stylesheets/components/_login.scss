@@ -77,12 +77,12 @@
       }
       .loginBtn {
         @include theme_button(rgb(235, 169, 42));
-        width: 60%;
+        width: 100%;
         margin: $space/2 auto;
       }
       .registerBtn {
         @include theme_button(rgb(161, 173, 217));
-        width: 60%;
+        width: 100%;
         margin: $space*2 auto;
       }
     }
