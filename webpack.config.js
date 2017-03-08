@@ -23,7 +23,7 @@ module.exports = {
       {
         // Only run .js and .jsx files through Babel
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, "src"),
+        include: path.resolve(__dirname, "client"),
         exclude: path.resolve(__dirname, "node_modules"),
 
         loader: 'babel-loader',

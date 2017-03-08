@@ -21,6 +21,7 @@ var dbWrapper = (function(mysql) {
 
 
   return {
+    mysql,
     db: pool
   };
 

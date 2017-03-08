@@ -5,10 +5,12 @@ const RecipeHelper = require("./components/recipeHelper.js");
 
 
 const Homecooked = (function() {
+  // Used to store placeholdler element
+  var clickedEmptyMeal;
 
   // Get Initial App State from server
   function init(callback) {
-    axios.get("/get_app_state").then((response)=> {
+    axios.get("/get_app_state").then((response) => {
       callback(response);
     });
   }
@@ -43,8 +45,11 @@ const Homecooked = (function() {
       let miniRecipe = RecipeHelper.getMiniRecipeHTML(response.data);
       clickedEmptyMeal.outerHTML = miniRecipe;
       hideRecipeMenu();
+      MealPlan.saveMealPlan();
     });
   }
+
+
 
   // Shows sidebar menu
   function showRecipeMenu(e) {
@@ -286,6 +291,7 @@ const Homecooked = (function() {
     handleLogin,
     handleRegister,
     // Mealplan
+    saveMealPlan: MealPlan.saveMealPlan,
     addRecipesToMealPlan: MealPlan.addRecipesToMealPlan,
     getMyMealPlan: MealPlan.getMyMealPlan,
     addMealPlanToDOM: MealPlan.addMealPlanToDOM,

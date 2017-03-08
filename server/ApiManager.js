@@ -165,7 +165,28 @@ var ApiManager = (function(dbWrapper) {
           let id = rows.insertId;
           connection.release();
           // return last insert id
-          callback(rows.insertId);
+          callback(id);
+        }
+      });
+    });
+
+  }
+
+  function saveUserMealPlan(mealPlanInfo, callback) {
+    let { db, mysql } = dbWrapper;
+    let { mealPlan, owner_id } = mealPlanInfo;
+    db.getConnection(function(err, connection) {
+      // let sql = ;
+      // // var sql = "SELECT * FROM ?? WHERE ?? = ?";
+      // var inserts = [{mealPlan, owner_id}, {mealPlan, owner_id}];
+      // sql = mysql.format(sql, inserts);
+      // connection.query('INSERT INTO `mealplans` SET ?', { mealPlan, owner_id }, function(err, rows, fields) {
+      connection.query("INSERT INTO `mealplans` SET ? ON DUPLICATE KEY UPDATE ?", [{mealPlan,owner_id}, {mealPlan, owner_id}] ,function(err, rows, fields) {
+        if(err) throw err;
+        if(typeof callback === "function") {
+          let id = rows.insertId;
+          connection.release();
+          callback(id);
         }
       });
     });
@@ -182,7 +203,8 @@ var ApiManager = (function(dbWrapper) {
     getUserRecipes,
     getUserMealPlan,
     addRecipe,
-    addIngredient
+    addIngredient,
+    saveUserMealPlan
   };
 })(dbWrapper);
 

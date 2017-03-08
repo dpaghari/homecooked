@@ -70,10 +70,11 @@ const recipeHelper = (function() {
   }
 
   function getMiniRecipeHTML(recipeInfo) {
-    let { name, recipe_image } = recipeInfo;
+    let { id, name, recipe_image } = recipeInfo;
+
     let miniRecipe = `
-      <div class="recipe-mini">
-        <img src=${recipe_image}/>
+      <div data-recipe_id=${id} class="recipe-mini">
+        <img src="${recipe_image}" alt="${recipe_image}">
         <div class="overlay">
           <h4>${name}</h4>
           <div class="cta">

@@ -173,6 +173,13 @@ app.post('/api/add_ingredient', upload.array(), function(req, res, next) {
     res.send(ingredient_id);
   });
 });
+app.post('/api/save_meal_plan', upload.array(), function(req, res, next) {
+  var mealPlanInfo = req.body;
+  mealPlanInfo.owner_id = appState.currentUser.id;
+  ApiManager.saveUserMealPlan(mealPlanInfo, (mealplan_id) => {
+    res.json(mealplan_id);
+  });
+});
 
 app.listen(process.env.PORT || 3000, function() {
   console.log('Homecooked listening on port 3000!');
