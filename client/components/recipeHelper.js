@@ -8,13 +8,14 @@ const recipeHelper = (function() {
     };
     return axios.post("/api/get_user_recipes", data);
   }
+
   function addRecipesToDOM(recipes, target) {
 
     let recipeList = target || document.querySelector(".recipeList");
     let recipeListStr = "";
     recipes.forEach((el, idx) => {
       let {
-        id,
+        recipe_id,
         name,
         cooking_time,
         ingredients,
@@ -42,7 +43,7 @@ const recipeHelper = (function() {
 
 
       let recipeEntryHTML = `
-      <li data-recipe_id=${id} class="recipe">
+      <li data-recipe_id=${recipe_id} class="recipe">
         <div class="recipe-header">
           <div class="left">
             <h2 class="recipeName">${name}</h2>
@@ -70,10 +71,10 @@ const recipeHelper = (function() {
   }
 
   function getMiniRecipeHTML(recipeInfo) {
-    let { id, name, recipe_image } = recipeInfo;
+    let { recipe_id, name, recipe_image } = recipeInfo;
 
     let miniRecipe = `
-      <div data-recipe_id=${id} class="recipe-mini">
+      <div data-recipe_id=${recipe_id} class="recipe-mini">
         <img src="${recipe_image}" alt="${recipe_image}">
         <div class="overlay">
           <h4>${name}</h4>

@@ -5,6 +5,28 @@ const RecipeHelper = require("./components/recipeHelper.js");
 
 
 const Homecooked = (function() {
+
+  let api = {
+    init,
+    addMealToDay,
+    showRecipeMenu,
+    hideRecipeMenu,
+    handleToggleMenu,
+    handleAddMealToDay,
+    handleCreateRecipe,
+    handleLogin,
+    handleRegister,
+    // Mealplan
+    saveMealPlan: MealPlan.saveMealPlan,
+    addRecipesToMealPlan: MealPlan.addRecipesToMealPlan,
+    getMyMealPlan: MealPlan.getMyMealPlan,
+    addMealPlanToDOM: MealPlan.addMealPlanToDOM,
+    // RecipeHelper
+    getMyRecipes: RecipeHelper.getMyRecipes,
+    addRecipesToDOM: RecipeHelper.addRecipesToDOM,
+    getMiniRecipeHTML: RecipeHelper.getMiniRecipeHTML
+  };
+
   // Used to store placeholdler element
   var clickedEmptyMeal;
 
@@ -163,7 +185,7 @@ const Homecooked = (function() {
       addRecipeBtn.addEventListener("click", function(e) {
         e.preventDefault();
 
-        invalidInputs = fields.filter((el, idx) => {
+        invalidInputs = fields.filter((el) => {
           let valid = false;
           let { field, required } =  el;
           if(required)
@@ -176,7 +198,7 @@ const Homecooked = (function() {
 
         if(invalidInputs.length < 1) {
           let data = {
-            owner_id : user_id,
+            user_id,
             name: recipeName.value,
             cooking_time: cookTime.value + cookTimeMeasure.value,
             serving_size: servingSize.value,
@@ -226,6 +248,8 @@ const Homecooked = (function() {
           .catch((err) => {
             console.log("error", err);
           });
+
+
 
         }
 
@@ -280,26 +304,7 @@ const Homecooked = (function() {
     }
   }
 
-  return {
-    init,
-    addMealToDay,
-    showRecipeMenu,
-    hideRecipeMenu,
-    handleToggleMenu,
-    handleAddMealToDay,
-    handleCreateRecipe,
-    handleLogin,
-    handleRegister,
-    // Mealplan
-    saveMealPlan: MealPlan.saveMealPlan,
-    addRecipesToMealPlan: MealPlan.addRecipesToMealPlan,
-    getMyMealPlan: MealPlan.getMyMealPlan,
-    addMealPlanToDOM: MealPlan.addMealPlanToDOM,
-    // RecipeHelper
-    getMyRecipes: RecipeHelper.getMyRecipes,
-    addRecipesToDOM: RecipeHelper.addRecipesToDOM,
-    getMiniRecipeHTML: RecipeHelper.getMiniRecipeHTML
-  };
+  return api;
 })();
 
 module.exports = Homecooked;

@@ -14,7 +14,7 @@ let appState = {
   loggedIn: false,
   currentUser: {
     // name: "Daniel",
-    // id: 15,
+    // user_id: 15,
     // profile_picture: "sup"
   },
   currentPage: "Home"
@@ -90,7 +90,6 @@ app.post('/', upload.array(), function(req, res, next) {
         res.json(response);
       }
       else {
-
         appState = Object.assign({}, appState, {currentPage: "Home", loggedIn: true, currentUser: data, error: undefined});
         response = {
           appState,
@@ -103,7 +102,7 @@ app.post('/', upload.array(), function(req, res, next) {
   else if(userInfo.action === "register") {
     ApiManager.createNewUser(userInfo, function(data) {
         let currentUser = {
-          id: data,
+          user_id: data,
           name: userInfo.name,
           profile_picture: userInfo.profile_picture
         };
@@ -175,7 +174,7 @@ app.post('/api/add_ingredient', upload.array(), function(req, res, next) {
 });
 app.post('/api/save_meal_plan', upload.array(), function(req, res, next) {
   var mealPlanInfo = req.body;
-  mealPlanInfo.owner_id = appState.currentUser.id;
+  mealPlanInfo.user_id = appState.currentUser.user_id;
   ApiManager.saveUserMealPlan(mealPlanInfo, (mealplan_id) => {
     res.json(mealplan_id);
   });

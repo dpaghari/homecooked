@@ -24,7 +24,7 @@ var ApiManager = (function(dbWrapper) {
     let { db } = dbWrapper;
     db.getConnection(function(err, connection) {
 
-      connection.query("SELECT `name`, `profile_picture`, `signup_date` from `users` where `id` = ?", [user_id], (err, rows, fields) => {
+      connection.query("SELECT `name`, `profile_picture`, `signup_date` from `users` where `user_id` = ?", [user_id], (err, rows, fields) => {
         if(err) throw err;
         if(typeof rows !== "undefined" && typeof rows[0] !== "undefined"){
           user = rows[0];
@@ -41,7 +41,7 @@ var ApiManager = (function(dbWrapper) {
     // let queryString = "SELECT name, password FROM users WHERE name = ? AND password = ?";
     let { user_name, password } = user_info;
     db.getConnection(function(err, connection) {
-    connection.query("SELECT `id`, `name`, `profile_picture` FROM `users` WHERE `name` = ? AND `password` = ?", [user_name, password], (err, rows, fields) => {
+    connection.query("SELECT `user_id`, `name`, `profile_picture` FROM `users` WHERE `name` = ? AND `password` = ?", [user_name, password], (err, rows, fields) => {
       if(err) throw err;
 
       if(typeof rows !== "undefined" && typeof rows[0] !== "undefined"){
@@ -94,7 +94,7 @@ var ApiManager = (function(dbWrapper) {
     let { recipe_id } = recipeInfo;
     let { db } = dbWrapper;
     db.getConnection(function(err, connection) {
-      connection.query("SELECT * from `recipes` where `id` = ?", [recipe_id], (err, rows, fields) => {
+      connection.query("SELECT * from `recipes` where `recipe_id` = ?", [recipe_id], (err, rows, fields) => {
         if(err) throw err;
 
         if(typeof rows !== "undefined" && typeof rows[0] !== "undefined"){
@@ -112,7 +112,7 @@ var ApiManager = (function(dbWrapper) {
     let { user_id } = userInfo;
     let { db } = dbWrapper;
     db.getConnection(function(err, connection) {
-      connection.query('SELECT * from `recipes` where `owner_id` = ?', [user_id], (err, rows, fields) => {
+      connection.query('SELECT * from `recipes` where `user_id` = ?', [user_id], (err, rows, fields) => {
         if(err) throw err;
         recipes = rows;
         connection.release();
@@ -127,7 +127,7 @@ var ApiManager = (function(dbWrapper) {
     let { user_id } = userInfo;
     let { db } = dbWrapper;
     db.getConnection(function(err, connection) {
-      connection.query('SELECT * from `mealplans` where `owner_id` = ?', [user_id], (err, rows, fields) => {
+      connection.query('SELECT * from `mealplans` where `user_id` = ?', [user_id], (err, rows, fields) => {
         if(err) throw err;
         mealplan = rows;
         connection.release();
@@ -140,11 +140,11 @@ var ApiManager = (function(dbWrapper) {
 
   function addRecipe(recipe_info, callback) {
     let { db } = dbWrapper;
-    let { owner_id, name, cooking_time, serving_size, recipe_image, ingredients, directions, blurb } = recipe_info;
+    let { user_id, name, cooking_time, serving_size, recipe_image, ingredients, directions, blurb } = recipe_info;
     ingredients = JSON.stringify(ingredients);
     directions = JSON.stringify(directions);
     db.getConnection(function(err, connection) {
-      connection.query('INSERT INTO `recipes` SET ?', {owner_id, name, cooking_time, serving_size, recipe_image, ingredients, instructions: directions, blurb}, function (err, rows, fields) {
+      connection.query('INSERT INTO `recipes` SET ?', {user_id, name, cooking_time, serving_size, recipe_image, ingredients, instructions: directions, blurb}, function (err, rows, fields) {
         if(err) throw err;
         if(typeof callback === "function") {
           let id = rows.insertId;
@@ -174,14 +174,9 @@ var ApiManager = (function(dbWrapper) {
 
   function saveUserMealPlan(mealPlanInfo, callback) {
     let { db, mysql } = dbWrapper;
-    let { mealPlan, owner_id } = mealPlanInfo;
+    let { mealPlan, user_id } = mealPlanInfo;
     db.getConnection(function(err, connection) {
-      // let sql = ;
-      // // var sql = "SELECT * FROM ?? WHERE ?? = ?";
-      // var inserts = [{mealPlan, owner_id}, {mealPlan, owner_id}];
-      // sql = mysql.format(sql, inserts);
-      // connection.query('INSERT INTO `mealplans` SET ?', { mealPlan, owner_id }, function(err, rows, fields) {
-      connection.query("INSERT INTO `mealplans` SET ? ON DUPLICATE KEY UPDATE ?", [{mealPlan,owner_id}, {mealPlan, owner_id}] ,function(err, rows, fields) {
+      connection.query("INSERT INTO `mealplans` (`user_id`,`mealplan`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `user_id` = ? , `mealplan` = ?",[user_id, mealPlan, user_id, mealPlan] ,function(err, rows, fields) {
         if(err) throw err;
         if(typeof callback === "function") {
           let id = rows.insertId;

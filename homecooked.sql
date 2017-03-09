@@ -23,10 +23,10 @@ DROP TABLE IF EXISTS `ingredients`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ingredients` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ingredient_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) DEFAULT NULL,
   `quantity` decimal(3,2) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`ingredient_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,11 +48,10 @@ DROP TABLE IF EXISTS `mealplans`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mealplans` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `mealplan` mediumtext,
-  `owner_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,6 +60,7 @@ CREATE TABLE `mealplans` (
 
 LOCK TABLES `mealplans` WRITE;
 /*!40000 ALTER TABLE `mealplans` DISABLE KEYS */;
+INSERT INTO `mealplans` VALUES (15,'[[{\"recipe_id\":\"19\",\"mealPosition\":0}],[],[],[],[],[],[]]');
 /*!40000 ALTER TABLE `mealplans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,16 +72,16 @@ DROP TABLE IF EXISTS `recipes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recipes` (
-  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `recipe_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) DEFAULT NULL,
   `ingredients` mediumtext,
   `instructions` mediumtext,
   `recipe_image` varchar(8000) DEFAULT NULL,
   `serving_size` int(11) DEFAULT NULL,
   `cooking_time` varchar(256) DEFAULT NULL,
-  `owner_id` int(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `blurb` mediumtext,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`recipe_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -103,12 +103,12 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   `password` varchar(256) DEFAULT NULL,
   `profile_picture` varchar(256) DEFAULT NULL,
   `signup_date` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -131,4 +131,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-02-28 19:16:02
+-- Dump completed on 2017-03-08 19:55:53
