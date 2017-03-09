@@ -2,6 +2,12 @@ const axios = require("axios");
 
 const recipeHelper = (function() {
 
+  let api = {
+    getMyRecipes,
+    addRecipesToDOM,
+    getMiniRecipeHTML
+  };
+
   function getMyRecipes(user_id) {
     let data = {
       user_id
@@ -88,11 +94,7 @@ const recipeHelper = (function() {
     return miniRecipe;
   }
 
-  return {
-    getMyRecipes,
-    addRecipesToDOM,
-    getMiniRecipeHTML
-  };
+  return api;
 })();
 
 module.exports = recipeHelper;

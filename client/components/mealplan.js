@@ -1,20 +1,20 @@
 const axios = require("axios");
-
+const RecipeHelper = require("./recipeHelper.js");
 
 const MealPlan = (function() {
-  function addRecipesToMealPlan(recipes) {
-    console.log(recipes);
-  }
 
+  let api = {
+    getMyMealPlan,
+    saveMealPlan
+  };
 
   function getMyMealPlan(user_id) {
     let data = {
       user_id
     };
     axios.post("/api/get_user_mealplan", data).then((response) => {
-      let mealplan = response.data;
-      console.log(mealplan);
-      addMealPlanToDOM(mealplan);
+      let mealplanInfo = response.data;
+      addMealPlanToDOM(mealplanInfo);
     })
     .catch((err) => {
       console.log("error", err);
@@ -22,8 +22,41 @@ const MealPlan = (function() {
 
   }
 
-  function addMealPlanToDOM(mealplan) {
+  function addMealPlanToDOM(mealplanInfo) {
+    let { mealplan } = mealplanInfo;
+    let weekdayPlans = [].slice.call(document.querySelectorAll("li.weekday .plan"), 0);
 
+    mealplan = JSON.parse(mealplan);
+
+    mealplan.forEach((weekdayMeals,idx) => {
+      if(weekdayMeals.length > 0) {
+        let mealSlots = weekdayPlans[idx].children;
+        weekdayMeals.forEach((meal, idx) => {
+          let { recipe_id, mealPosition } = meal;
+          recipe_id = parseInt(recipe_id);
+          addMealToDay(recipe_id, mealSlots[mealPosition]);
+        });
+      }
+    });
+  }
+
+  // Adds meal to previously clicked placeholder
+  // @param recipe_id number / string
+  // @param target element
+  function addMealToDay(recipe_id, target) {
+    // Make sure it's to a number
+    recipe_id = parseInt(recipe_id);
+    let data = {
+      recipe_id
+    };
+    if(target.outerHTML) {
+      // fetch recipe information based on id
+      axios.post("/api/get_recipe", data).then((response) => {
+        let miniRecipe = RecipeHelper.getMiniRecipeHTML(response.data);
+        target.outerHTML = miniRecipe;
+        // saveMealPlan();
+      });
+    }
   }
 
   function saveMealPlan() {
@@ -33,27 +66,25 @@ const MealPlan = (function() {
       var newWeekdayPlan = createWeekdayEntry(elem);
       mealPlan.push(newWeekdayPlan);
     });
-    console.log(mealPlan);
     mealPlan = JSON.stringify(mealPlan);
     axios.post("/api/save_meal_plan", {
       mealPlan
     }).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
     })
     .catch((err) => {
       console.log("error", err);
     });
-
-
   }
-
 
   function createWeekdayEntry(weekday) {
     let newWeekday = [];
-    weekday = [].slice.call(weekday.children);
-    weekday.forEach((el, idx) => {
+
+    let meals = [].slice.call(weekday.children);
+    meals.forEach((el, idx) => {
       if(el.dataset.recipe_id) {
         let { recipe_id } = el.dataset;
+
         let meal = {
           recipe_id,
           mealPosition: idx
@@ -64,12 +95,7 @@ const MealPlan = (function() {
     return newWeekday;
   }
 
-  return {
-    addRecipesToMealPlan,
-    getMyMealPlan,
-    addMealPlanToDOM,
-    saveMealPlan
-  };
+  return api;
 
 })();
 

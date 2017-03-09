@@ -3,7 +3,9 @@ const Homecooked = require("./Homecooked.js");
 
 (function() {
   Homecooked.init((appState)=> {
+    console.log("Appstate", appState);
     let { currentUser, loggedIn, currentPage } = appState.data;
+
     let recipes = Homecooked.getMyRecipes(currentUser.user_id);  // returns thenable promise with recipes data
     switch(currentPage){
       case "Home":
@@ -11,11 +13,11 @@ const Homecooked = require("./Homecooked.js");
       if(loggedIn) {
         // Use recipes data to populate meal plan functionality
         recipes.then((response) => {
-          Homecooked.getMyMealPlan();
+
+          Homecooked.getMyMealPlan(currentUser.user_id);
           Homecooked.addRecipesToDOM(response.data, document.querySelector("ul.menu"));
           Homecooked.handleToggleMenu();
           Homecooked.handleAddMealToDay();
-          // Homecooked.addRecipesToMealPlan(response.data);
         });
       }
       else {

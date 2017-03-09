@@ -3,7 +3,6 @@ const validator = require("validator");
 const MealPlan = require("./components/mealplan.js");
 const RecipeHelper = require("./components/recipeHelper.js");
 
-
 const Homecooked = (function() {
 
   let api = {
@@ -49,26 +48,32 @@ const Homecooked = (function() {
   function handleAddMealToDay() {
     let recipes = document.querySelectorAll("ul.menu li.recipe");
     recipes.forEach((el,idx) => {
-      el.addEventListener("click", addMealToDay);
+      el.addEventListener("click", function(e) {
+        e.preventDefault();
+        let { recipe_id } = this.dataset;
+        addMealToDay(recipe_id, clickedEmptyMeal);
+        hideRecipeMenu();
+      });
     });
   }
 
   // Adds meal to previously clicked placeholder
-  function addMealToDay(e) {
-    e.preventDefault();
-    let { recipe_id } = this.dataset;
-    // Make sure we cast it to a number
+  // @param recipe_id number / string
+  // @param target element
+  function addMealToDay(recipe_id, target) {
+    // Make sure it's to a number
     recipe_id = parseInt(recipe_id);
-
     let data = {
       recipe_id
     };
-    axios.post("/api/get_recipe", data).then((response) => {
-      let miniRecipe = RecipeHelper.getMiniRecipeHTML(response.data);
-      clickedEmptyMeal.outerHTML = miniRecipe;
-      hideRecipeMenu();
-      MealPlan.saveMealPlan();
-    });
+    if(target.outerHTML) {
+      // fetch recipe information based on id
+      axios.post("/api/get_recipe", data).then((response) => {
+        let miniRecipe = RecipeHelper.getMiniRecipeHTML(response.data);
+        target.outerHTML = miniRecipe;
+        MealPlan.saveMealPlan();
+      });
+    }
   }
 
 

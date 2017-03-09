@@ -129,10 +129,12 @@ var ApiManager = (function(dbWrapper) {
     db.getConnection(function(err, connection) {
       connection.query('SELECT * from `mealplans` where `user_id` = ?', [user_id], (err, rows, fields) => {
         if(err) throw err;
-        mealplan = rows;
-        connection.release();
-        if(typeof callback === "function") {
-          callback(mealplan);
+        if(rows && rows[0]){
+          mealplan = rows[0];
+          connection.release();
+          if(typeof callback === "function") {
+            callback(mealplan);
+          }
         }
       });
     });
