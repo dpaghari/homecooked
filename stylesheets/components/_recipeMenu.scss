@@ -11,12 +11,14 @@
   &.active {
     bottom: 0;
   }
+
   h4 {
     text-align: center;
     font-size: 3em;
     font-family: $header-font-stack;
     margin: $space auto;
   }
+
   ul.menu {
     width: 100%;
     height: 100%;
@@ -25,45 +27,51 @@
     justify-content: center;
     align-items: center;
     li.recipe {
-        cursor: pointer;
-        width: 28%;
-        padding: $space/8;
-        height: 200px;
+      cursor: pointer;
+      width: 28%;
+      height: 250px;
+      box-sizing: border-box;
+      transition: 0.3s all;
+      transform: scale(1);
+      &:hover {
+        transform: scale(1.1);
+      }
+      // border-bottom: 1px solid #cdcdcd;
+      .recipe-header {
         box-sizing: border-box;
-        // border-bottom: 1px solid #cdcdcd;
-        .recipe-header {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        padding: 0;
+        .left {
+          display: flex;
+          justify-content: center;
+          align-items: center;
           box-sizing: border-box;
+          text-align: center;
+          position: absolute;
           width: 100%;
           height: 100%;
-          position: relative;
-          .left {
-            box-sizing: border-box;
-            text-align: center;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            z-index: 13;
-            .recipeName {
-              margin-top: $space;
-              font-size: 1.2em;
-            }
-            .recipe-info {
-              display: none;
-            }
+          background: rgba(0,0,0,0.5);
+          color: white;
+          z-index: 13;
+          .recipeName {
+            font-size: 1.2em;
           }
-
-          img {
-            width: 100%;
-            height: 100%;
-            position: absolute;
+          .recipe-info {
+            display: none;
           }
         }
-        .recipe-body {
-          display: none;
-        }
 
+        img {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+        }
+      }
+      .recipe-body {
+        display: none;
+      }
     }
   }
 
