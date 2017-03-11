@@ -1,5 +1,6 @@
 const axios = require("axios");
 const RecipeHelper = require("./recipeHelper.js");
+const ShoppingList = require("./shoppingList.js");
 
 const MealPlan = (function() {
 
@@ -16,6 +17,7 @@ const MealPlan = (function() {
     axios.post("/api/get_user_mealplan", data).then((response) => {
       let mealplanInfo = response.data;
       addMealPlanToDOM(mealplanInfo);
+      ShoppingList.getShoppingList(mealplanInfo, user_id);
     })
     .catch((err) => {
       console.log("error", err);

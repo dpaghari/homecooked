@@ -190,6 +190,23 @@ var ApiManager = (function(dbWrapper) {
 
   }
 
+  function getUserShoppingList(mealPlanInfo, callback) {
+    let { db, mysql } = dbWrapper;
+    let { recipeIds } = mealPlanInfo;
+    let query = `SELECT recipe_id, ingredients
+                 FROM recipes 
+                 WHERE recipe_id IN (${recipeIds}) 
+                 AND ingredients IS NOT NULL`;
+
+    db.query(query, recipeIds, function(err, rows) {
+      if (err) throw err;
+
+      if (typeof callback === "function") {
+        callback(rows);
+      }
+    });
+  }
+
   return {
     getUsers,
     getUser,
@@ -201,7 +218,8 @@ var ApiManager = (function(dbWrapper) {
     getUserMealPlan,
     addRecipe,
     addIngredient,
-    saveUserMealPlan
+    saveUserMealPlan,
+    getUserShoppingList
   };
 })(dbWrapper);
 
