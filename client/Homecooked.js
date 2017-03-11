@@ -10,11 +10,13 @@ const Homecooked = (function() {
     addMealToDay,
     showRecipeMenu,
     hideRecipeMenu,
-    handleToggleMenu,
+    handleShowMenu,
+    handleHideMenu,
     handleAddMealToDay,
     handleCreateRecipe,
     handleLogin,
     handleRegister,
+    handleCtrlBtns,
     // Mealplan
     saveMealPlan: MealPlan.saveMealPlan,
     addRecipesToMealPlan: MealPlan.addRecipesToMealPlan,
@@ -37,11 +39,21 @@ const Homecooked = (function() {
   }
 
   // Attaches Handler when user clicks on a recipe slot in the meal plan; placeholder
-  function handleToggleMenu() {
+  function handleShowMenu() {
     let placeholders = document.querySelectorAll(".placeholder");
     placeholders.forEach((el, idx) => {
       el.addEventListener("click", showRecipeMenu);
     });
+  }
+
+  function handleHideMenu() {
+    let closeMenu = document.querySelector("a.closeMenu");
+    if(closeMenu) {
+      closeMenu.addEventListener("click", function(e) {
+        e.preventDefault();
+        hideRecipeMenu();
+      });
+    }
   }
 
   // Attaches Handler when user clicks a recipe item on the sidebar menu
@@ -83,8 +95,12 @@ const Homecooked = (function() {
     e.preventDefault();
     clickedEmptyMeal = this;
     let recipeMenu = document.querySelector(".recipeMenu");
+    let lightbox = document.querySelector(".lightbox");
     if(!recipeMenu.classList.contains("active")){
       recipeMenu.classList.add("active");
+      lightbox.style.display = "block";
+      lightbox.style.opacity = 1;
+
     }
   }
 
@@ -92,8 +108,11 @@ const Homecooked = (function() {
   function hideRecipeMenu() {
     clickedEmptyMeal = null;
     let recipeMenu = document.querySelector(".recipeMenu");
+    let lightbox = document.querySelector(".lightbox");
     if(recipeMenu.classList.contains("active")){
       recipeMenu.classList.remove("active");
+      lightbox.style.opacity = 0;
+      lightbox.style.display = "none";
     }
   }
 
@@ -305,6 +324,33 @@ const Homecooked = (function() {
             console.log("error", err);
           });
         }
+      });
+    }
+  }
+
+  function handleCtrlBtns() {
+    var clearBtn = document.querySelector(".ctrl-btn.delete-plan");
+    var finishBtn = document.querySelector(".ctrl-btn.complete-plan");
+    var cartBtn = document.querySelector(".ctrl-btn.shopping-list");
+    if(clearBtn) {
+      clearBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        MealPlan.clearMealPlan();
+        MealPlan.saveMealPlan();
+      });
+    }
+    if(finishBtn) {
+      finishBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        MealPlan.clearMealPlan();
+        MealPlan.saveMealPlan();
+        // Add method here for reducing pantry ingredients from all recipes in the mealplan
+      });
+    }
+    if(cartBtn) {
+      cartBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        // Logic for showing shopping list
       });
     }
   }

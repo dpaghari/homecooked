@@ -1,30 +1,53 @@
 .recipeMenu {
+  box-sizing: border-box;
   position: fixed;
-  right: -300px;
-  top: 0;
-  bottom: 0;
-  height: 100%;
+  bottom: -90%;
+  height: 90%;
   overflow: auto;
-  background: white;
-  width: 300px;
-  transition: 0.2s all;
+  background: url('../public/img/handmadepaper.png');
+  width: 60%;
+  transition: 0.4s all;
+  z-index: 12;
   &.active {
-    right: 0;
+    bottom: 0;
+  }
+  h4 {
+    text-align: center;
+    font-size: 3em;
+    font-family: $header-font-stack;
+    margin: $space auto;
   }
   ul.menu {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     li.recipe {
         cursor: pointer;
-        width: 100%;
+        width: 28%;
         padding: $space/8;
-        border-bottom: 1px solid #cdcdcd;
+        height: 200px;
+        box-sizing: border-box;
+        // border-bottom: 1px solid #cdcdcd;
         .recipe-header {
+          box-sizing: border-box;
           width: 100%;
+          height: 100%;
+          position: relative;
           .left {
-            width: 40%;
+            box-sizing: border-box;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            z-index: 13;
             .recipeName {
-              font-size: 1em;
+              margin-top: $space;
+              font-size: 1.2em;
             }
             .recipe-info {
               display: none;
@@ -32,8 +55,9 @@
           }
 
           img {
-            width: 55%;
-            height: 150px;
+            width: 100%;
+            height: 100%;
+            position: absolute;
           }
         }
         .recipe-body {
@@ -42,5 +66,6 @@
 
     }
   }
+
 
 }

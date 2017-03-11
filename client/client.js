@@ -13,11 +13,12 @@ const Homecooked = require("./Homecooked.js");
       if(loggedIn) {
         // Use recipes data to populate meal plan functionality
         recipes.then((response) => {
-
           Homecooked.getMyMealPlan(currentUser.user_id);
           Homecooked.addRecipesToDOM(response.data, document.querySelector("ul.menu"));
-          Homecooked.handleToggleMenu();
+          Homecooked.handleShowMenu();
+          Homecooked.handleHideMenu();
           Homecooked.handleAddMealToDay();
+          Homecooked.handleCtrlBtns();
         });
       }
       else {

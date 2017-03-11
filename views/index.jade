@@ -14,7 +14,9 @@ html(lang="en")
               include mealPlanHeading
               include mealPlan
               .recipeMenu
+                h4 Menu
                 ul.menu
+                
           if currentPage == "MyRecipes"
             .myRecipes
               ul.recipeList
@@ -28,6 +30,9 @@ html(lang="en")
       
       else
         include loginForm
+    .lightbox
+      a.closeMenu(href="#") Close
         
+       
           
     script(type="text/javascript" src="client.min.js")

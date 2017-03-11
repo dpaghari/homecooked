@@ -5,7 +5,8 @@ const MealPlan = (function() {
 
   let api = {
     getMyMealPlan,
-    saveMealPlan
+    saveMealPlan,
+    clearMealPlan
   };
 
   function getMyMealPlan(user_id) {
@@ -74,6 +75,24 @@ const MealPlan = (function() {
     })
     .catch((err) => {
       console.log("error", err);
+    });
+  }
+
+  function clearMealPlan() {
+    let weekdayPlans = [].slice.call(document.querySelectorAll("li.weekday .plan"), 0);
+    let placeHolderHTML = `
+    <div class="placeholder">
+      <i class="fa fa-plus"></i>
+    </div>
+    `;
+    weekdayPlans.forEach((elem, idx) => {
+      var meals = [].slice.call(elem.children);
+
+      meals.forEach((meal, i) => {
+        if(meal.classList.contains("recipe-mini")) {
+          meal.outerHTML = placeHolderHTML;
+        }
+      });
     });
   }
 
