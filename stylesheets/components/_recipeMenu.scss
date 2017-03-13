@@ -16,7 +16,11 @@
     text-align: center;
     font-size: 3em;
     font-family: $header-font-stack;
-    margin: $space auto;
+    padding: $space 0;
+    background: $coolRed;
+    color: white;
+    border: 1px solid $errorRed;
+    box-shadow: 0px 2px 2px $errorRed;
   }
 
   ul.menu {
@@ -74,6 +78,7 @@
       }
     }
   }
+
 
 
 }

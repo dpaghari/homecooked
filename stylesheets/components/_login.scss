@@ -93,6 +93,9 @@
     &.active {
       display: flex;
     }
+    a.forgotPwd {
+      color: white;
+    }
   }
   .registerForm {
     display: none;
