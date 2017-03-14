@@ -2,7 +2,6 @@ var mysql = require('mysql');
 
 var dbWrapper = (function(mysql) {
   var pool;
-  console.log("HC ENV IS EQUAL TO: ", process.env.HC_ENV);
   if(process.env.HC_ENV === "production") {
     pool = mysql.createPool({
       host : 'us-cdbr-iron-east-04.cleardb.net',
@@ -19,7 +18,7 @@ var dbWrapper = (function(mysql) {
       database : 'homecooked'
     });
   }
-
+  
   return {
     mysql,
     db: pool

@@ -194,11 +194,11 @@ var ApiManager = (function(dbWrapper) {
     let { db, mysql } = dbWrapper;
     let { recipeIds } = mealPlanInfo;
     let query = `SELECT recipe_id, ingredients
-                 FROM recipes 
-                 WHERE recipe_id IN (${recipeIds}) 
+                 FROM recipes
+                 WHERE recipe_id IN (${recipeIds})
                  AND ingredients IS NOT NULL`;
 
-    db.query(query, recipeIds, function(err, rows) {
+    db.query(query, function(err, rows) {
       if (err) throw err;
 
       if (typeof callback === "function") {

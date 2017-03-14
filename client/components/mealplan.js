@@ -15,6 +15,7 @@ const MealPlan = (function() {
       user_id
     };
     axios.post("/api/get_user_mealplan", data).then((response) => {
+      console.log(response);
       let mealplanInfo = response.data;
       addMealPlanToDOM(mealplanInfo);
       ShoppingList.getShoppingList(mealplanInfo, user_id);

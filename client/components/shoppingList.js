@@ -7,15 +7,17 @@ const shoppingList = (function() {
 
   function getShoppingList(mealplanInfo, user_id) {
     let recipeIds = getRecipeIds(mealplanInfo);
-    let data = { recipeIds };
+    if(recipeIds.length > 0) {
+      let data = { recipeIds };
 
-    axios.post("/api/get_user_shoppingList", data).then((response) => {
-      let ingredientData = response.data;
-      addShoppingListToDOM(recipeIds, ingredientData);
-    })
-    .catch((err) => {
-      console.log("error", err);
-    });
+      axios.post("/api/get_user_shoppingList", data).then((response) => {
+        let ingredientData = response.data;
+        addShoppingListToDOM(recipeIds, ingredientData);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+    }
   }
 
   function getRecipeIds(mealplanInfo) {
