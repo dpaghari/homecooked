@@ -180,7 +180,7 @@ app.post('/api/save_meal_plan', upload.array(), function(req, res, next) {
   });
 });
 
-app.post('/api/get_user_shoppingList', upload.array(), function (req, res) {
+app.post('/api/get_user_shopping_list', upload.array(), function (req, res) {
   var recipeIds = req.body;
   ApiManager.getUserShoppingList(recipeIds, (ingredients) => {
     res.json(ingredients);

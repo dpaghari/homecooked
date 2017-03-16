@@ -61,12 +61,19 @@ const recipeHelper = (function() {
               <i class="fa fa-clock-o"></i>
               ${cooking_time}
               </p>
+              <p class="blurb"> ${blurb}</p>
             </div>
           </div>
-          <img class="recipeImg" src=${recipe_image} alt="recipe image"/>
+          <div class="right">
+            <ul class="recipeCtrls">
+              <li class="recipeCtrl editRecipe"><i class="fa fa-pencil-square-o"></i></li>
+              <li class="recipeCtrl delRecipe"><i class="fa fa-trash"></i></li>
+              <li class="recipeCtrl shareRecipe"><i class="fa fa-share"></i></li>
+            </ul>
+            <img class="recipeImg" src=${recipe_image} alt="recipe image"/>
+          </div>
         </div>
         <div class="recipe-body">
-        <p class="blurb"> ${blurb}</p>
         <ul class="ingredients">${ing_string}</ul>
         <ol class="directions">${dir_string}</ol>
         </div>

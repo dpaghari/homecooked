@@ -2,10 +2,12 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
+  width: 70%;
   padding: $space;
   overflow: auto;
-  margin: 0 auto;
+  margin: $space auto;
+  border: 1px solid #cdcdcd;
+  box-shadow: 0px 1px 1px darken(#cdcdcd, 5%);
   .recipe-header {
     display: flex;
     padding: $space/2;
@@ -14,6 +16,7 @@
       padding: $space/2;
       width: 400px;
       h2 {
+        font-size: 2em;
         margin: $space/2 0;
       }
       .header-info {
@@ -24,21 +27,50 @@
         margin: $space 0 $space/2;
       }
       p {
+        font-size: 1.2em;
         padding: $space/2;
-        i{
+        i {
           margin-right: $space/2;
+          font-size: 1em;
         }
       }
+      .blurb {
+        color: lighten($notSoDark, 25%);
+        font-size: 1em;
+      }
     }
-    // align-items: center;
-    img {
-      margin: 0 auto;
-      width: 360px;
-      height: 256px;
-      // float: right;
-      box-shadow: 0px 1px 2px 2px #cdcdcd;
-      border: 1px solid #cdcdcd;
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      ul.recipeCtrls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        list-style-type: none;
+        li {
+          i {
+            font-size: 2em;
+            margin: $space $space * 2;
+            cursor: pointer;
+            transform: scale(1);
+            transition: 0.2s all;
+            &:hover {
+              transform: scale(1.2);
+            }
+          }
+        }
+      }
+      img {
+        margin: 0 auto;
+        width: 480px;
+        height: 360px;
+        box-shadow: 0px 1px 2px 2px #cdcdcd;
+        border: 1px solid #cdcdcd;
+      }
     }
+
   }
   .recipe-body {
     display: flex;
@@ -56,6 +88,7 @@
       flex-direction: column;
       padding: $space/3;
       max-height: 280px;
+      border-bottom: 1px solid #cdcdcd;
       li {
         padding: $space/3;
         margin: 0 $space/3;

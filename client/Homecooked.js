@@ -159,7 +159,10 @@ const Homecooked = (function() {
         e.preventDefault();
         let ingredient = ingredientName.value;
 
-        if(!validator.isEmpty(quantity.value) && validator.isNumeric(quantity.value) && !validator.isEmpty(ingredient) && !validator.isEmpty(measure.value)){
+        if(!validator.isEmpty(quantity.value) &&
+           (validator.isNumeric(quantity.value) || validator.isDecimal(quantity.value)) &&
+           !validator.isEmpty(ingredient) &&
+           !validator.isEmpty(measure.value)){
           let newIngredient = {
             name: ingredient,
             quantity: quantity.value,

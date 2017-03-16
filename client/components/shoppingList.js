@@ -10,7 +10,7 @@ const shoppingList = (function() {
     if(recipeIds.length > 0) {
       let data = { recipeIds };
 
-      axios.post("/api/get_user_shoppingList", data).then((response) => {
+      axios.post("/api/get_user_shopping_list", data).then((response) => {
         let ingredientData = response.data;
         addShoppingListToDOM(recipeIds, ingredientData);
       })
@@ -21,7 +21,7 @@ const shoppingList = (function() {
   }
 
   function getRecipeIds(mealplanInfo) {
-    let mealplan = JSON.parse(mealplanInfo.mealplan)
+    let mealplan = JSON.parse(mealplanInfo.mealplan);
     let recipeIds = [];
 
     mealplan.forEach((weekdayMeals) => {
@@ -46,7 +46,7 @@ const shoppingList = (function() {
           let ingredients = JSON.parse(row.ingredients);
 
           ingredients.forEach((ingredient) => {
-            shoppingList += ingredient.name + " x" + ingredient.quantity + "</br>";
+            shoppingList += `<li class="shop-ing">${ingredient.name} x${ingredient.quantity} ${ingredient.measure}</li>`;
           });
         }
       });
