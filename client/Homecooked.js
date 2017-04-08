@@ -17,6 +17,7 @@ const Homecooked = (function() {
     handleLogin,
     handleRegister,
     handleCtrlBtns,
+    handleShowShoppingList,
     // Mealplan
     saveMealPlan: MealPlan.saveMealPlan,
     addRecipesToMealPlan: MealPlan.addRecipesToMealPlan,
@@ -38,6 +39,17 @@ const Homecooked = (function() {
     });
   }
 
+  function handleShowShoppingList() {
+    let shoppingListBtn = document.querySelector('.shopping-list');
+    shoppingListBtn.addEventListener('click', function() {
+      // console.log('ay lmao');
+      document.querySelector('ul.shoppingList').style.display = 'block';
+      document.querySelector('.lightbox').style.display = 'block';
+      document.querySelector('.lightbox').style.opacity = 1;
+    });
+  }
+
+
   // Attaches Handler when user clicks on a recipe slot in the meal plan; placeholder
   function handleShowMenu() {
     let placeholders = document.querySelectorAll(".placeholder");
@@ -52,6 +64,9 @@ const Homecooked = (function() {
       closeMenu.addEventListener("click", function(e) {
         e.preventDefault();
         hideRecipeMenu();
+        document.querySelector('ul.shoppingList').style.display = 'none';
+        document.querySelector('.lightbox').style.display = 'none';
+        document.querySelector('.lightbox').style.opacity = 0;
       });
     }
   }

@@ -36,10 +36,6 @@ const shoppingList = (function() {
   function addShoppingListToDOM(recipeIds, ingredientData) {
     let listDOM = document.querySelector('.shoppingList');
     let shoppingList = '';
-
-    console.log(recipeIds);
-
-    // Convoluted as FUCK
     recipeIds.forEach((id) => {
       ingredientData.forEach((row) => {
         if (row.recipe_id === id) {

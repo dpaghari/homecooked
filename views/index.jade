@@ -13,6 +13,8 @@ html(lang="en")
             .home
               h1 Your Meal Plan
               include mealPlanHeading
+              ul.shoppingList
+                span Shopping List
               include mealPlan
               .recipeMenu
                 h4 Menu
@@ -26,16 +28,13 @@ html(lang="en")
             .addRecipeWrapper
               include addRecipeForm
               include recipePrep
-          if currentPage == "Pantry"
-            .pantry
-              |Asuhdude
+          //- if currentPage == "Pantry"
+          //-   .pantry
+          //-     |Asuhdude
       
       else
         include loginForm
     .lightbox
       a.closeMenu(href="#") Close
-      
-        
-       
           
     script(type="text/javascript" src="client.min.js")

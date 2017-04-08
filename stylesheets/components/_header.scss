@@ -19,16 +19,20 @@
     font-size: 4em;
     font-family: $header-font-stack;
   }
-  input[name="recipe_search"]{
-    @include theme_input();
+  form.recipe-search {
     width: 40%;
-    padding: $space/2;
-    z-index: 10;
-    font-size: 1em;
-    font-family: $font-stack;
-    margin-top: $space;
-    &:focus{
-      outline: none;
+    input[name="recipe_search"]{
+      @include theme_input();
+      width: 100%;
+      padding: $space/2;
+      position: relative;
+      z-index: 10;
+      font-size: 1em;
+      font-family: $font-stack;
+      margin-top: $space;
+      &:focus{
+        outline: none;
+      }
     }
   }
   .overlay{
