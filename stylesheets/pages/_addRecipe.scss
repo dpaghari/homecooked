@@ -2,8 +2,20 @@
 @import "../components/recipe";
 @import "../components/recipePrep";
 
-
+button.showRecipeForm {
+  @include theme_button(blue);
+  // padding: $space/2 $space;
+  color: white;
+  margin: 0 auto;
+}
 .addRecipeWrapper {
-  display: flex;
+  display: none;
   justify-content: space-between;
+  width: 100%;
+
+  &.active {
+    display: flex;
+  }
+
+
 }

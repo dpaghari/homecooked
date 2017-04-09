@@ -11,11 +11,11 @@ const upload = multer(); // for parsing multipart/form-data
 const ApiManager = require("./ApiManager.js");
 
 let appState = {
-  loggedIn: false,
+  loggedIn: true,
   currentUser: {
-    // name: "Daniel",
-    // user_id: 15,
-    // profile_picture: "sup"
+    name: "Daniel",
+    user_id: 15,
+    profile_picture: "sup"
   },
   currentPage: "Home"
 };
@@ -37,19 +37,23 @@ app.get('/', function(req, res) {
   res.render('index', appState);
 });
 app.get('/my_recipes', function(req, res) {
-  // ApiManager.getUserRecipes(appState.currentUser.id, function(recipes) {
-  //   console.log(appState);
-  // });
+
   appState = Object.assign({}, appState, {currentPage: "MyRecipes"});
-  //console.log(appState);
-  res.render('index', appState);
+  if(appState.loggedIn)
+    res.render('index', appState);
+  else
+    res.redirect('/');
 
 
 });
 app.get('/create_recipe', function(req, res) {
   appState = Object.assign({}, appState, {currentPage: "AddRecipe"});
-  //console.log(appState);
-  res.render('index', appState);
+
+  //console.log(appState)
+  if(appState.loggedIn)
+    res.render('index', appState);
+  else
+    res.redirect('/');
 });
 app.get('/pantry', function(req, res) {
   appState = Object.assign({}, appState, {currentPage: "Pantry"});
@@ -185,6 +189,18 @@ app.post('/api/get_user_shopping_list', upload.array(), function (req, res) {
   ApiManager.getUserShoppingList(recipeIds, (ingredients) => {
     res.json(ingredients);
   });
+});
+
+app.post('/api/delete_recipe', upload.array(), function(req, res) {
+  let payload = req.body;
+  let response = false;
+  ApiManager.deleteRecipe(payload, function (result) {
+    response = result;
+    console.log(response);
+    res.json(response);
+  });
+
+
 });
 
 app.listen(process.env.PORT || 3000, function() {

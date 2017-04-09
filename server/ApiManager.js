@@ -207,6 +207,28 @@ var ApiManager = (function(dbWrapper) {
     });
   }
 
+
+  function deleteRecipe(payload, callback) {
+    let { db, mysql } = dbWrapper;
+    let { recipe_id } = payload;
+    recipe_id = parseInt(recipe_id);
+    let query = "DELETE FROM `recipes` where recipe_id = ?";
+    db.query(query, [recipe_id], function(err, rows) {
+      if(err) throw err;
+      if(typeof callback === 'function')
+      callback(true);
+    });
+  }
+
+  function updateRecipe(recipe_changes) {
+    let { db, mysql } = dbWrapper;
+    for (var key in recipe_changes) {
+      if (recipe_changes.hasOwnProperty(key)) {
+        console.log(key);
+      }
+    }
+  }
+
   return {
     getUsers,
     getUser,
@@ -219,7 +241,9 @@ var ApiManager = (function(dbWrapper) {
     addRecipe,
     addIngredient,
     saveUserMealPlan,
-    getUserShoppingList
+    getUserShoppingList,
+    deleteRecipe,
+    updateRecipe
   };
 })(dbWrapper);
 

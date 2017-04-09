@@ -22,12 +22,15 @@ html(lang="en")
                 
                 
           if currentPage == "MyRecipes"
-            .myRecipes
-              ul.recipeList
-          if currentPage == "AddRecipe"
+            button.showRecipeForm 
+              i.fa.fa-plus
             .addRecipeWrapper
               include addRecipeForm
               include recipePrep
+            .myRecipes
+              ul.recipeList
+          //- if currentPage == "AddRecipe"
+            
           //- if currentPage == "Pantry"
           //-   .pantry
           //-     |Asuhdude

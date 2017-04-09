@@ -18,6 +18,8 @@ const Homecooked = (function() {
     handleRegister,
     handleCtrlBtns,
     handleShowShoppingList,
+    handleShowRecipeForm,
+
     // Mealplan
     saveMealPlan: MealPlan.saveMealPlan,
     addRecipesToMealPlan: MealPlan.addRecipesToMealPlan,
@@ -26,7 +28,8 @@ const Homecooked = (function() {
     // RecipeHelper
     getMyRecipes: RecipeHelper.getMyRecipes,
     addRecipesToDOM: RecipeHelper.addRecipesToDOM,
-    getMiniRecipeHTML: RecipeHelper.getMiniRecipeHTML
+    getMiniRecipeHTML: RecipeHelper.getMiniRecipeHTML,
+    handleDeleteRecipe: RecipeHelper.handleDeleteRecipe
   };
 
   // Used to store placeholdler element
@@ -210,7 +213,7 @@ const Homecooked = (function() {
             step
           };
           let newDirHTML = `
-          <li class="newIngredient"><span>${newDirection.step}</span></li>
+          <li class="newStep"><span>${newDirection.step}</span></li>
           `;
           document.querySelector(".recipePrep ol.directionsList").insertAdjacentHTML("beforeend", newDirHTML);
           directions.push(newDirection);
@@ -371,6 +374,13 @@ const Homecooked = (function() {
         // Logic for showing shopping list
       });
     }
+  }
+
+  function handleShowRecipeForm() {
+    document.querySelector('button.showRecipeForm').addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector('.addRecipeWrapper').classList.add('active');
+    });
   }
 
   return api;

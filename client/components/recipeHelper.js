@@ -5,7 +5,8 @@ const recipeHelper = (function() {
   let api = {
     getMyRecipes,
     addRecipesToDOM,
-    getMiniRecipeHTML
+    getMiniRecipeHTML,
+    handleDeleteRecipe
   };
 
   function getMyRecipes(user_id) {
@@ -68,7 +69,6 @@ const recipeHelper = (function() {
             <ul class="recipeCtrls">
               <li class="recipeCtrl editRecipe"><i class="fa fa-pencil-square-o"></i></li>
               <li class="recipeCtrl delRecipe"><i class="fa fa-trash"></i></li>
-              <li class="recipeCtrl shareRecipe"><i class="fa fa-share"></i></li>
             </ul>
             <img class="recipeImg" src=${recipe_image} alt="recipe image"/>
           </div>
@@ -100,6 +100,35 @@ const recipeHelper = (function() {
     `;
     return miniRecipe;
   }
+
+
+  function handleDeleteRecipe() {
+    let delBtns = document.querySelectorAll('.delRecipe');
+    delBtns.forEach((el, idx) => {
+      el.addEventListener('click', deleteRecipe);
+    });
+  }
+
+  function deleteRecipe(e) {
+    // Get closest match
+    let elem = this;
+    let recipe;
+    let recipeList = document.querySelector('ul.recipeList');
+
+
+   for ( ; elem && elem !== document; elem = elem.parentNode ) {
+       if ( elem.matches( '.recipe' ) ) recipe = elem;
+   }
+    let data = {
+      recipe_id: recipe.dataset.recipe_id
+    };
+    axios.post('/api/delete_recipe', data).then((response) => {
+      if(response) {
+        recipeList.removeChild(recipe);
+      }
+    });
+  }
+
 
   return api;
 })();

@@ -5,6 +5,12 @@
   padding: $space;
   width: 60%;
   border-right: 1px solid #cdcdcd;
+
+
+
+  form {
+    width: 100%;
+  }
   button{
     @include theme_button(rgb(8, 168, 34));
     &.addRecipe{

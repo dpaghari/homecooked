@@ -32,10 +32,12 @@ const Homecooked = require("./Homecooked.js");
       // Use recipes data to populate user's recipes list
       recipes.then((response) => {
         Homecooked.addRecipesToDOM(response.data);
+        Homecooked.handleDeleteRecipe();
+        Homecooked.handleShowRecipeForm();
+        Homecooked.handleCreateRecipe(currentUser.user_id);
       });
       break;
       case "AddRecipe":
-      Homecooked.handleCreateRecipe(currentUser.user_id);
       break;
       case "Pantry":
       break;

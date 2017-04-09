@@ -4,10 +4,10 @@
   label Recipe Image
     input(name="recipe_image" type="text" placeholder="Recipe Image")  
   label Serving Size
-    input(name="recipe_servsize" type="text" placeholder="4")
+    input(name="recipe_servsize" type="text")
     i(class="fa fa-users")
   label Cooking Time
-    input(name="recipe_cooktime" type="text" placeholder="40")
+    input(name="recipe_cooktime" type="text")
     select(class="cooktime_measure")
       option h
       option m
@@ -17,11 +17,11 @@
     p Add Ingredients
     label(class="ingredient_field") 
       |Name
-      input(name="ingredient" type="text" placeholder="Carrots")
+      input(name="ingredient" type="text")
       |Qty
-      input(name="qty" type="text" placeholder="4")
+      input(name="qty" type="text")
       |Measure
-      input(list="measure" name="measure" type="text" placeholder="tbsp" autoComplete="off")
+      input(list="measure" name="measure" type="text" autoComplete="off")
       datalist(id="measure")
         option(value="tsp")
         option(value="tbsp")
