@@ -19,7 +19,8 @@ const Homecooked = require("./Homecooked.js");
           Homecooked.handleHideMenu();
           Homecooked.handleAddMealToDay();
           Homecooked.handleCtrlBtns();
-          Homecooked.handleShowShoppingList();
+          // Homecooked.handleShowShoppingList();
+          Homecooked.handleHideShoppingList();
         });
       }
       else {

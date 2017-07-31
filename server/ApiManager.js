@@ -23,7 +23,9 @@ var ApiManager = (function(dbWrapper) {
     let user;
     let { db } = dbWrapper;
     db.getConnection(function(err, connection) {
-
+      if (err) {
+        throw err;
+      }
       connection.query("SELECT `name`, `profile_picture`, `signup_date` from `users` where `user_id` = ?", [user_id], (err, rows, fields) => {
         if(err) throw err;
         if(typeof rows !== "undefined" && typeof rows[0] !== "undefined"){
@@ -112,6 +114,7 @@ var ApiManager = (function(dbWrapper) {
     let { user_id } = userInfo;
     let { db } = dbWrapper;
     db.getConnection(function(err, connection) {
+
       connection.query('SELECT * from `recipes` where `user_id` = ?', [user_id], (err, rows, fields) => {
         if(err) throw err;
         recipes = rows;

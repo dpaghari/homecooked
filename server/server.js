@@ -13,9 +13,9 @@ const ApiManager = require("./ApiManager.js");
 let appState = {
   loggedIn: false,
   currentUser: {
-    // name: "Daniel",
-    // user_id: 15,
-    // profile_picture: "sup"
+    name: "Daniel",
+    user_id: 15,
+    profile_picture: "sup"
   },
   currentPage: "Home"
 };
@@ -80,7 +80,6 @@ app.get('/api/get_user', function(req, res) {
 // Authentication or registration
 app.post('/', upload.array(), function(req, res, next) {
   let userInfo = req.body;
-  //console.log(userInfo);
 
   if(userInfo.action === "login") {
     var response;
@@ -196,7 +195,7 @@ app.post('/api/delete_recipe', upload.array(), function(req, res) {
   let response = false;
   ApiManager.deleteRecipe(payload, function (result) {
     response = result;
-    console.log(response);
+
     res.json(response);
   });
 

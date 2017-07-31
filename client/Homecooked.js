@@ -18,6 +18,7 @@ const Homecooked = (function() {
     handleRegister,
     handleCtrlBtns,
     handleShowShoppingList,
+    handleHideShoppingList,
     handleShowRecipeForm,
 
     // Mealplan
@@ -43,13 +44,14 @@ const Homecooked = (function() {
   }
 
   function handleShowShoppingList() {
-    let shoppingListBtn = document.querySelector('.shopping-list');
-    shoppingListBtn.addEventListener('click', function() {
+    // let shoppingListBtn = document.querySelector('.shopping-list');
+    // shoppingListBtn.addEventListener('click', function() {
       // console.log('ay lmao');
       document.querySelector('ul.shoppingList').style.display = 'block';
+      document.querySelector('ul.shoppingList').classList.toggle('active');
       document.querySelector('.lightbox').style.display = 'block';
       document.querySelector('.lightbox').style.opacity = 1;
-    });
+    // });
   }
 
 
@@ -67,11 +69,16 @@ const Homecooked = (function() {
       closeMenu.addEventListener("click", function(e) {
         e.preventDefault();
         hideRecipeMenu();
-        document.querySelector('ul.shoppingList').style.display = 'none';
+        // document.querySelector('ul.shoppingList').style.display = 'none';
         document.querySelector('.lightbox').style.display = 'none';
         document.querySelector('.lightbox').style.opacity = 0;
       });
     }
+  }
+  function handleHideShoppingList() {
+    hideShoppingList();
+    document.querySelector('.lightbox').style.display = 'none';
+    document.querySelector('.lightbox').style.opacity = 0;
   }
 
   // Attaches Handler when user clicks a recipe item on the sidebar menu
@@ -129,6 +136,17 @@ const Homecooked = (function() {
     let lightbox = document.querySelector(".lightbox");
     if(recipeMenu.classList.contains("active")){
       recipeMenu.classList.remove("active");
+      lightbox.style.opacity = 0;
+      lightbox.style.display = "none";
+    }
+  }
+  // Hides sidebar menu
+  function hideShoppingList() {
+    clickedEmptyMeal = null;
+    let shoppingList = document.querySelector(".shoppingList");
+    let lightbox = document.querySelector(".lightbox");
+    if(shoppingList.classList.contains("active")){
+      shoppingList.classList.remove("active");
       lightbox.style.opacity = 0;
       lightbox.style.display = "none";
     }
@@ -351,8 +369,10 @@ const Homecooked = (function() {
 
   function handleCtrlBtns() {
     var clearBtn = document.querySelector(".ctrl-btn.delete-plan");
-    var finishBtn = document.querySelector(".ctrl-btn.complete-plan");
     var cartBtn = document.querySelector(".ctrl-btn.shopping-list");
+    let closeMenu = document.querySelector("a.closeMenu");
+    let deleteMealBtn = document.querySelector('.delete_meal');
+
     if(clearBtn) {
       clearBtn.addEventListener("click", function (e) {
         e.preventDefault();
@@ -360,20 +380,25 @@ const Homecooked = (function() {
         MealPlan.saveMealPlan();
       });
     }
-    if(finishBtn) {
-      finishBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        MealPlan.clearMealPlan();
-        MealPlan.saveMealPlan();
-        // Add method here for reducing pantry ingredients from all recipes in the mealplan
-      });
-    }
     if(cartBtn) {
       cartBtn.addEventListener("click", function (e) {
         e.preventDefault();
+        handleShowShoppingList();
         // Logic for showing shopping list
       });
     }
+    if(closeMenu) {
+      closeMenu.addEventListener("click", function(e) {
+        e.preventDefault();
+        handleHideShoppingList();
+      });
+    }
+    if(deleteMealBtn) {
+      deleteMealBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+      });
+    }
+
   }
 
   function handleShowRecipeForm() {

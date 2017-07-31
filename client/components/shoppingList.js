@@ -11,7 +11,9 @@ const shoppingList = (function() {
       let data = { recipeIds };
 
       axios.post("/api/get_user_shopping_list", data).then((response) => {
+        // console.log(response);
         let ingredientData = response.data;
+
         addShoppingListToDOM(recipeIds, ingredientData);
       })
       .catch((err) => {

@@ -92,8 +92,7 @@ const recipeHelper = (function() {
         <div class="overlay">
           <h4>${name}</h4>
           <div class="cta">
-            <i class="fa fa-check"></i>
-            <i class="fa fa-times"></i>
+            <i class="fa fa-trash delete_meal"></i>
           </div>
         </div>
       </div>

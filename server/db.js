@@ -1,5 +1,4 @@
 var mysql = require('mysql');
-
 var dbWrapper = (function(mysql) {
   var pool;
   if(process.env.HC_ENV === "production") {
@@ -18,7 +17,7 @@ var dbWrapper = (function(mysql) {
       database : 'homecooked'
     });
   }
-  
+
   return {
     mysql,
     db: pool
