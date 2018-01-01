@@ -113,6 +113,7 @@ var ApiManager = (function(dbWrapper) {
     let recipes = [];
     let { user_id } = userInfo;
     let { db } = dbWrapper;
+
     db.getConnection(function(err, connection) {
 
       connection.query('SELECT * from `recipes` where `user_id` = ?', [user_id], (err, rows, fields) => {

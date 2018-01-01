@@ -13,7 +13,7 @@ var dbWrapper = (function(mysql) {
     pool = mysql.createPool({
       host : 'localhost',
       user : 'root',
-      password: 'root',
+      password: '',
       database : 'homecooked'
     });
   }
@@ -24,5 +24,4 @@ var dbWrapper = (function(mysql) {
   };
 
 })(mysql);
-
 module.exports = dbWrapper;

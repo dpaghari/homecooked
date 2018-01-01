@@ -6,39 +6,40 @@ html(lang="en")
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Great+Vibes|Roboto+Condensed|Source+Sans+Pro")
     
   body
-    .wrapper
-      if loggedIn == true
-        include header  
-        .content
-          if currentPage == "Home"
-            .home
-              h1 Your Meal Plan
-              include mealPlanHeading
-              ul.shoppingList
-                span Shopping List
-              include mealPlan
-              .recipeMenu
-                h4 Menu
-                ul.menu
-                
-                
-          if currentPage == "MyRecipes"
-            button.showRecipeForm 
-              i.fa.fa-plus
-            .addRecipeWrapper
-              include addRecipeForm
-              include recipePrep
-            .myRecipes
-              ul.recipeList
-          //- if currentPage == "AddRecipe"
-            
-          //- if currentPage == "Pantry"
-          //-   .pantry
-          //-     |Asuhdude
-      
-      else
-        include loginForm
-    .lightbox
-      a.closeMenu(href="#") Close
+    #app
+    //- .wrapper
+    //-   if loggedIn == true
+    //-     include header  
+    //-     .content
+    //-       if currentPage == "Home"
+    //-         .home
+    //-           h1 Your Meal Plan
+    //-           include mealPlanHeading
+    //-           ul.shoppingList
+    //-             span Shopping List
+    //-           include mealPlan
+    //-           .recipeMenu
+    //-             h4 Menu
+    //-             ul.menu
+    //- 
+    //- 
+    //-       if currentPage == "MyRecipes"
+    //-         button.showRecipeForm 
+    //-           i.fa.fa-plus
+    //-         .addRecipeWrapper
+    //-           include addRecipeForm
+    //-           include recipePrep
+    //-         .myRecipes
+    //-           ul.recipeList
+    //-       //- if currentPage == "AddRecipe"
+    //- 
+    //-       //- if currentPage == "Pantry"
+    //-       //-   .pantry
+    //-       //-     |Asuhdude
+    //- 
+    //-   else
+    //-     include loginForm
+    //- .lightbox
+    //-   a.closeMenu(href="#") Close
           
     script(type="text/javascript" src="client.min.js")
