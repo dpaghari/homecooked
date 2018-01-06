@@ -1,5 +1,9 @@
 import React from 'react';
-import { render } from 'react-dom';
+
+import Dashboard from './Dashboard';
+
+// Components
+import Login from '../components/Login';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -7,11 +11,12 @@ export default class Home extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-      <p>Sup</p>
-      </div>
-    );
 
+    let { appState, updateAppState } = this.props;
+
+    if(appState.loggedIn)
+      return <Dashboard updateAppState={updateAppState} appState={appState} />;
+    else
+      return <Login updateAppState={updateAppState.bind(this)} />;
   }
 }

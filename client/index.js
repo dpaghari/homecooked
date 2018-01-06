@@ -9,7 +9,8 @@ import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 import App from './pages/App';
 import Home from './pages/Home';
-
+import Cookbook from './pages/Cookbook';
+import Settings from './pages/Settings';
 
 // const history = syncHistoryWithStore(browserHistory, store);
 
@@ -17,6 +18,8 @@ render(
   <Router history={browserHistory}>
     <Route path="/" component={App}>
     <IndexRoute component={Home}/>
+    <Route path="/cookbook" component={Cookbook}></Route>
+    <Route path="/settings" component={Settings}></Route>
     </Route>
   </Router>,
   document.getElementById('app'));

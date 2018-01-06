@@ -1,0 +1,32 @@
+.c-user-recipes {
+  &__list {
+    list-style-type: none;
+  }
+
+  &__list-item {
+    display: flex;
+    padding: 12px;
+    border-bottom: 1px solid $borderColor;
+    img {
+      width: 300px;
+      height: 260px;
+    }
+  }
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+  }
+
+  &__right {
+    width: 60%;
+  }
+
+}
+
+
+.c-ingredient-list {
+  padding: 12px;
+  border-bottom: 1px solid $borderColor;
+}

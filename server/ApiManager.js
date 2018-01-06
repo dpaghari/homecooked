@@ -26,6 +26,7 @@ var ApiManager = (function(dbWrapper) {
       if (err) {
         throw err;
       }
+
       connection.query("SELECT `name`, `profile_picture`, `signup_date` from `users` where `user_id` = ?", [user_id], (err, rows, fields) => {
         if(err) throw err;
         if(typeof rows !== "undefined" && typeof rows[0] !== "undefined"){
@@ -40,8 +41,8 @@ var ApiManager = (function(dbWrapper) {
   }
   function authUser(user_info, callback) {
     let { db } = dbWrapper;
-    // let queryString = "SELECT name, password FROM users WHERE name = ? AND password = ?";
     let { user_name, password } = user_info;
+
     db.getConnection(function(err, connection) {
     connection.query("SELECT `user_id`, `name`, `profile_picture` FROM `users` WHERE `name` = ? AND `password` = ?", [user_name, password], (err, rows, fields) => {
       if(err) throw err;

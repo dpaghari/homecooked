@@ -25,40 +25,13 @@ app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.set('view engine', 'jade');
-
-
 //############
 // ROUTING
 //############
 app.get('/', function(req, res) {
   appState = Object.assign({}, appState, {currentPage: "Home"});
   //console.log(appState);
-  res.render('index', appState);
-});
-app.get('/my_recipes', function(req, res) {
-
-  appState = Object.assign({}, appState, {currentPage: "MyRecipes"});
-  if(appState.loggedIn)
-    res.render('index', appState);
-  else
-    res.redirect('/');
-
-
-});
-app.get('/create_recipe', function(req, res) {
-  appState = Object.assign({}, appState, {currentPage: "AddRecipe"});
-
-  //console.log(appState)
-  if(appState.loggedIn)
-    res.render('index', appState);
-  else
-    res.redirect('/');
-});
-app.get('/pantry', function(req, res) {
-  appState = Object.assign({}, appState, {currentPage: "Pantry"});
-  // console.log(appState);
-  res.render('index', appState);
+  res.send('index.html', appState);
 });
 
 //############
@@ -67,19 +40,20 @@ app.get('/pantry', function(req, res) {
 // Get All user info
 app.get('/api/get_users', function(req, res) {
   ApiManager.getUsers(function(data) {
-    res.send('index', {users: data});
+    res.send('index.html', {users: data});
   });
 });
 
 // Get Single User Info
 app.get('/api/get_user', function(req, res) {
   ApiManager.getUser(function(data) {
-    res.send('index', {user: data});
+    res.send('index.html', {user: data});
   });
 });
 // Authentication or registration
 app.post('/', upload.array(), function(req, res, next) {
   let userInfo = req.body;
+  console.log(userInfo);
 
   if(userInfo.action === "login") {
     var response;
