@@ -7,7 +7,8 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showRegister: false
+      showRegister: false,
+      errorMsg: null
     };
   }
 
@@ -47,6 +48,7 @@ export default class Login extends React.Component {
     else {
       return (
         <form class="c-login__form" onSubmit={this.handleSubmitLogin.bind(this)}>
+          {this.renderErrorMsg()}
           <label for="userName">Username</label>
           <input class="c-login__input" type="text" ref="userName" placeholder="Username"/>
           <label for="userName">Password</label>
@@ -57,6 +59,23 @@ export default class Login extends React.Component {
 
       );
     }
+  }
+
+  renderErrorMsg() {
+    console.log(this.state.errorMsg);
+    if(this.state.errorMsg === null) return null;
+    setTimeout(() => {
+      this.setState({errorMsg: null});
+    }, 3000);
+    return <span style={{
+      color: 'white',
+      display: 'block',
+      background: '#ba312d',
+      textAlign: 'center',
+      width: '100%',
+      padding: '12px',
+      margin: '12px 0'
+    }} class="c-error-msg">{this.state.errorMsg}</span>;
   }
 
   handleShowRegister(e) {
@@ -75,15 +94,18 @@ export default class Login extends React.Component {
       console.log(userCreds);
 
       axios.post('/', userCreds).then((response) => {
-
-        if(response.data.appState) {
+        if(typeof response.data.appState.error === 'undefined') {
           let { loggedIn, currentPage, currentUser } = response.data.appState;
-          console.log(response);
+
           this.props.updateAppState({
             loggedIn,
             currentPage,
             currentUser
           });
+        }
+        else {
+          console.log('fail');
+          this.setState({errorMsg: response.data.appState.error});
         }
       })
       .catch((err) => {
@@ -98,7 +120,6 @@ export default class Login extends React.Component {
     // TO-DO: validation for newUserPicture to be a valid asset url
     let { newUserName, newUserPassword, confirmNewUserPassword, newUserPicture } = this.refs;
     if (newUserPassword.value === confirmNewUserPassword.value) {
-      console.log();
       let userCreds = {
         'action': 'register',
         'name': newUserName.value,
