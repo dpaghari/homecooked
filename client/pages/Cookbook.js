@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Login from '../components/Login';
 
 import axios from 'axios';
@@ -45,13 +43,10 @@ export default class Cookbook extends React.Component {
     if(appState.loggedIn){
       return (
         <section class="c-cookbook">
-        <Header updateAppState={this.props.updateAppState}/>
         <h1>Cookbook</h1>
         <a onClick={this.handleToggleNewRecipeForm.bind(this)} class="c-cookbook__nav-item" href="#">Add New Recipe</a>
         {this.renderNewRecipeForm()}
         {this.renderUserRecipes()}
-
-        <Footer/>
         </section>
       );
     }

@@ -8,7 +8,6 @@ export default class Header extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <header class="c-header">
         <h1>Homecooked</h1>
@@ -25,10 +24,9 @@ export default class Header extends React.Component {
   handleLogoutUser(e) {
     e.preventDefault();
     this.props.updateAppState({
-      loggedIn: false
+      loggedIn: false,
+      currentPage: 'Home',
+      currentUser: {}
     });
   }
-
-
-
 }

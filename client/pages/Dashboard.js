@@ -1,7 +1,4 @@
 import React from 'react';
-
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { Link } from 'react-router';
 
 
@@ -14,9 +11,9 @@ export default class Dashboard extends React.Component {
     let { currentUser } = this.props.appState;
     return (
       <section class="c-dashboard">
-        <Header updateAppState={this.props.updateAppState}/>
         <section class="c-greeting">
           <h2>Welcome { currentUser.name }</h2>
+          <img src={currentUser.profile_picture}  alt={currentUser.name}/>
         </section>
         <section class="c-mealplan">
           <div class="c-mealplan__header">Jan 7 - 13</div>
@@ -51,7 +48,6 @@ export default class Dashboard extends React.Component {
             </div>
           </div>
         </section>
-        <Footer />
       </section>
     );
   }

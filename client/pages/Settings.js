@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Login from '../components/Login';
 
 export default class Settings extends React.Component {
@@ -17,9 +15,7 @@ export default class Settings extends React.Component {
     if(appState.loggedIn) {
       return (
         <section>
-        <Header updateAppState={updateAppState}/>
-        <h1>Settings</h1>
-        <Footer/>
+          <h1>Settings</h1>
         </section>
       );
     }

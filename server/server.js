@@ -10,15 +10,17 @@ const upload = multer(); // for parsing multipart/form-data
 // Includes
 const ApiManager = require("./ApiManager.js");
 
-let appState = {
+const initialState = {
   loggedIn: false,
   currentUser: {
-    name: "Daniel",
-    user_id: 15,
-    profile_picture: "sup"
+    // name: "Daniel",
+    // user_id: 15,
+    // profile_picture: "sup"
   },
   currentPage: "Home"
 };
+
+let appState = initialState;
 
 // App Settings
 app.use(express.static('public'));
@@ -58,8 +60,9 @@ app.post('/', upload.array(), function(req, res, next) {
   if(userInfo.action === "login") {
     var response;
     ApiManager.authUser(userInfo, function(data) {
+      console.log(data);
       if(data === false) {
-        appState = Object.assign({}, appState, {error: "Username or password is incorrect"});
+        appState = Object.assign({}, initialState, {error: "Username or password is incorrect"});
         response = {
           appState,
           redirect: "/"
@@ -67,7 +70,7 @@ app.post('/', upload.array(), function(req, res, next) {
         res.json(response);
       }
       else {
-        appState = Object.assign({}, appState, {currentPage: "Home", loggedIn: true, currentUser: data, error: undefined});
+        appState = Object.assign({}, initialState, {currentPage: "Home", loggedIn: true, currentUser: data, error: undefined});
         response = {
           appState,
           redirect: "/"
@@ -83,7 +86,7 @@ app.post('/', upload.array(), function(req, res, next) {
           name: userInfo.name,
           profile_picture: userInfo.profile_picture
         };
-        appState = Object.assign({}, appState, {currentPage: "Home", loggedIn: true, currentUser});
+        appState = Object.assign({}, initialState, {currentPage: "Home", loggedIn: true, currentUser});
         var response = {
           appState,
           redirect: "/"
