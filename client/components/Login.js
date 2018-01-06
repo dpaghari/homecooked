@@ -91,8 +91,6 @@ export default class Login extends React.Component {
         'user_name': userName.value,
         'password': userPassword.value
       };
-      console.log(userCreds);
-
       axios.post('/', userCreds).then((response) => {
         if(typeof response.data.appState.error === 'undefined') {
           let { loggedIn, currentPage, currentUser } = response.data.appState;
@@ -104,7 +102,7 @@ export default class Login extends React.Component {
           });
         }
         else {
-          console.log('fail');
+          userName.focus();
           this.setState({errorMsg: response.data.appState.error});
         }
       })
