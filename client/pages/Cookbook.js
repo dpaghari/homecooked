@@ -27,7 +27,7 @@ export default class Cookbook extends React.Component {
       user_id: userId
     })
     .then((response) => {
-      console.log(response);
+
       if(response.data.length) {
         this.setState({
           userRecipes: response.data
@@ -36,16 +36,16 @@ export default class Cookbook extends React.Component {
     });
   }
 
-
-
   render () {
     let { appState, updateAppState } = this.props;
+
     if(appState.loggedIn){
       return (
         <section class="c-cookbook">
         <h1>Cookbook</h1>
         <a onClick={this.handleToggleNewRecipeForm.bind(this)} class="c-cookbook__nav-item" href="#">Add New Recipe</a>
         {this.renderNewRecipeForm()}
+
         {this.renderUserRecipes()}
         </section>
       );
@@ -53,6 +53,22 @@ export default class Cookbook extends React.Component {
     else {
       return <Login updateAppState={updateAppState.bind(this)} />;
     }
+  }
+
+  renderNewRecipePreview() {
+    return (
+      <div class="c-new-recipe__preview">
+      <strong>Ingredients</strong>
+      <ul class="c-ingredient-list">
+        { this.renderIngredientList(this.state.newRecipe.ingredients) }
+      </ul>
+
+      <strong>Instructions</strong>
+      <ol class="c-instruction-list">
+        { this.renderInstructionsList(this.state.newRecipe.instructions) }
+      </ol>
+      </div>
+    );
   }
 
   renderUserRecipes() {
@@ -74,37 +90,102 @@ export default class Cookbook extends React.Component {
     if(this.state.showNewRecipeForm) {
       return (
         <div class="c-new-recipe">
-        <form class="c-new-recipe__form">
-          <fieldset>
-            <label for="recipeName"></label>
-            <input type="text" ref="recipeName" placeholder="Recipe Name" required/>
-            <label for="recipeCookTime"></label>
-            <input type="text" ref="recipeCookTime" placeholder="Cooking Time" required/>
-            <label for="recipeServing"></label>
-            <input type="text" ref="recipeServing" placeholder="Serving Size" required/>
-            <label for="recipeDescription"></label>
-            <textarea cols="100" rows="6" ref="recipeDescription" placeholder="Description" required/>
-          </fieldset>
-          <fieldset>
-            <label for="recipeIngredient"></label>
-            <input type="text" ref="recipeIngredient" placeholder="Ingredient"/>
-            <label for="recipeIngQty"></label>
-            <input type="text" ref="recipeIngQty" placeholder="Qty"/>
-            <button type="button" class="c-new-recipe__add-ingredient">Add Ingredient</button>
-          </fieldset>
-          <fieldset>
-            <label for="recipeInstruction"></label>
-            <input type="text" ref="recipeInstruction" placeholder="Chop up garlic"/>
-            <button type="button" class="c-new-recipe__add-instruction">Add Instruction</button>
-          </fieldset>
-          <button class="c-new-recipe__submit" type="submit">Add To Cookbook</button>
-        </form>
+          <form class="c-new-recipe__form" onSubmit={this.handleAddNewRecipe.bind(this)}>
+            <fieldset>
+              <label for="recipeName">Recipe Name</label>
+              <input type="text" ref="recipeName" placeholder="Recipe Name" required/>
+              <label for="recipeImage">Recipe Image URL</label>
+              <input type="text" ref="recipeImage" placeholder="Recipe Image URL" required/>
+              <label for="recipeCookTime">Cooking Time</label>
+              <input type="text" ref="recipeCookTime" placeholder="Cooking Time" required/>
+              <label for="recipeServing">Serves How many?</label>
+              <input type="text" ref="recipeServing" placeholder="Serving Size" required/>
+              <label for="recipeDescription">Description</label>
+              <textarea cols="100" rows="6" ref="recipeDescription" placeholder="Description" required/>
+            </fieldset>
+            <fieldset>
+              <label for="recipeIngredient">Ingredient Name</label>
+              <input type="text" ref="recipeIngredient" placeholder="Ingredient"/>
+              <label for="recipeIngQty">Ingredient Quantity</label>
+              <input type="text" ref="recipeIngQty" placeholder="Qty"/>
+              <button type="button" class="c-new-recipe__add-ingredient" onClick={this.handleAddIngredient.bind(this)}>Add Ingredient</button>
+            </fieldset>
+            <fieldset>
+              <label for="recipeInstruction">Instruction</label>
+              <input type="text" ref="recipeInstruction" placeholder="Chop up garlic"/>
+              <button type="button" class="c-new-recipe__add-instruction" onClick={this.handleAddInstruction.bind(this)}>Add Instruction</button>
+            </fieldset>
+            <button class="c-new-recipe__submit" type="submit">Add To Cookbook</button>
+          </form>
+
+          {this.renderNewRecipePreview()}
         </div>
       )
     }
     else {
       return null;
     }
+  }
+
+  handleAddIngredient() {
+    let { recipeIngredient, recipeIngQty } = this.refs;
+    let newIngredient = {
+      name: recipeIngredient.value,
+      quantity: recipeIngQty.value
+    };
+
+    this.state.newRecipe.ingredients.push(newIngredient);
+    this.state.newRecipe = Object.assign({}, this.state.newRecipe, {ingredients: this.state.newRecipe.ingredients});
+
+    this.setState({
+      newRecipe: this.state.newRecipe
+    });
+
+    recipeIngredient.value = recipeIngQty.value = "";
+    recipeIngredient.focus();
+  }
+
+  handleAddInstruction() {
+    let { recipeInstruction } = this.refs;
+    let newInstruction = recipeInstruction.value;
+
+    this.state.newRecipe.instructions.push(newInstruction);
+    this.state.newRecipe = Object.assign({}, this.state.newRecipe, {instructions: this.state.newRecipe.instructions});
+    this.setState({
+      newRecipe: this.state.newRecipe
+    });
+    recipeInstruction.value = "";
+    recipeInstruction.focus();
+  }
+
+  handleAddNewRecipe(e) {
+    e.preventDefault();
+    let { recipeName, recipeCookTime, recipeServing, recipeDescription, recipeImage } = this.refs;
+    let ingredients = this.state.newRecipe.ingredients;
+    let directions = this.state.newRecipe.instructions;
+
+
+    console.log(ingredients, directions);
+    let newRecipe = {
+      user_id: this.props.appState.currentUser.user_id,
+      name: recipeName.value,
+      cooking_time: recipeCookTime.value,
+      serving_size: recipeServing.value,
+      recipe_image: recipeImage.value,
+      ingredients,
+      directions,
+      blurb: recipeDescription.value
+    };
+
+    console.log(newRecipe);
+    axios.post('/api/add_recipe', newRecipe)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      throw err;
+    });
+
   }
 
 
@@ -153,11 +234,12 @@ export default class Cookbook extends React.Component {
   }
 
   renderInstructionsList(directions) {
+
     if(directions !== null && directions.length > 0) {
       return directions.map((direction, idx) => {
         return (
           <li key={idx} class="c-instruction">
-            <p>{direction.step}</p>
+            <p>{direction}</p>
           </li>
         )
       });
