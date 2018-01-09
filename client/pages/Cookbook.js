@@ -7,6 +7,7 @@ export default class Cookbook extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentPage: 'userCookbook',
       userRecipes: [],
       showNewRecipeForm: false,
       newRecipe: {
@@ -38,20 +39,40 @@ export default class Cookbook extends React.Component {
 
   render () {
     let { appState, updateAppState } = this.props;
-
+    console.log(this.state);
     if(appState.loggedIn){
       return (
         <section class="c-cookbook">
         <h1>Cookbook</h1>
-        <a onClick={this.handleToggleNewRecipeForm.bind(this)} class="c-cookbook__nav-item" href="#">Add New Recipe</a>
-        {this.renderNewRecipeForm()}
-
-        {this.renderUserRecipes()}
+        <nav class="c-cookbook__nav">
+          <a onClick={this.setState({currentPage: "userCookbook"})} class="c-cookbook__nav-item" href="#">Home</a>
+          <a onClick={this.setState({currentPage: "explore"})} class="c-cookbook__nav-item" href="#">Explore</a>
+        </nav>
+        {this.renderCookbookPage()}
         </section>
       );
     }
     else {
       return <Login updateAppState={updateAppState.bind(this)} />;
+    }
+  }
+
+  renderCookbookPage() {
+    if(this.state.currentPage === 'userCookbook') {
+      return (
+        <div class="c-cookbook__page">
+          <a onClick={this.handleToggleNewRecipeForm.bind(this)} class="c-cookbook__nav-item" href="#">Add New Recipe</a>
+          {this.renderNewRecipeForm()}
+          {this.renderUserRecipes()}
+        </div>
+      );
+    }
+    else if(this.state.currentPage === 'explore') {
+      return (
+        <div class="c-cookbook__page">
+          EXPLORE RECIPES
+        </div>
+      );
     }
   }
 
@@ -136,7 +157,6 @@ export default class Cookbook extends React.Component {
 
     this.state.newRecipe.ingredients.push(newIngredient);
     this.state.newRecipe = Object.assign({}, this.state.newRecipe, {ingredients: this.state.newRecipe.ingredients});
-
     this.setState({
       newRecipe: this.state.newRecipe
     });
@@ -162,10 +182,8 @@ export default class Cookbook extends React.Component {
     e.preventDefault();
     let { recipeName, recipeCookTime, recipeServing, recipeDescription, recipeImage } = this.refs;
     let ingredients = this.state.newRecipe.ingredients;
-    let directions = this.state.newRecipe.instructions;
+    let instructions = this.state.newRecipe.instructions;
 
-
-    console.log(ingredients, directions);
     let newRecipe = {
       user_id: this.props.appState.currentUser.user_id,
       name: recipeName.value,
@@ -173,14 +191,13 @@ export default class Cookbook extends React.Component {
       serving_size: recipeServing.value,
       recipe_image: recipeImage.value,
       ingredients,
-      directions,
+      instructions,
       blurb: recipeDescription.value
     };
-
-    console.log(newRecipe);
+    this.state.userRecipes.push(newRecipe);
     axios.post('/api/add_recipe', newRecipe)
     .then((response) => {
-      console.log(response);
+      this.setState({userRecipes: this.state.userRecipes});
     })
     .catch((err) => {
       throw err;
@@ -192,8 +209,11 @@ export default class Cookbook extends React.Component {
 
   renderRecipesList() {
     let recipes = this.state.userRecipes;
-    if(this.state.userRecipes.length > 0) {
+    console.log(recipes);
+    if(recipes.length > 0) {
       return recipes.map((recipe, idx) => {
+        recipe.ingredients = typeof recipe.ingredients === 'string' ? JSON.parse(recipe.ingredients) : recipe.ingredients;
+        recipe.instructions = typeof recipe.instructions === 'string' ? JSON.parse(recipe.instructions) : recipe.instructions;
         return (
           <li key={idx} class="c-user-recipes__list-item">
             <div class="c-user-recipes__left">
@@ -205,10 +225,10 @@ export default class Cookbook extends React.Component {
             </div>
             <div class="c-user-recipes__right">
               <ul class="c-ingredient-list">
-                { this.renderIngredientList(JSON.parse(recipe.ingredients)) }
+                { this.renderIngredientList(recipe.ingredients) }
               </ul>
               <ol class="c-instruction-list">
-                { this.renderInstructionsList(JSON.parse(recipe.instructions)) }
+                { this.renderInstructionsList(recipe.instructions) }
               </ol>
             </div>
           </li>
@@ -219,7 +239,6 @@ export default class Cookbook extends React.Component {
   }
 
   renderIngredientList(ingredients) {
-
     if(ingredients !== null && ingredients.length > 0) {
       return ingredients.map((ingredient, idx) => {
         return (
@@ -233,13 +252,12 @@ export default class Cookbook extends React.Component {
     else return null;
   }
 
-  renderInstructionsList(directions) {
-
-    if(directions !== null && directions.length > 0) {
-      return directions.map((direction, idx) => {
+  renderInstructionsList(instructions) {
+    if(instructions !== null && instructions.length > 0) {
+      return instructions.map((step, idx) => {
         return (
           <li key={idx} class="c-instruction">
-            <p>{direction}</p>
+            <p>{step}</p>
           </li>
         )
       });

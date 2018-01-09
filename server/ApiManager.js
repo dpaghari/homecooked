@@ -146,11 +146,11 @@ var ApiManager = (function(dbWrapper) {
 
   function addRecipe(recipe_info, callback) {
     let { db } = dbWrapper;
-    let { user_id, name, cooking_time, serving_size, recipe_image, ingredients, directions, blurb } = recipe_info;
+    let { user_id, name, cooking_time, serving_size, recipe_image, ingredients, instructions, blurb } = recipe_info;
     ingredients = JSON.stringify(ingredients);
-    directions = JSON.stringify(directions);
+    instructions = JSON.stringify(instructions);
     db.getConnection(function(err, connection) {
-      connection.query('INSERT INTO `recipes` SET ?', {user_id, name, cooking_time, serving_size, recipe_image, ingredients, instructions: directions, blurb}, function (err, rows, fields) {
+      connection.query('INSERT INTO `recipes` SET ?', {user_id, name, cooking_time, serving_size, recipe_image, ingredients, instructions, blurb}, function (err, rows, fields) {
         if(err) throw err;
         if(typeof callback === "function") {
           let id = rows.insertId;
