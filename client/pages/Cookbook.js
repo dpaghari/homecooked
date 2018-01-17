@@ -7,7 +7,6 @@ export default class Cookbook extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 'userCookbook',
       userRecipes: [],
       showNewRecipeForm: false,
       newRecipe: {
@@ -44,10 +43,6 @@ export default class Cookbook extends React.Component {
       return (
         <section class="c-cookbook">
         <h1>Cookbook</h1>
-        <nav class="c-cookbook__nav">
-          <a onClick={this.setState({currentPage: "userCookbook"})} class="c-cookbook__nav-item" href="#">Home</a>
-          <a onClick={this.setState({currentPage: "explore"})} class="c-cookbook__nav-item" href="#">Explore</a>
-        </nav>
         {this.renderCookbookPage()}
         </section>
       );
@@ -58,22 +53,13 @@ export default class Cookbook extends React.Component {
   }
 
   renderCookbookPage() {
-    if(this.state.currentPage === 'userCookbook') {
-      return (
-        <div class="c-cookbook__page">
-          <a onClick={this.handleToggleNewRecipeForm.bind(this)} class="c-cookbook__nav-item" href="#">Add New Recipe</a>
-          {this.renderNewRecipeForm()}
-          {this.renderUserRecipes()}
-        </div>
-      );
-    }
-    else if(this.state.currentPage === 'explore') {
-      return (
-        <div class="c-cookbook__page">
-          EXPLORE RECIPES
-        </div>
-      );
-    }
+    return (
+      <div class="c-cookbook__page">
+        <a onClick={this.handleToggleNewRecipeForm.bind(this)} class="c-cookbook__nav-item" href="#">Add New Recipe</a>
+        {this.renderNewRecipeForm()}
+        {this.renderUserRecipes()}
+      </div>
+    );
   }
 
   renderNewRecipePreview() {
@@ -108,6 +94,7 @@ export default class Cookbook extends React.Component {
   }
 
   renderNewRecipeForm() {
+    console.log(this.state.showNewRecipeForm);
     if(this.state.showNewRecipeForm) {
       return (
         <div class="c-new-recipe">
@@ -141,7 +128,7 @@ export default class Cookbook extends React.Component {
 
           {this.renderNewRecipePreview()}
         </div>
-      )
+      );
     }
     else {
       return null;

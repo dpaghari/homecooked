@@ -11,6 +11,7 @@ import App from './pages/App';
 import Home from './pages/Home';
 import Cookbook from './pages/Cookbook';
 import Settings from './pages/Settings';
+import Explore from './pages/Explore';
 
 // const history = syncHistoryWithStore(browserHistory, store);
 
@@ -20,6 +21,7 @@ render(
     <IndexRoute component={Home}/>
     <Route path="/cookbook" component={Cookbook}></Route>
     <Route path="/settings" component={Settings}></Route>
+    <Route path="/explore" component={Explore}></Route>
     </Route>
   </Router>,
   document.getElementById('app'));

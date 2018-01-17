@@ -98,7 +98,7 @@ app.post('/', upload.array(), function(req, res, next) {
 
 app.get('/api/get_recipes', function(req, res) {
   ApiManager.getRecipes(function(data) {
-    // res.send('index', data);
+    res.json(data);
   });
 });
 
