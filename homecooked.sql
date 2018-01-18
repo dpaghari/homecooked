@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for osx10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: homecooked
 -- ------------------------------------------------------
--- Server version	5.7.17
+-- Server version	5.7.21-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +27,7 @@ CREATE TABLE `ingredients` (
   `name` varchar(30) DEFAULT NULL,
   `quantity` decimal(3,2) DEFAULT NULL,
   PRIMARY KEY (`ingredient_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,6 @@ CREATE TABLE `ingredients` (
 
 LOCK TABLES `ingredients` WRITE;
 /*!40000 ALTER TABLE `ingredients` DISABLE KEYS */;
-INSERT INTO `ingredients` VALUES (1,'Carrots',4.00),(2,'Carrots',4.00);
 /*!40000 ALTER TABLE `ingredients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,7 +50,7 @@ CREATE TABLE `mealplans` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `mealplan` mediumtext,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +59,6 @@ CREATE TABLE `mealplans` (
 
 LOCK TABLES `mealplans` WRITE;
 /*!40000 ALTER TABLE `mealplans` DISABLE KEYS */;
-INSERT INTO `mealplans` VALUES (15,'[[{\"recipe_id\":\"19\",\"mealPosition\":0}],[],[],[],[],[],[]]');
 /*!40000 ALTER TABLE `mealplans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +80,7 @@ CREATE TABLE `recipes` (
   `user_id` int(11) DEFAULT NULL,
   `blurb` mediumtext,
   PRIMARY KEY (`recipe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +89,7 @@ CREATE TABLE `recipes` (
 
 LOCK TABLES `recipes` WRITE;
 /*!40000 ALTER TABLE `recipes` DISABLE KEYS */;
-INSERT INTO `recipes` VALUES (14,'chicken parmesan',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,NULL,NULL,NULL,'http://img.sndimg.com/food/image/upload/w_555,h_416,c_fit,fl_progressive,q_95/v1/img/recipes/22/78/2/pic4IW8Lh.jpg',NULL,NULL,NULL,NULL),(16,'Spaghetti',NULL,NULL,'http://img.sndimg.com/food/image/upload/w_555,h_416,c_fit,fl_progressive,q_95/v1/img/recipes/22/78/2/pic4IW8Lh.jpg',NULL,NULL,NULL,NULL),(17,'Chicken Soup',NULL,NULL,'http://clv.h-cdn.co/assets/cm/15/10/1600x800/54f4a5bf1042a_-_chicken-noodle-soup-recipe.jpg',NULL,NULL,15,NULL),(18,'Lasagna',NULL,NULL,'https://static01.nyt.com/images/2015/10/15/dining/15RECIPE20DIN/15RECIPE20DIN-superJumbo.jpg',NULL,NULL,15,NULL),(19,'Ramen',NULL,NULL,'https://www.chowstatic.com/blog-media/2015/09/phpThumb_generated_thumbnail-17.jpeg',NULL,NULL,15,NULL),(20,'Sushi Bowl',NULL,NULL,'https://www.budgetbytes.com/wp-content/uploads/2016/06/Sushi-Bowls-Vs.jpg',NULL,NULL,15,NULL),(21,'Garlic Butter Shrimp','[{\"name\":\"Garlic\",\"quantity\":\"4\"},{\"name\":\"Butter\",\"quantity\":\"4\"},{\"name\":\"Shrimp\",\"quantity\":\"4\"}]','[{\"step\":\"Do stuff\"},{\"step\":\"cook it\"},{\"step\":\"eat it\"}]','http://damndelicious.net/wp-content/uploads/2014/04/IMG_5261edit.jpg',4,'40h',15,NULL),(22,'Beef Wellington','[{\"name\":\"Steak\",\"quantity\":\"1\"},{\"name\":\"Bread\",\"quantity\":\"1\"}]','[{\"step\":\"Put the steak in the bread\"},{\"step\":\"cook it\"}]','http://food.fnr.sndimg.com/content/dam/images/food/fullset/2008/12/30/0/TU0602_Beef-Wellington.jpg.rend.hgtvcom.1280.960.jpeg',4,'2h',15,'[object Object]'),(23,'Some salad','[{\"name\":\"Green things\",\"quantity\":\"10\"}]','[{\"step\":\"Throw em together\"}]','https://s-media-cache-ak0.pinimg.com/564x/20/6d/0a/206d0a27c4f3b5fcd4e5fe206f02602a.jpg',4,'30m',15,'You gotta eat healthy and stuff so eat this green stuff');
+INSERT INTO `recipes` VALUES (1,'Pizza','[{\"name\":\"Pizza Dough\",\"quantity\":\"1\"},{\"name\":\"Pizza Sauce \",\"quantity\":\"1 can\"},{\"name\":\"Cheese\",\"quantity\":\"1 bag\"}]','[\"Knead dough\",\"Put sauce\",\"Put cheese\",\"Put in oven and eat\"]','http://nohopizza.com/images/pizza.jpeg',2,'30',1,'Pizza is great'),(2,'Garlic Butter Shrimp','[{\"name\":\"Shrimp\",\"quantity\":\"1 lb\"},{\"name\":\"Butter \",\"quantity\":\"8 tbsp\"},{\"name\":\"Garlic Cloves\",\"quantity\":\"6\"},{\"name\":\"Chicken Stock\",\"quantity\":\"1/2 cup\"},{\"name\":\"Italian Parsley\",\"quantity\":\"1/2 cup\"},{\"name\":\"Salt \",\"quantity\":\"To taste\"}]','[\"Pink shrimp\",\"Take out shrimp\",\"melt butter and saute garlic\",\"add chicken stock and slowly add more butter\",\"put back shrimp\",\"add parsley, salt and pepper\",\"eat\"]','https://23209-presscdn-pagely.netdna-ssl.com/wp-content/uploads/2014/04/IMG_5265edit-340x340.jpg',2,'30',2,'Super good quick and easy');
 /*!40000 ALTER TABLE `recipes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +107,7 @@ CREATE TABLE `users` (
   `profile_picture` varchar(256) DEFAULT NULL,
   `signup_date` date DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +116,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (15,'Daniel','sup','sup',NULL);
+INSERT INTO `users` VALUES (1,'GordonRamsay','cool','http://a.abcnews.com/images/Entertainment/HT-Gordon-Ramsay-ml-170516_16x9_992.jpg',NULL),(2,'Daniel','sup','https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-9/26166222_10213136778148890_3980469345509616265_n.jpg?oh=74225c1e8dfb497211c7026b869bfb0d&oe=5AF0C2F8',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -131,4 +129,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-08 19:55:53
+-- Dump completed on 2018-01-17 18:43:35

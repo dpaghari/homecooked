@@ -16,7 +16,7 @@ export default class Header extends React.Component {
           <Link class="c-header__nav-item" to="/cookbook">Cookbook</Link>
           <Link class="c-header__nav-item" to="/explore">Explore</Link>
           <Link class="c-header__nav-item" to="/settings">Settings</Link>
-          <a onClick={this.handleLogoutUser.bind(this)} class="c-header__nav-item" href="#">Logout</a>
+          <Link onClick={this.handleLogoutUser.bind(this)} class="c-header__nav-item" to="/">Logout</Link>
         </nav>
       </header>
     );

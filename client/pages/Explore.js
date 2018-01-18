@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import Login from '../components/Login';
+
 
 export default class Explore extends React.Component {
   constructor(props) {

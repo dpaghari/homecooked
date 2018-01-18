@@ -211,6 +211,9 @@ export default class Cookbook extends React.Component {
               <p>Description: {recipe.blurb}</p>
             </div>
             <div class="c-user-recipes__right">
+              <div class="c-user-recipes__actions">
+                <a onClick={ this.deleteRecipe.bind(this, recipe.recipe_id, idx) } href="#">Delete</a>
+              </div>
               <ul class="c-ingredient-list">
                 { this.renderIngredientList(recipe.ingredients) }
               </ul>
@@ -223,6 +226,17 @@ export default class Cookbook extends React.Component {
       });
     }
     else return null;
+  }
+
+  deleteRecipe(recipeId, recipeIndex) {
+    axios.post('/api/delete_recipe', {recipe_id: recipeId})
+    .then((response) => {
+      this.state.userRecipes.splice(recipeIndex, 1);
+      this.setState({userRecipes: this.state.userRecipes});
+    })
+    .catch((err) => {
+      throw err;
+    });
   }
 
   renderIngredientList(ingredients) {
