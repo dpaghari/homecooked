@@ -146,6 +146,21 @@ app.post('/api/add_recipe', upload.array(), function(req, res, next) {
   });
 
 });
+
+
+app.post('/api/add_follower_to_recipe', upload.array(), function(req, res, next) {
+  var recipe_info = req.body;
+
+  ApiManager.addFollowerIdToRecipe(recipe_info, (recipe_id) => {
+    var response = {
+      recipe_id,
+      appState
+    };
+    res.json(response);
+  });
+});
+
+
 app.post('/api/add_ingredient', upload.array(), function(req, res, next) {
   var ingredient_info = req.body;
   ApiManager.addIngredient(ingredient_info, (ingredient_id) => {

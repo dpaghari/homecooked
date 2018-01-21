@@ -42,6 +42,9 @@ export default class Explore extends React.Component {
               <p>Description: {recipe.blurb}</p>
             </div>
             <div class="c-user-recipes__right">
+              <div class="c-user-recipes__actions">
+                <a onClick={ this.handleAddToCookbook.bind(this, recipe.recipe_id, idx) } href="#">Add To Cookbook</a>
+              </div>
               <ul class="c-ingredient-list">
                 { this.renderIngredientList(recipe.ingredients) }
               </ul>
@@ -54,6 +57,20 @@ export default class Explore extends React.Component {
       });
     }
     else return null;
+  }
+
+  handleAddToCookbook(recipe_id) {
+    let user_id =  this.props.appState.currentUser.user_id;
+    axios.post('/api/add_follower_to_recipe', {
+      recipe_id,
+      follower_id: user_id
+    })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((err) => {
+      throw err;
+    })
   }
 
   renderIngredientList(ingredients) {

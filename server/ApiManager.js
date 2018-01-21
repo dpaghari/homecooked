@@ -160,8 +160,40 @@ var ApiManager = (function(dbWrapper) {
         }
       });
     });
+  }
+
+  function addFollowerIdToRecipe(recipe_info, callback) {
+    let { db } = dbWrapper;
+    let { recipe_id, follower_id } = recipe_info;
+    console.log(recipe_info);
+
+    db.getConnection(function(err, connection) {
+      connection.query("SELECT `follower_ids` FROM `recipes` where `recipe_id` = ?", [recipe_id], (err, rows, fields) => {
+
+        if(err) throw err;
+        let newFollowerArr = [];
+        newFollowerArr.push(follower_id);
+        if(rows[0].follower_ids) {
+          let existingFollowers = JSON.parse(rows[0].follower_ids);
+          existingFollowers.push(follower_id);
+          newFollowerArr = existingFollowers;
+        }
+        newFollowerArr = JSON.stringify(newFollowerArr);
+        connection.query("UPDATE recipes SET ? WHERE recipe_id = ?",[{follower_ids: newFollowerArr}, recipe_id], (err, rows, fields) => {
+          if(err) throw err;
+          if(typeof callback === "function") {
+            let id = rows.insertId;
+            connection.release();
+            callback(id);
+          }
+        });
+
+      });
+    });
 
   }
+
+
   function addIngredient(ing_info, callback) {
     let { db } = dbWrapper;
     db.getConnection(function(err, connection) {
@@ -247,7 +279,8 @@ var ApiManager = (function(dbWrapper) {
     saveUserMealPlan,
     getUserShoppingList,
     deleteRecipe,
-    updateRecipe
+    updateRecipe,
+    addFollowerIdToRecipe
   };
 })(dbWrapper);
 
