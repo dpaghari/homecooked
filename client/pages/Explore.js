@@ -32,31 +32,35 @@ export default class Explore extends React.Component {
       return recipes.map((recipe, idx) => {
         recipe.ingredients = typeof recipe.ingredients === 'string' ? JSON.parse(recipe.ingredients) : recipe.ingredients;
         recipe.instructions = typeof recipe.instructions === 'string' ? JSON.parse(recipe.instructions) : recipe.instructions;
-        return (
-          <li key={idx} class="c-user-recipes__list-item">
-            <div class="c-user-recipes__left">
-              <strong>{recipe.name}</strong>
-              <img src={recipe.recipe_image} alt={recipe.name} />
-              <p>Cooking Time: {recipe.cooking_time}</p>
-              <p>Serving Size: {recipe.serving_size}</p>
-              <p>Description: {recipe.blurb}</p>
-            </div>
-            <div class="c-user-recipes__right">
-              <div class="c-user-recipes__actions">
-                <a onClick={ this.handleAddToCookbook.bind(this, recipe.recipe_id, idx) } href="#">Add To Cookbook</a>
-              </div>
-              <ul class="c-ingredient-list">
-                { this.renderIngredientList(recipe.ingredients) }
-              </ul>
-              <ol class="c-instruction-list">
-                { this.renderInstructionsList(recipe.instructions) }
-              </ol>
-            </div>
-          </li>
-        );
+        return this.renderRecipe(recipe, idx);
       });
     }
     else return null;
+  }
+
+  renderRecipe(recipe, idx) {
+    return (
+      <li key={idx} class="c-user-recipes__list-item">
+        <div class="c-user-recipes__left">
+          <strong>{recipe.name}</strong>
+          <img src={recipe.recipe_image} alt={recipe.name} />
+          <p>Cooking Time: {recipe.cooking_time}</p>
+          <p>Serving Size: {recipe.serving_size}</p>
+          <p>Description: {recipe.blurb}</p>
+        </div>
+        <div class="c-user-recipes__right">
+          <div class="c-user-recipes__actions">
+            <a onClick={ this.handleAddToCookbook.bind(this, recipe.recipe_id, idx) } href="#">Add To Cookbook</a>
+          </div>
+          <ul class="c-ingredient-list">
+            { this.renderIngredientList(recipe.ingredients) }
+          </ul>
+          <ol class="c-instruction-list">
+            { this.renderInstructionsList(recipe.instructions) }
+          </ol>
+        </div>
+      </li>
+    );
   }
 
   handleAddToCookbook(recipe_id) {
@@ -106,7 +110,7 @@ export default class Explore extends React.Component {
   render() {
     let { appState, updateAppState } = this.props;
 
-    if(appState.loggedIn){
+    if(appState.loggedIn) {
       return (
         <div class="c-explore">
           <h1> Explore Page! </h1>

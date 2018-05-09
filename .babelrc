@@ -1,0 +1,11 @@
+{
+  "presets" : [
+    "env",
+    "react"
+  ],
+  "plugins" : [
+    "react-html-attrs",
+    "transform-class-properties",
+    "transform-decorators-legacy"
+  ]
+}
