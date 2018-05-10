@@ -61,6 +61,49 @@ export default class Cookbook extends React.Component {
       </div>
     );
   }
+  renderNewRecipeForm() {
+    console.log(this.state.showNewRecipeForm);
+    if(this.state.showNewRecipeForm) {
+      return (
+        <div class="c-new-recipe">
+          <button onClick={this.handleToggleNewRecipeForm.bind(this)}>Close</button>
+          <form class="c-new-recipe__form" onSubmit={this.handleAddNewRecipe.bind(this)}>
+            <fieldset>
+              <label for="recipeName">Recipe Name</label>
+              <input type="text" ref="recipeName" placeholder="Recipe Name" required/>
+              <label for="recipeImage">Recipe Image URL</label>
+              <input type="text" ref="recipeImage" placeholder="Recipe Image URL" required/>
+              <label for="recipeCookTime">Cooking Time</label>
+              <input type="text" ref="recipeCookTime" placeholder="Cooking Time" required/>
+              <label for="recipeServing">Serves How many?</label>
+              <input type="text" ref="recipeServing" placeholder="Serving Size" required/>
+              <label for="recipeDescription">Description</label>
+              <textarea cols="100" rows="6" ref="recipeDescription" placeholder="Description" required/>
+            </fieldset>
+            <fieldset>
+              <label for="recipeIngredient">Ingredient Name</label>
+              <input type="text" ref="recipeIngredient" placeholder="Ingredient"/>
+              <label for="recipeIngQty">Ingredient Quantity</label>
+              <input type="text" ref="recipeIngQty" placeholder="Qty"/>
+              <button type="button" class="c-new-recipe__add-ingredient" onClick={this.handleAddIngredient.bind(this)}>Add Ingredient</button>
+            </fieldset>
+            <fieldset>
+              <label for="recipeInstruction">Instruction</label>
+              <input type="text" ref="recipeInstruction" placeholder="Chop up garlic"/>
+              <button type="button" class="c-new-recipe__add-instruction" onClick={this.handleAddInstruction.bind(this)}>Add Instruction</button>
+            </fieldset>
+            <button class="c-new-recipe__submit" type="submit">Add To Cookbook</button>
+          </form>
+
+          {/*this.renderNewRecipePreview()*/}
+        </div>
+      );
+    }
+    else {
+      return null;
+    }
+  }
+
 
   renderNewRecipePreview() {
     return (
@@ -93,47 +136,6 @@ export default class Cookbook extends React.Component {
     }
   }
 
-  renderNewRecipeForm() {
-    console.log(this.state.showNewRecipeForm);
-    if(this.state.showNewRecipeForm) {
-      return (
-        <div class="c-new-recipe">
-          <form class="c-new-recipe__form" onSubmit={this.handleAddNewRecipe.bind(this)}>
-            <fieldset>
-              <label for="recipeName">Recipe Name</label>
-              <input type="text" ref="recipeName" placeholder="Recipe Name" required/>
-              <label for="recipeImage">Recipe Image URL</label>
-              <input type="text" ref="recipeImage" placeholder="Recipe Image URL" required/>
-              <label for="recipeCookTime">Cooking Time</label>
-              <input type="text" ref="recipeCookTime" placeholder="Cooking Time" required/>
-              <label for="recipeServing">Serves How many?</label>
-              <input type="text" ref="recipeServing" placeholder="Serving Size" required/>
-              <label for="recipeDescription">Description</label>
-              <textarea cols="100" rows="6" ref="recipeDescription" placeholder="Description" required/>
-            </fieldset>
-            <fieldset>
-              <label for="recipeIngredient">Ingredient Name</label>
-              <input type="text" ref="recipeIngredient" placeholder="Ingredient"/>
-              <label for="recipeIngQty">Ingredient Quantity</label>
-              <input type="text" ref="recipeIngQty" placeholder="Qty"/>
-              <button type="button" class="c-new-recipe__add-ingredient" onClick={this.handleAddIngredient.bind(this)}>Add Ingredient</button>
-            </fieldset>
-            <fieldset>
-              <label for="recipeInstruction">Instruction</label>
-              <input type="text" ref="recipeInstruction" placeholder="Chop up garlic"/>
-              <button type="button" class="c-new-recipe__add-instruction" onClick={this.handleAddInstruction.bind(this)}>Add Instruction</button>
-            </fieldset>
-            <button class="c-new-recipe__submit" type="submit">Add To Cookbook</button>
-          </form>
-
-          {this.renderNewRecipePreview()}
-        </div>
-      );
-    }
-    else {
-      return null;
-    }
-  }
 
   handleAddIngredient() {
     let { recipeIngredient, recipeIngQty } = this.refs;

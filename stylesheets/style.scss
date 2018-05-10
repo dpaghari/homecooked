@@ -2,9 +2,8 @@
 @import "colors";
 @import "mixins";
 
-// Pages
-@import "pages/login";
-@import "pages/cookbook";
+// Modules
+@import "modules/index";
 
 * {
   margin: 0;

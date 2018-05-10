@@ -1,0 +1,75 @@
+.c-dashboard {
+  color: $textBlack;
+  &__greeting {
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    padding: 24px;
+    justify-content: space-between;
+  }
+  &__profile-pic {
+    display: block;
+    width: 30%;
+    img {
+      display: block;
+      margin: 0 auto;
+      max-width: 120px;
+      max-height: 120px;
+      border-radius: 50%;
+    }
+  }
+}
+
+.c-user-info {
+  width: 70%;
+  display: flex;
+  padding: 12px;
+  justify-content: space-around;
+  &__bio {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    span {
+      &:first-child {
+        font-size: 1.3em;
+        font-weight: bold;
+      }
+      font-size: 1em;
+      line-height: 1.4em;
+    }
+    i {
+      font-size: 16px;
+      margin-right: 24px;
+    }
+  }
+
+
+  &__stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+
+  &__stat {
+    width: 100px;
+    height: 100px;
+    margin: 0 12px;
+    border: 1px solid $borderColor;
+    &-label {
+      background: $coolRed;
+      color: white;
+    }
+    span:last-child {
+      color: $notSoDark;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    span {
+      padding: 12px;
+      display: inline-block;
+      width: 100%;
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+}

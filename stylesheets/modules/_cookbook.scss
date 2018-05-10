@@ -1,0 +1,69 @@
+.c-new-recipe {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    width: 80%;
+    fieldset {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      width: 80%;
+      margin: 0 auto;
+      padding: 12px;
+      input, textarea {
+        border: 1px solid $borderColor;
+        padding: 12px;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+
+.c-user-recipes {
+  &__list {
+    list-style-type: none;
+  }
+
+  &__list-item {
+    display: flex;
+    padding: 12px;
+    border-bottom: 1px solid $borderColor;
+    img {
+      width: 300px;
+      height: 260px;
+    }
+  }
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+  }
+
+  &__right {
+    width: 60%;
+  }
+}
+
+
+.c-ingredient-list {
+  padding: 12px;
+  border-bottom: 1px solid $borderColor;
+}

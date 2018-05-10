@@ -1,0 +1,24 @@
+.c-header {
+  background: $coolRed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  color: white;
+  h1 {
+    width: 50%;
+    margin-left: 12px;
+  }
+  &__nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
+  }
+
+  &__nav-item {
+    color: white;
+    text-decoration: none;
+  }
+
+}

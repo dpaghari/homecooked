@@ -13,6 +13,7 @@ export default class Home extends React.Component {
   render() {
 
     let { appState, updateAppState } = this.props;
+    console.log(appState);
 
     if(appState.loggedIn)
       return <Dashboard updateAppState={updateAppState} appState={appState} />;
