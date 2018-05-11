@@ -9,12 +9,12 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
+      loggedIn: true,
       currentPage: 'Home',
       currentUser: {
-        // user_id: 2,
-        // name: 'Daniel',
-        // profile_picture: 'https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/31131270_10214106691836126_6397608758125527040_n.jpg?_nc_cat=0&oh=aed28f41fa138de102820680eb3d9a8a&oe=5B957335'
+        user_id: 2,
+        name: 'Daniel',
+        profile_picture: 'https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/31131270_10214106691836126_6397608758125527040_n.jpg?_nc_cat=0&oh=aed28f41fa138de102820680eb3d9a8a&oe=5B957335'
       }
     };
   }
