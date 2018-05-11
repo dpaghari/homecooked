@@ -16,7 +16,8 @@ export default class Cookbook extends React.Component {
         description: '',
         ingredients: [],
         instructions: []
-      }
+      },
+      currentStep: 0
     };
   }
 
@@ -38,7 +39,6 @@ export default class Cookbook extends React.Component {
 
   render () {
     let { appState, updateAppState } = this.props;
-    console.log(this.state);
     if(appState.loggedIn){
       return (
         <section class="c-cookbook">
@@ -62,37 +62,12 @@ export default class Cookbook extends React.Component {
     );
   }
   renderNewRecipeForm() {
-    console.log(this.state.showNewRecipeForm);
     if(this.state.showNewRecipeForm) {
       return (
         <div class="c-new-recipe">
           <button onClick={this.handleToggleNewRecipeForm.bind(this)}>Close</button>
           <form class="c-new-recipe__form" onSubmit={this.handleAddNewRecipe.bind(this)}>
-            <fieldset>
-              <label for="recipeName">Recipe Name</label>
-              <input type="text" ref="recipeName" placeholder="Recipe Name" required/>
-              <label for="recipeImage">Recipe Image URL</label>
-              <input type="text" ref="recipeImage" placeholder="Recipe Image URL" required/>
-              <label for="recipeCookTime">Cooking Time</label>
-              <input type="text" ref="recipeCookTime" placeholder="Cooking Time" required/>
-              <label for="recipeServing">Serves How many?</label>
-              <input type="text" ref="recipeServing" placeholder="Serving Size" required/>
-              <label for="recipeDescription">Description</label>
-              <textarea cols="100" rows="6" ref="recipeDescription" placeholder="Description" required/>
-            </fieldset>
-            <fieldset>
-              <label for="recipeIngredient">Ingredient Name</label>
-              <input type="text" ref="recipeIngredient" placeholder="Ingredient"/>
-              <label for="recipeIngQty">Ingredient Quantity</label>
-              <input type="text" ref="recipeIngQty" placeholder="Qty"/>
-              <button type="button" class="c-new-recipe__add-ingredient" onClick={this.handleAddIngredient.bind(this)}>Add Ingredient</button>
-            </fieldset>
-            <fieldset>
-              <label for="recipeInstruction">Instruction</label>
-              <input type="text" ref="recipeInstruction" placeholder="Chop up garlic"/>
-              <button type="button" class="c-new-recipe__add-instruction" onClick={this.handleAddInstruction.bind(this)}>Add Instruction</button>
-            </fieldset>
-            <button class="c-new-recipe__submit" type="submit">Add To Cookbook</button>
+            { this.renderCurrFieldSet() }
           </form>
 
           {/*this.renderNewRecipePreview()*/}
@@ -101,6 +76,72 @@ export default class Cookbook extends React.Component {
     }
     else {
       return null;
+    }
+  }
+
+  renderCurrFieldSet() {
+    const { currentStep } = this.state;
+    if(currentStep === 0) {
+      return (
+        <fieldset class="c-new-recipe__step--one">
+          <label for="recipeName">Recipe Name</label>
+          <input type="text" ref="recipeName" placeholder="Recipe Name" required/>
+          <label for="recipeImage">Recipe Image URL</label>
+          <input type="text" ref="recipeImage" placeholder="Recipe Image URL" required/>
+          <label for="recipeCookTime">Cooking Time</label>
+          <input type="text" ref="recipeCookTime" placeholder="Cooking Time" required/>
+          <label for="recipeServing">Serves How many?</label>
+          <input type="text" ref="recipeServing" placeholder="Serving Size" required/>
+          <label for="recipeDescription">Description</label>
+          <textarea cols="100" rows="6" ref="recipeDescription" placeholder="Description" required/>
+          <button type="button" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </fieldset>
+      );
+    }
+    else if(currentStep === 1) {
+      return (
+        <fieldset class="c-new-recipe__step--two">
+          <label for="recipeIngredient">Ingredient Name</label>
+          <input type="text" ref="recipeIngredient" placeholder="Ingredient"/>
+          <label for="recipeIngQty">Ingredient Quantity</label>
+          <input type="text" ref="recipeIngQty" placeholder="Qty"/>
+          <button type="button" class="c-new-recipe__add-ingredient" onClick={this.handleAddIngredient.bind(this)}>Add Ingredient</button>
+          <button type="button" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </fieldset>
+      );
+    }
+    else if(currentStep === 2) {
+      return (
+        <fieldset class="c-new-recipe__step--one">
+          <label for="recipeInstruction">Instruction</label>
+          <input type="text" ref="recipeInstruction" placeholder="Chop up garlic"/>
+          <button type="button" class="c-new-recipe__add-instruction" onClick={this.handleAddInstruction.bind(this)}>Add Instruction</button>
+          <button type="button" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+          <button class="c-new-recipe__submit" type="submit">Add To Cookbook</button>
+        </fieldset>
+      );
+    }
+  }
+
+
+  handleClickNext() {
+    let { currentStep } = this.state;
+    if(currentStep < 2) {
+      this.state.currentStep++;
+      this.setState({
+        currentStep: this.state.currentStep
+      });
+    }
+    else {
+      this.setState({
+        currentStep: 0
+      });
     }
   }
 
@@ -198,7 +239,6 @@ export default class Cookbook extends React.Component {
 
   renderRecipesList() {
     let recipes = this.state.userRecipes;
-    console.log(recipes);
     if(recipes.length > 0) {
       return recipes.map((recipe, idx) => {
         recipe.ingredients = typeof recipe.ingredients === 'string' ? JSON.parse(recipe.ingredients) : recipe.ingredients;
