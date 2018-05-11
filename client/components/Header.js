@@ -28,5 +28,6 @@ export default class Header extends React.Component {
       currentPage: 'Home',
       currentUser: {}
     });
+    window.location = '/';
   }
 }

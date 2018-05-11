@@ -109,6 +109,24 @@ var ApiManager = (function(dbWrapper) {
 
   }
 
+  function getGlobalRecipes(userInfo, callback) {
+    let recipes = [];
+    let { user_id } = userInfo;
+    let { db } = dbWrapper;
+
+    db.getConnection(function(err, connection) {
+
+      connection.query('SELECT * from `recipes` where `user_id` != ?', [user_id], (err, rows, fields) => {
+        if(err) throw err;
+        recipes = rows;
+        connection.release();
+        if(typeof callback === "function") {
+          callback(recipes);
+        }
+      });
+    });
+  }
+
   function getUserRecipes(userInfo, callback) {
     let recipes = [];
     let { user_id } = userInfo;
@@ -273,6 +291,7 @@ var ApiManager = (function(dbWrapper) {
     getRecipes,
     getRecipe,
     getUserRecipes,
+    getGlobalRecipes,
     getUserMealPlan,
     addRecipe,
     addIngredient,

@@ -109,6 +109,13 @@ app.post('/api/get_user_recipes', upload.array(), function(req, res, next) {
     res.json(data);
   });
 });
+app.post('/api/get_global_recipes', upload.array(), function(req, res, next) {
+  var userInfo = req.body;
+  ApiManager.getGlobalRecipes(userInfo, function(data) {
+    //console.log(data);
+    res.json(data);
+  });
+});
 app.post('/api/get_user_mealplan', upload.array(), function(req, res, next) {
   var userInfo = req.body;
   ApiManager.getUserMealPlan(userInfo, function(data) {

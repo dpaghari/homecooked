@@ -13,15 +13,23 @@ export default class Explore extends React.Component {
 
 
   componentWillMount() {
-    this.getAllRecipes();
+    let { appState } = this.props;
+    console.log(appState);
+    let userId = appState.currentUser.user_id;
+    this.getGlobalRecipes(userId);
   }
 
-  getAllRecipes() {
-    axios.get('/api/get_recipes').then((response) => {
-      console.log(response);
-      this.setState({
-        global_recipes: response.data
-      })
+  getGlobalRecipes(userId) {
+    axios.post('/api/get_global_recipes', {
+      user_id: userId
+    })
+    .then((response) => {
+
+      if(response.data.length) {
+        this.setState({
+          global_recipes: response.data
+        });
+      }
     });
   }
 
