@@ -5,10 +5,8 @@ const Autoprefixer = require('autoprefixer');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
-const mode = "development";
-// const mode = "production";
 module.exports = {
-  mode,
+  // mode,
   devtool: 'inline-source-map',
   entry: {
     client: [
@@ -72,8 +70,7 @@ module.exports = {
         {
           loader: 'sass-loader',
           options: {
-            sourceMap: mode === 'development',
-            // includePaths: NodeNeat.includePaths,
+            sourceMap: mode === 'development'
           },
         }
       ]
