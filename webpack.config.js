@@ -10,24 +10,31 @@ const mode = "development";
 module.exports = {
   mode,
   devtool: 'inline-source-map',
-  entry: [
-    './stylesheets/style.scss',
-    './client/index.js'
-  ],
+  entry: {
+    client: [
+      './src/js/client/index.js',
+      './src/stylesheets/style.scss'
+    ]
+  },
   output: {
     path: path.join(__dirname, 'public'),
-    filename: 'client.min.js'
+    filename: '[name].min.js'
   },
+  // node: {
+  //   fs: 'empty',
+  //   net: 'empty',
+  //   tls: 'empty'
+  // },
   resolve: {
     alias: {
       'waypoints': 'waypoints/lib/jquery.waypoints.js'
     },
-    extensions: ['.js', '.scss']
+    extensions: ['.js', '.scss', 'sass', 'jsx']
   },
   module: {
     rules: [
     {
-      test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"
+      test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader"
     },
     {
       test: /\.css$/,

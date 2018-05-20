@@ -4,7 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "concurrently 'webpack --watch --progress' 'nodemon server/server.js'",
+    "start": "concurrently 'webpack --watch --progress' 'nodemon src/js/server/server.js'",
     "pack:dev": "webpack -d --progress",
     "pack:prod": "webpack -p --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
