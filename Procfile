@@ -1,1 +1,1 @@
-web: node ./server/server.js
+web: node ./public/server/server.js
