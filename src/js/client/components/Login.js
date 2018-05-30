@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import { getCookie, setCookie } from '../../util';
+
 // import Footer from './Footer';
 
 export default class Login extends React.Component {
@@ -84,33 +86,34 @@ export default class Login extends React.Component {
   }
 
   handleSubmitLogin(e) {
-      e.preventDefault();
-      let { userName, userPassword } = this.refs;
-      let userCreds = {
-        'action': 'login',
-        'user_name': userName.value,
-        'password': userPassword.value
-      };
-      axios.post('/', userCreds).then((response) => {
-        if(typeof response.data.appState.error === 'undefined') {
-          let { loggedIn, currentPage, currentUser } = response.data.appState;
+    e.preventDefault();
+    let { userName, userPassword } = this.refs;
+    let userCreds = {
+      'action': 'login',
+      'user_name': userName.value,
+      'password': userPassword.value
+    };
+    axios.post('/', userCreds).then((response) => {
+      if(typeof response.data.appState.error === 'undefined') {
+        let { loggedIn, currentPage, currentUser } = response.data.appState;
+        setCookie('isLoggedIn', true);
+        setCookie('currentUser', JSON.stringify(currentUser));
+        this.props.updateAppState({
+          loggedIn,
+          currentPage,
+          currentUser
+        });
+      }
+      else {
+        userName.focus();
+        this.setState({errorMsg: response.data.appState.error});
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
-          this.props.updateAppState({
-            loggedIn,
-            currentPage,
-            currentUser
-          });
-        }
-        else {
-          userName.focus();
-          this.setState({errorMsg: response.data.appState.error});
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-      this.refs.userName.value = this.refs.userPassword.value = "";
+    this.refs.userName.value = this.refs.userPassword.value = "";
   }
 
   handleSubmitRegister(e) {

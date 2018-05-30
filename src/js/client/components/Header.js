@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { setCookie, getCookie } from '../../util.js';
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export default class Header extends React.Component {
 
   handleLogoutUser(e) {
     e.preventDefault();
+    setCookie('isLoggedIn', false);
     this.props.updateAppState({
       loggedIn: false,
       currentPage: 'Home',

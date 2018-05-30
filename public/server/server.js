@@ -1,3 +1,6 @@
+const path = require('path');
+
+
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
@@ -11,11 +14,11 @@ const upload = multer(); // for parsing multipart/form-data
 const ApiManager = require("./ApiManager.js");
 
 const initialState = {
-  loggedIn: true,
+  loggedIn: false,
   currentUser: {
-    name: "Daniel",
-    user_id: 2,
-    profile_picture: "https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/31131270_10214106691836126_6397608758125527040_n.jpg?_nc_cat=0&oh=aed28f41fa138de102820680eb3d9a8a&oe=5B957335"
+    // name: "Daniel",
+    // user_id: 2,
+    // profile_picture: "https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/31131270_10214106691836126_6397608758125527040_n.jpg?_nc_cat=0&oh=aed28f41fa138de102820680eb3d9a8a&oe=5B957335"
   },
   // currentPage: "Home"
 };
@@ -30,14 +33,13 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 //############
 // ROUTING
 //############
-app.get('/', function(req, res) {
-  appState = Object.assign({}, appState);
-  //console.log(appState);
-  res.send('index.html', appState);
-});
-app.get('/cookbook', function(req, res) {
-  appState = Object.assign({}, appState);
-  res.send('index.html', appState);
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
 });
 
 //############

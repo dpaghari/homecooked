@@ -1,4 +1,4 @@
-.c-new-recipe {
+.l-modal {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -9,7 +9,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
 
+
+.c-new-recipe {
   &__form {
     display: flex;
     flex-direction: column;
@@ -35,6 +38,17 @@
         margin: 0 auto;
       }
     }
+  }
+}
+
+.c-recipe-detail {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    width: 60%;
+    padding: 24px;
   }
 }
 

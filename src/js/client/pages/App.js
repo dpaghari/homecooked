@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { setCookie, getCookie, checkCookie } from '../../util.js';
 
 import Header from '../components/Header';
 // import Footer from '../components/Footer';
@@ -9,32 +10,39 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: true,
+      loggedIn: false,
       currentPage: 'Home',
-      currentUser: {
-        user_id: 2,
-        name: 'Daniel',
-        profile_picture: 'https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/31131270_10214106691836126_6397608758125527040_n.jpg?_nc_cat=0&oh=aed28f41fa138de102820680eb3d9a8a&oe=5B957335'
-      }
+      currentUser: {}
     };
   }
 
-  componentWillMount() {}
-  componentDidMount() {}
+  componentWillMount() {
+    const isLoggedIn = JSON.parse(getCookie('isLoggedIn'));
+    if(isLoggedIn) {
+      this.setState({
+        loggedIn: true,
+        currentUser: JSON.parse(getCookie('currentUser'))
+      });
+    }
+  }
+  componentDidMount() {
+
+  }
 
   render() {
     // this.props.children = React Router route component
     // pass the appState to the route component
     let page = React.cloneElement(this.props.children, {
-    appState: this.state,
-    updateAppState: this.updateAppState.bind(this)
+      appState: this.state,
+      updateAppState: this.updateAppState.bind(this)
     });
 
     return (
       <main>
         <Header updateAppState={this.updateAppState.bind(this)}/>
           {page}
-      </main>);
+      </main>
+    );
   }
 
   updateAppState(newState) {

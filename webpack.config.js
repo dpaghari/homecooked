@@ -5,6 +5,8 @@ const Autoprefixer = require('autoprefixer');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
+// const mode = "development";
+// const mode = "production";
 module.exports = {
   // mode,
   devtool: 'inline-source-map',
@@ -51,14 +53,14 @@ module.exports = {
           loader: 'css-loader',
           options: {
             minimize: true,
-            sourceMap: mode === 'development',
+            // sourceMap: mode === 'development',
             importLoaders: 3,
           },
         },
         {
           loader: 'postcss-loader',
           options: {
-            sourceMap: mode === 'development',
+            // sourceMap: mode === 'development',
             plugins: () => [
               Autoprefixer(),
             ],
@@ -70,7 +72,8 @@ module.exports = {
         {
           loader: 'sass-loader',
           options: {
-            sourceMap: mode === 'development'
+            // sourceMap: mode === 'development',
+            // includePaths: NodeNeat.includePaths,
           },
         }
       ]

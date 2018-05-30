@@ -8,7 +8,13 @@ export default class Cookbook extends React.Component {
     super(props);
     this.state = {
       userRecipes: [],
-      showNewRecipeForm: false,
+      addRecipeForm: {
+        isActive: false
+      },
+      recipeDetail: {
+        isActive: false,
+        recipe: {}
+      },
       newRecipe: {
         name: '',
         cook_time: '',
@@ -55,17 +61,18 @@ export default class Cookbook extends React.Component {
   renderCookbookPage() {
     return (
       <div class="c-cookbook__page">
-        <a onClick={this.handleToggleNewRecipeForm.bind(this)} class="c-cookbook__nav-item" href="#">Add New Recipe</a>
-        {this.renderNewRecipeForm()}
+        <a onClick={this.handleToggleaddRecipeForm.bind(this)} class="c-cookbook__nav-item" href="#">Add New Recipe</a>
+        {this.renderaddRecipeForm()}
         {this.renderUserRecipes()}
+        {this.renderRecipeDetail()}
       </div>
     );
   }
-  renderNewRecipeForm() {
-    if(this.state.showNewRecipeForm) {
+  renderaddRecipeForm() {
+    if(this.state.addRecipeForm.isActive) {
       return (
-        <div class="c-new-recipe">
-          <button onClick={this.handleToggleNewRecipeForm.bind(this)}>Close</button>
+        <div class="c-new-recipe l-modal">
+          <button onClick={this.handleToggleaddRecipeForm.bind(this)}>Close</button>
           <form class="c-new-recipe__form" onSubmit={this.handleAddNewRecipe.bind(this)}>
             { this.renderCurrFieldSet() }
           </form>
@@ -77,6 +84,29 @@ export default class Cookbook extends React.Component {
     else {
       return null;
     }
+  }
+
+  renderRecipeDetail() {
+    let { recipeDetail } = this.state;
+    let { recipe, isActive, idx } = recipeDetail;
+    if(isActive) {
+      return (
+        <div class="c-recipe-detail l-modal">
+          <div class="c-recipe-detail__wrapper">
+            <div class="c-user-recipes__actions">
+              <a onClick={ this.deleteRecipe.bind(this, recipe.recipe_id, idx) } href="#">Delete</a>
+            </div>
+            <ul class="c-ingredient-list">
+              { this.renderIngredientList(recipe.ingredients) }
+            </ul>
+            <ol class="c-instruction-list">
+              { this.renderInstructionsList(recipe.instructions) }
+            </ol>
+          </div>
+        </div>
+      );
+    }
+    else return null;
   }
 
   renderCurrFieldSet() {
@@ -250,7 +280,7 @@ export default class Cookbook extends React.Component {
     recipe.instructions = typeof recipe.instructions === 'string' ? JSON.parse(recipe.instructions) : recipe.instructions;
     let imgUrl = recipe.recipe_image ? recipe.recipe_image : './img/cooking.jpeg';
     return (
-      <li key={idx} class="c-user-recipes__list-item">
+      <li onClick={this.handleToggleRecipeDetail.bind(this, recipe, idx)} key={idx} class="c-user-recipes__list-item">
         <div class="c-user-recipes__left">
           <strong>{recipe.name}</strong>
           <img src={imgUrl} alt={recipe.name} />
@@ -258,20 +288,12 @@ export default class Cookbook extends React.Component {
           <p>Serving Size: {recipe.serving_size}</p>
           <p>Description: {recipe.blurb}</p>
         </div>
-        {/*<div class="c-user-recipes__right">
-          <div class="c-user-recipes__actions">
-            <a onClick={ this.deleteRecipe.bind(this, recipe.recipe_id, idx) } href="#">Delete</a>
-          </div>
-          <ul class="c-ingredient-list">
-            { this.renderIngredientList(recipe.ingredients) }
-          </ul>
-          <ol class="c-instruction-list">
-            { this.renderInstructionsList(recipe.instructions) }
-          </ol>
-        </div>*/}
+
       </li>
     );
   }
+
+
 
   deleteRecipe(recipeId, recipeIndex) {
     axios.post('/api/delete_recipe', {recipe_id: recipeId})
@@ -311,10 +333,20 @@ export default class Cookbook extends React.Component {
     else return null;
   }
 
-  handleToggleNewRecipeForm(e) {
+  handleToggleaddRecipeForm(e) {
     e.preventDefault();
     this.setState({
-      showNewRecipeForm: !this.state.showNewRecipeForm
+      addRecipeForm: !this.state.addRecipeForm.isActive
+    });
+  }
+  handleToggleRecipeDetail(recipe, idx, e) {
+    e.preventDefault();
+    this.setState({
+      recipeDetail: {
+        isActive: !this.state.recipeDetail.isActive,
+        recipe,
+        idx
+      }
     });
   }
 
