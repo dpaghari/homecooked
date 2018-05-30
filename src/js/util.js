@@ -19,14 +19,3 @@ export function getCookie(cname) {
     }
     return "";
 }
-
-export function checkCookie(key, value) {
-    var cookie = getCookie(key);
-    if (key != "") {
-      return cookie;
-    } else {
-      if (cookie != "" && cookie != null) {
-        setCookie(key, cookie, 365);
-      }
-    }
-}

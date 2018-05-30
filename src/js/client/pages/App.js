@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { setCookie, getCookie, checkCookie } from '../../util.js';
+import { setCookie, getCookie } from '../../util.js';
 
 import Header from '../components/Header';
 // import Footer from '../components/Footer';
@@ -17,11 +17,18 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    const isLoggedIn = JSON.parse(getCookie('isLoggedIn'));
+
+    const isLoggedIn = getCookie('isLoggedIn') ? JSON.parse(getCookie('isLoggedIn')) : false;
     if(isLoggedIn) {
       this.setState({
         loggedIn: true,
         currentUser: JSON.parse(getCookie('currentUser'))
+      });
+    }
+    else {
+      this.setState({
+        loggedIn: false,
+        currentUser: {}
       });
     }
   }

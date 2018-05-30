@@ -64,7 +64,7 @@ export default class Login extends React.Component {
   }
 
   renderErrorMsg() {
-    console.log(this.state.errorMsg);
+
     if(this.state.errorMsg === null) return null;
     setTimeout(() => {
       this.setState({errorMsg: null});
@@ -132,7 +132,7 @@ export default class Login extends React.Component {
 
         if(response.data.appState) {
           let { loggedIn, currentPage, currentUser } = response.data.appState;
-          console.log(response);
+
           this.props.updateAppState({
             loggedIn,
             currentPage,
