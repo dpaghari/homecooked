@@ -1,5 +1,6 @@
 import React from 'react';
 import Login from '../components/Login';
+import Recipe from '../components/Recipe';
 
 import axios from 'axios';
 
@@ -89,24 +90,17 @@ export default class Cookbook extends React.Component {
   renderRecipeDetail() {
     let { recipeDetail } = this.state;
     let { recipe, isActive, idx } = recipeDetail;
-    if(isActive) {
-      return (
-        <div class="c-recipe-detail l-modal">
-          <div class="c-recipe-detail__wrapper">
-            <div class="c-user-recipes__actions">
-              <a onClick={ this.deleteRecipe.bind(this, recipe.recipe_id, idx) } href="#">Delete</a>
-            </div>
-            <ul class="c-ingredient-list">
-              { this.renderIngredientList(recipe.ingredients) }
-            </ul>
-            <ol class="c-instruction-list">
-              { this.renderInstructionsList(recipe.instructions) }
-            </ol>
-          </div>
-        </div>
-      );
-    }
-    else return null;
+    console.log(isActive);
+    return (
+      <Recipe
+        recipe={recipe}
+        isActive={isActive}
+        renderIngredientList={this.renderIngredientList.bind(this)}
+        renderInstructionsList={this.renderInstructionsList.bind(this)}
+        deleteRecipe={this.deleteRecipe.bind(this, recipe.recipe_id, idx)}
+        handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this, recipe, idx) }
+      />
+    );
   }
 
   renderCurrFieldSet() {
@@ -339,8 +333,7 @@ export default class Cookbook extends React.Component {
       addRecipeForm: !this.state.addRecipeForm.isActive
     });
   }
-  handleToggleRecipeDetail(recipe, idx, e) {
-    e.preventDefault();
+  handleToggleRecipeDetail(recipe, idx) {
     this.setState({
       recipeDetail: {
         isActive: !this.state.recipeDetail.isActive,
