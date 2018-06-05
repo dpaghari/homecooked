@@ -90,14 +90,13 @@ export default class Cookbook extends React.Component {
   renderRecipeDetail() {
     let { recipeDetail } = this.state;
     let { recipe, isActive, idx } = recipeDetail;
-    console.log(isActive);
     return (
       <Recipe
         recipe={recipe}
         isActive={isActive}
         renderIngredientList={this.renderIngredientList.bind(this)}
         renderInstructionsList={this.renderInstructionsList.bind(this)}
-        deleteRecipe={this.deleteRecipe.bind(this, recipe.recipe_id, idx)}
+        deleteRecipe={this.deleteRecipe.bind(this, recipe, idx)}
         handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this, recipe, idx) }
       />
     );
@@ -270,17 +269,28 @@ export default class Cookbook extends React.Component {
   }
 
   renderRecipe(recipe, idx) {
+
+    let { appState } = this.props;
+    console.log(recipe);
+    console.log(appState.currentUser);
+    const profile_picture = appState.currentUser.profile_picture;
+
     recipe.ingredients = typeof recipe.ingredients === 'string' ? JSON.parse(recipe.ingredients) : recipe.ingredients;
     recipe.instructions = typeof recipe.instructions === 'string' ? JSON.parse(recipe.instructions) : recipe.instructions;
     let imgUrl = recipe.recipe_image ? recipe.recipe_image : './img/cooking.jpeg';
     return (
       <li onClick={this.handleToggleRecipeDetail.bind(this, recipe, idx)} key={idx} class="c-user-recipes__list-item">
-        <div class="c-user-recipes__left">
-          <strong>{recipe.name}</strong>
-          <img src={imgUrl} alt={recipe.name} />
-          <p>Cooking Time: {recipe.cooking_time}</p>
-          <p>Serving Size: {recipe.serving_size}</p>
-          <p>Description: {recipe.blurb}</p>
+        <div class="c-user-recipes__wrapper">
+          <img class="c-user-recipes__image" src={imgUrl} alt={recipe.name} />
+          <div class="c-user-recipes__info">
+            <strong>{recipe.name}</strong>
+            <div class="c-user-recipes__user-lockup">
+              <img src={profile_picture} class="c-user-recipes__user-image"/>
+              <span class="c-user-recipes__cook-time">{recipe.cooking_time}</span>
+              <span class="c-user-recipes__serving-size">{recipe.serving_size}</span>
+            </div>
+            <p>Description: {recipe.blurb}</p>
+          </div>
         </div>
 
       </li>
@@ -289,11 +299,12 @@ export default class Cookbook extends React.Component {
 
 
 
-  deleteRecipe(recipeId, recipeIndex) {
-    axios.post('/api/delete_recipe', {recipe_id: recipeId})
+  deleteRecipe(recipe, recipeIndex) {
+    axios.post('/api/delete_recipe', {recipe_id: recipe.recipe_id})
     .then((response) => {
       this.state.userRecipes.splice(recipeIndex, 1);
       this.setState({userRecipes: this.state.userRecipes});
+      this.handleToggleRecipeDetail(recipe, recipeIndex)
     })
     .catch((err) => {
       throw err;
