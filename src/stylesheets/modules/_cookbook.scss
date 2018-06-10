@@ -1,3 +1,18 @@
+.c-cookbook {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    text-align: center;
+  }
+  &__nav-item {
+    text-align: center;
+  }
+}
+
+
+
 .l-modal {
   position: fixed;
   top: 0;

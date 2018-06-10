@@ -20,7 +20,7 @@ export default class Recipe extends React.Component {
 
     const imgUrl = recipe_image ? recipe_image : './img/cooking.jpeg';
 
-    console.log(this.props.recipe);
+    
     if(isActive) {
       return (
         <div class="c-recipe-detail l-modal">

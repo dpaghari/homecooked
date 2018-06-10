@@ -14,7 +14,7 @@ export default class Explore extends React.Component {
 
   componentWillMount() {
     let { appState } = this.props;
-    console.log(appState);
+
     let userId = appState.currentUser.user_id;
     this.getGlobalRecipes(userId);
   }
@@ -35,7 +35,7 @@ export default class Explore extends React.Component {
 
   renderRecipesList() {
     let recipes = this.state.global_recipes;
-    console.log(recipes);
+
     if(recipes.length > 0) {
       return recipes.map((recipe, idx) => {
         recipe.ingredients = typeof recipe.ingredients === 'string' ? JSON.parse(recipe.ingredients) : recipe.ingredients;
@@ -102,7 +102,7 @@ export default class Explore extends React.Component {
   renderInstructionsList(instructions) {
     if(instructions !== null && instructions.length > 0) {
       return instructions.map((step, idx) => {
-        console.log(step);
+
         return (
           <li key={idx} class="c-instruction">
             <p>{step}</p>

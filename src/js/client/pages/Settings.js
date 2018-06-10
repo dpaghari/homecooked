@@ -10,7 +10,6 @@ export default class Settings extends React.Component {
   }
 
   render () {
-    console.log(this.props);
     let { appState, updateAppState } = this.props;
     if(appState.loggedIn) {
       return (

@@ -1,6 +1,8 @@
 import React from 'react';
+
 import Login from '../components/Login';
 import Recipe from '../components/Recipe';
+import RecipeForm from '../components/RecipeForm';
 
 import axios from 'axios';
 
@@ -9,22 +11,13 @@ export default class Cookbook extends React.Component {
     super(props);
     this.state = {
       userRecipes: [],
-      addRecipeForm: {
+      recipeForm: {
         isActive: false
       },
       recipeDetail: {
         isActive: false,
         recipe: {}
       },
-      newRecipe: {
-        name: '',
-        cook_time: '',
-        serving_size: '',
-        description: '',
-        ingredients: [],
-        instructions: []
-      },
-      currentStep: 0
     };
   }
 
@@ -44,145 +37,42 @@ export default class Cookbook extends React.Component {
     });
   }
 
+  updateRecipes(newRecipes) {
+    this.setState({recipeForm: newRecipes});
+  }
+
   render () {
     let { appState, updateAppState } = this.props;
+    let { recipe, isActive, idx } = this.state.recipeDetail;
+    console.log(this.state);
     if(appState.loggedIn){
       return (
         <section class="c-cookbook">
         <h1>Cookbook</h1>
-        {this.renderCookbookPage()}
+        <a onClick={this.handleToggleRecipeForm.bind(this)} class="c-cookbook__nav-item" href="#">Add New Recipe</a>
+        <div class="c-cookbook__page">
+          {this.renderUserRecipes()}
+          <Recipe
+            recipe={recipe}
+            isActive={isActive}
+            renderIngredientList={this.renderIngredientList}
+            renderInstructionsList={this.renderInstructionsList}
+            deleteRecipe={this.deleteRecipe.bind(this, recipe, idx)}
+            handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this, recipe, idx) }
+          />
+        </div>
+        <RecipeForm renderInstructionsList={this.renderInstructionsList}
+                    renderIngredientList={this.renderIngredientList}
+                    isActive={this.state.recipeForm.isActive}
+                    userRecipes={this.state.userRecipes}
+                    updateRecipes={this.updateRecipes.bind(this)}
+                    handleToggleRecipeForm={this.handleToggleRecipeForm.bind(this)} />
         </section>
       );
     }
     else {
       return <Login updateAppState={updateAppState.bind(this)} />;
     }
-  }
-
-  renderCookbookPage() {
-    return (
-      <div class="c-cookbook__page">
-        <a onClick={this.handleToggleaddRecipeForm.bind(this)} class="c-cookbook__nav-item" href="#">Add New Recipe</a>
-        {this.renderaddRecipeForm()}
-        {this.renderUserRecipes()}
-        {this.renderRecipeDetail()}
-      </div>
-    );
-  }
-  renderaddRecipeForm() {
-    if(this.state.addRecipeForm.isActive) {
-      return (
-        <div class="c-new-recipe l-modal">
-          <button onClick={this.handleToggleaddRecipeForm.bind(this)}>Close</button>
-          <form class="c-new-recipe__form" onSubmit={this.handleAddNewRecipe.bind(this)}>
-            { this.renderCurrFieldSet() }
-          </form>
-
-          { this.renderNewRecipePreview() }
-        </div>
-      );
-    }
-    else {
-      return null;
-    }
-  }
-
-  renderRecipeDetail() {
-    let { recipeDetail } = this.state;
-    let { recipe, isActive, idx } = recipeDetail;
-    return (
-      <Recipe
-        recipe={recipe}
-        isActive={isActive}
-        renderIngredientList={this.renderIngredientList.bind(this)}
-        renderInstructionsList={this.renderInstructionsList.bind(this)}
-        deleteRecipe={this.deleteRecipe.bind(this, recipe, idx)}
-        handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this, recipe, idx) }
-      />
-    );
-  }
-
-  renderCurrFieldSet() {
-    const { currentStep } = this.state;
-    if(currentStep === 0) {
-      return (
-        <fieldset class="c-new-recipe__step--one">
-          <label for="recipeName">Recipe Name</label>
-          <input type="text" ref="recipeName" placeholder="Recipe Name" required/>
-          <label for="recipeImage">Recipe Image URL</label>
-          <input type="text" ref="recipeImage" placeholder="Recipe Image URL" required/>
-          <label for="recipeCookTime">Cooking Time</label>
-          <input type="text" ref="recipeCookTime" placeholder="Cooking Time" required/>
-          <label for="recipeServing">Serves How many?</label>
-          <input type="text" ref="recipeServing" placeholder="Serving Size" required/>
-          <label for="recipeDescription">Description</label>
-          <textarea cols="100" rows="6" ref="recipeDescription" placeholder="Description" required/>
-          <button type="button" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
-            <i class="fas fa-arrow-right"></i>
-          </button>
-        </fieldset>
-      );
-    }
-    else if(currentStep === 1) {
-      return (
-        <fieldset class="c-new-recipe__step--two">
-          <label for="recipeIngredient">Ingredient Name</label>
-          <input type="text" ref="recipeIngredient" placeholder="Ingredient"/>
-          <label for="recipeIngQty">Ingredient Quantity</label>
-          <input type="text" ref="recipeIngQty" placeholder="Qty"/>
-          <button type="button" class="c-new-recipe__add-ingredient" onClick={this.handleAddIngredient.bind(this)}>Add Ingredient</button>
-          <button type="button" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
-            <i class="fas fa-arrow-right"></i>
-          </button>
-        </fieldset>
-      );
-    }
-    else if(currentStep === 2) {
-      return (
-        <fieldset class="c-new-recipe__step--one">
-          <label for="recipeInstruction">Instruction</label>
-          <input type="text" ref="recipeInstruction" placeholder="Chop up garlic"/>
-          <button type="button" class="c-new-recipe__add-instruction" onClick={this.handleAddInstruction.bind(this)}>Add Instruction</button>
-          <button type="button" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
-            <i class="fas fa-arrow-right"></i>
-          </button>
-          <button class="c-new-recipe__submit" type="submit">Add To Cookbook</button>
-        </fieldset>
-      );
-    }
-  }
-
-
-  handleClickNext() {
-    let { currentStep } = this.state;
-    if(currentStep < 2) {
-      this.state.currentStep++;
-      this.setState({
-        currentStep: this.state.currentStep
-      });
-    }
-    else {
-      this.setState({
-        currentStep: 0
-      });
-    }
-  }
-
-
-  renderNewRecipePreview() {
-    return (
-      <div class="c-new-recipe__preview">
-      <strong>Ingredients</strong>
-      <ul class="c-ingredient-list">
-        { this.renderIngredientList(this.state.newRecipe.ingredients) }
-      </ul>
-
-      <strong>Instructions</strong>
-      <ol class="c-instruction-list">
-        { this.renderInstructionsList(this.state.newRecipe.instructions) }
-      </ol>
-      </div>
-    );
   }
 
   renderUserRecipes() {
@@ -200,66 +90,6 @@ export default class Cookbook extends React.Component {
     }
   }
 
-
-  handleAddIngredient() {
-    let { recipeIngredient, recipeIngQty } = this.refs;
-    let newIngredient = {
-      name: recipeIngredient.value,
-      quantity: recipeIngQty.value
-    };
-
-    this.state.newRecipe.ingredients.push(newIngredient);
-    this.state.newRecipe = Object.assign({}, this.state.newRecipe, {ingredients: this.state.newRecipe.ingredients});
-    this.setState({
-      newRecipe: this.state.newRecipe
-    });
-
-    recipeIngredient.value = recipeIngQty.value = "";
-    recipeIngredient.focus();
-  }
-
-  handleAddInstruction() {
-    let { recipeInstruction } = this.refs;
-    let newInstruction = recipeInstruction.value;
-
-    this.state.newRecipe.instructions.push(newInstruction);
-    this.state.newRecipe = Object.assign({}, this.state.newRecipe, {instructions: this.state.newRecipe.instructions});
-    this.setState({
-      newRecipe: this.state.newRecipe
-    });
-    recipeInstruction.value = "";
-    recipeInstruction.focus();
-  }
-
-  handleAddNewRecipe(e) {
-    e.preventDefault();
-    let { recipeName, recipeCookTime, recipeServing, recipeDescription, recipeImage } = this.refs;
-    let ingredients = this.state.newRecipe.ingredients;
-    let instructions = this.state.newRecipe.instructions;
-
-    let newRecipe = {
-      user_id: this.props.appState.currentUser.user_id,
-      name: recipeName.value,
-      cooking_time: recipeCookTime.value,
-      serving_size: recipeServing.value,
-      recipe_image: recipeImage.value,
-      ingredients,
-      instructions,
-      blurb: recipeDescription.value
-    };
-    this.state.userRecipes.push(newRecipe);
-    axios.post('/api/add_recipe', newRecipe)
-    .then((response) => {
-      this.setState({userRecipes: this.state.userRecipes});
-    })
-    .catch((err) => {
-      throw err;
-    });
-
-  }
-
-
-
   renderRecipesList() {
     let recipes = this.state.userRecipes;
     if(recipes.length > 0) {
@@ -271,8 +101,6 @@ export default class Cookbook extends React.Component {
   renderRecipe(recipe, idx) {
 
     let { appState } = this.props;
-    console.log(recipe);
-    console.log(appState.currentUser);
     const profile_picture = appState.currentUser.profile_picture;
 
     recipe.ingredients = typeof recipe.ingredients === 'string' ? JSON.parse(recipe.ingredients) : recipe.ingredients;
@@ -338,10 +166,11 @@ export default class Cookbook extends React.Component {
     else return null;
   }
 
-  handleToggleaddRecipeForm(e) {
-    e.preventDefault();
+  handleToggleRecipeForm() {
     this.setState({
-      addRecipeForm: !this.state.addRecipeForm.isActive
+      recipeForm: {
+        isActive: !this.state.recipeForm.isActive
+      }
     });
   }
   handleToggleRecipeDetail(recipe, idx) {

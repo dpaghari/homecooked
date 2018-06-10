@@ -41,7 +41,7 @@ export default class Dashboard extends React.Component {
               <span>Asian, Latin, Italian</span>
             </span>
           </div>
-          <div class="c-user-info__stats">
+          {/* {<div class="c-user-info__stats">
             <div class="c-user-info__stat">
               <span class="c-user-info__stat-label">Following</span>
               <span class="c-user-info__following">224</span>
@@ -54,7 +54,7 @@ export default class Dashboard extends React.Component {
               <span class="c-user-info__stat-label">Recipes</span>
               <span class="c-user-info__recipe-count">6</span>
             </div>
-          </div>
+          </div>} */}
         </div>
       </section>
     );
