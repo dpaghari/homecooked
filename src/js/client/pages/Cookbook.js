@@ -44,7 +44,6 @@ export default class Cookbook extends React.Component {
   render () {
     let { appState, updateAppState } = this.props;
     let { recipe, isActive, idx } = this.state.recipeDetail;
-    console.log(this.state);
     if(appState.loggedIn){
       return (
         <section class="c-cookbook">
@@ -61,7 +60,8 @@ export default class Cookbook extends React.Component {
             handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this, recipe, idx) }
           />
         </div>
-        <RecipeForm renderInstructionsList={this.renderInstructionsList}
+        <RecipeForm appState={this.props.appState}
+                    renderInstructionsList={this.renderInstructionsList}
                     renderIngredientList={this.renderIngredientList}
                     isActive={this.state.recipeForm.isActive}
                     userRecipes={this.state.userRecipes}
@@ -158,7 +158,7 @@ export default class Cookbook extends React.Component {
       return instructions.map((step, idx) => {
         return (
           <li key={idx} class="c-instruction">
-            <p>{step}</p>
+            <p>{step.name}</p>
           </li>
         )
       });
@@ -173,6 +173,7 @@ export default class Cookbook extends React.Component {
       }
     });
   }
+
   handleToggleRecipeDetail(recipe, idx) {
     this.setState({
       recipeDetail: {
