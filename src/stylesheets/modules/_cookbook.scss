@@ -1,17 +1,39 @@
 .c-cookbook {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  h1 {
+  &__heading {
+    margin: 32px;
+    font-size: 32px;
     text-align: center;
   }
-  &__nav-item {
-    text-align: center;
+
+  &__page {
+    width: 100%;
+  }
+
+  &__add-recipe {
+    color: $notSoDark;
+    display: inline-block;
+    padding: 48px;
+    font-size: 32px;
+    border: 2px dashed $notSoDark;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 280px;
+    min-height: 350px;
+    text-decoration: none;
+    margin: 12px;
+    transition: 0.2s all ease-in-out;
+    &:hover {
+      background: #dddddd;
+      color: darken($notSoDark, 1%);
+      border: 2px dashed darken($notSoDark, 1%);
+    }
   }
 }
-
-
 
 .l-modal {
   position: fixed;
@@ -27,64 +49,12 @@
 }
 
 
-.c-new-recipe {
-  &__form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: white;
-    width: 60%;
-    padding: 24px;
-    fieldset {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border: none;
-      width: 80%;
-      margin: 0 auto;
-      padding: 12px;
-
-      input, textarea {
-        border: 1px solid $borderColor;
-        padding: 12px;
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto;
-      }
-    }
-  }
-}
-
-.c-recipe-detail {
-  &__wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: white;
-    width: 80%;
-    padding: 24px;
-  }
-
-  &__actions {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    button {
-      margin: 12px;
-    }
-  }
-
-  &__info {
-    img {
-      width: 300px;
-      height: 260px;
-    }
-  }
-}
-
-
 .c-user-recipes {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: $backgroundColor;
+
   &__list {
     list-style-type: none;
     display: flex;
@@ -92,10 +62,11 @@
     justify-content: flex-start;
     align-items: center;
     max-width: 960px;
-    margin: 0 auto;
+    // margin: 0 auto;
   }
 
   &__list-item {
+    background: white;
     min-height: 350px;
     margin: 12px;
     display: flex;
@@ -120,6 +91,7 @@
   }
 
   &__user-lockup {
+    margin: 12px auto;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -132,6 +104,16 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
+  }
+
+  &__blurb {
+    color: $notSoDark;
+    font-size: 10px;
+    max-width: 250px;
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

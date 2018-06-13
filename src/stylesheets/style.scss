@@ -18,7 +18,7 @@ body {
   bottom: 0;
   left: 0;
   font-family: $font-stack;
-  background: $backgroundColor;
+  // background: $backgroundColor;
 }
 
 main {
@@ -26,6 +26,6 @@ main {
 }
 
 .container {
-  max-width: 1260px;
+  max-width: 960px;
   margin: 0 auto;
 }

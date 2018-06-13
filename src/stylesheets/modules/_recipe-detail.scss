@@ -1,0 +1,121 @@
+.c-recipe-detail {
+  &__wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    width: 80%;
+    &:hover .c-recipe-detail__action {
+      opacity: 1;
+    }
+  }
+
+  &__actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    color: $notSoDark;
+  }
+
+  &__action {
+    color: $notSoDark;
+    opacity: 0;
+    margin: 12px 24px;
+    transition: 0.3s opacity;
+    &:visited {
+      color: $notSoDark;
+    }
+  }
+
+  &__info {
+    display: flex;
+    width: 100%;
+  }
+
+  &__left {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 40%;
+    max-height: 500px;
+  }
+
+  &__right {
+    width: 60%;
+    padding: 24px;
+    h4 {
+      color: $notSoDark;
+      margin: 12px 0;
+      i {
+        margin-right: 12px;
+      }
+
+    }
+  }
+
+
+
+  &__recipe-name {
+    font-family: $header-font-stack;
+    display: inline-block;
+    padding-bottom: 8px;
+    font-size: $heading-fontsize;
+    border-bottom: 2px solid $borderColor;
+  }
+
+  &__blurb {
+    color: $notSoDark;
+    margin: 12px 0;
+  }
+
+}
+
+.c-ingredient-list {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.c-instruction-list {
+
+}
+
+
+.c-ingredient-list, .c-instruction-list {
+  padding-left: 12px;
+  min-height: 200px;
+  max-height: 260px;
+  font-family: $font-stack;
+  color: $notSoDark;
+  overflow-y: scroll;
+
+  &:first-child {
+    margin-top: 0px;
+  }
+
+}
+
+.c-ingredient, .c-instruction {
+  margin: 12px 0;
+}
+
+.c-instruction {
+  margin-left: 16px;
+  padding-left: 12px;
+}
+
+.c-ingredient {
+  &:first-of-type {
+    margin-top: 0;
+  }
+
+  &__qty {
+    font-size: 12px;
+    margin-right: 24px;
+  }
+}

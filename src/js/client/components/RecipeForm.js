@@ -1,5 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import validator from 'validator';
+
+
+
 
 export default class RecipeForm extends React.Component {
   constructor(props) {
@@ -9,13 +13,14 @@ export default class RecipeForm extends React.Component {
       newRecipe: {
         name: '',
         recipe_image: '',
-        cook_time: '',
+        cooking_time: '',
         serving_size: '',
         blurb: '',
         ingredients: [],
         instructions: []
       },
-      currentStep: 0
+      currentStep: 0,
+      error: null
     };
   }
 
@@ -25,43 +30,33 @@ export default class RecipeForm extends React.Component {
     })
   }
 
-  render() {
-    console.log(this.state);
-    if(this.state.isActive){
-      return (<div class="c-new-recipe l-modal">
-        <button onClick={this.handleToggleRecipeForm.bind(this)}>Close</button>
-        <form class="c-new-recipe__form" onSubmit={this.handleAddNewRecipe.bind(this)}>
-          { this.renderCurrFieldSet() }
-        </form>
+  componentDidUpdate() {
+    for (var ref in this.refs) {
+      if (this.refs.hasOwnProperty(ref)) {
+        this.refs[ref].value = "";
+      }
+    }
+  }
 
-        { this.renderNewRecipePreview() }
-      </div>);
+  render() {
+
+    if(this.state.isActive){
+      return (
+        <div class="c-new-recipe l-modal">
+          <div class="c-new-recipe__wrapper">
+            <div class="c-new-recipe__actions">
+              <a href="#" class="c-new-recipe__action" onClick={this.handleToggleRecipeForm.bind(this)}>
+                <i class="fa fa-times"></i>
+              </a>
+            </div>
+            <form class="c-new-recipe__form" onSubmit={this.handleAddNewRecipe.bind(this)}>
+              { this.renderCurrFieldSet() }
+            </form>
+            { this.renderNewRecipePreview() }
+          </div>
+        </div>);
     }
     else return null;
-  }
-
-  handleToggleRecipeForm() {
-    this.props.handleToggleRecipeForm();
-    this.setState({
-      currentStep: 0
-    });
-  }
-
-
-  handleAddNewRecipe(e) {
-    e.preventDefault();
-
-    let newRecipe = Object.assign(this.state.newRecipe, {user_id: this.props.appState.currentUser.user_id});
-    this.props.userRecipes.push(newRecipe);
-    axios.post('/api/add_recipe', newRecipe)
-    .then((response) => {
-      console.log(response);
-      this.props.updateRecipes(this.props.userRecipes);
-    })
-    .catch((err) => {
-      throw err;
-    });
-
   }
 
   renderCurrFieldSet() {
@@ -79,9 +74,9 @@ export default class RecipeForm extends React.Component {
           <input type="text" ref="recipeServing" placeholder="Serving Size" required/>
           <label for="recipeDescription">Description</label>
           <textarea cols="100" rows="6" ref="recipeDescription" placeholder="Description" required/>
-          <button type="button" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
+          <a href="#" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
             <i class="fas fa-arrow-right"></i>
-          </button>
+          </a>
         </fieldset>
       );
     }
@@ -92,81 +87,93 @@ export default class RecipeForm extends React.Component {
           <input type="text" ref="recipeIngredient" placeholder="Ingredient"/>
           <label for="recipeIngQty">Ingredient Quantity</label>
           <input type="text" ref="recipeIngQty" placeholder="Qty"/>
-          <button type="button" class="c-new-recipe__add-ingredient" onClick={this.handleAddIngredient.bind(this)}>Add Ingredient</button>
-          <button type="button" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
+          <a href="#" class="c-new-recipe__add-button" onClick={this.handleAddIngredient.bind(this)}>Add Ingredient<i class="fa fa-plus"></i></a>
+          <a href="#" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
             <i class="fas fa-arrow-right"></i>
-          </button>
+          </a>
         </fieldset>
       );
     }
     else if(currentStep === 2) {
       return (
-        <fieldset class="c-new-recipe__step--one">
+        <fieldset class="c-new-recipe__step--three">
           <label for="recipeInstruction">Instruction</label>
           <input type="text" ref="recipeInstruction" placeholder="Chop up garlic"/>
-          <button type="button" class="c-new-recipe__add-instruction" onClick={this.handleAddInstruction.bind(this)}>Add Instruction</button>
+          <a href="#" class="c-new-recipe__add-button" onClick={this.handleAddInstruction.bind(this)}>Add Instruction<i class="fa fa-plus"></i></a>
           {/* {<button type="button" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
             <i class="fas fa-arrow-right"></i>
           </button>} */}
-          <button class="c-new-recipe__submit" type="submit">Add To Cookbook</button>
+          <a href="#" onClick={this.handleAddNewRecipe.bind(this)} class="c-new-recipe__submit">
+            <i class="fas fa-clipboard-check"></i>
+          </a>
         </fieldset>
       );
     }
   }
 
   renderNewRecipePreview() {
-    console.log(this.state.newRecipe);
-    return (
-      <div class="c-new-recipe__preview">
-      <strong>Ingredients</strong>
-      <ul class="c-ingredient-list">
-        { this.props.renderIngredientList(this.state.newRecipe.ingredients) }
-      </ul>
-
-      <strong>Instructions</strong>
-      <ol class="c-instruction-list">
-        { this.props.renderInstructionsList(this.state.newRecipe.instructions) }
-      </ol>
-      </div>
-    );
+    if(this.state.currentStep === 1) {
+      return (
+        <div class="c-new-recipe__preview">
+          <strong>Ingredients</strong>
+          <ul class="c-ingredient-list">
+            { this.props.renderIngredientList(this.state.newRecipe.ingredients) }
+          </ul>
+        </div>
+      );
+    }
+    else if(this.state.currentStep === 2) {
+      return(
+        <div class="c-new-recipe__preview">
+          <strong>Instructions</strong>
+          <ol class="c-instruction-list">
+            { this.props.renderInstructionsList(this.state.newRecipe.instructions) }
+          </ol>
+        </div>
+      );
+    }
   }
 
   handleClickNext() {
     let { currentStep } = this.state;
-    // console.log(this.refs);
     if(currentStep < 2) {
-
       if( currentStep === 0) this.saveFieldsToState();
 
+      // console.log(this.refs);
       this.state.currentStep++;
       this.setState({
         currentStep: this.state.currentStep
       });
     }
-    // else {
-    //   this.setState({
-    //     currentStep: 0
-    //   });
-    // }
   }
 
-  saveFieldsToState() {
-
-    const { recipeName, recipeImage, recipeCookTime, recipeServing, recipeDescription } = this.refs;
-
-    this.state.newRecipe = Object.assign(this.state.newRecipe, {
-      name: recipeName.value,
-      recipe_image: recipeImage.value,
-      cook_time: recipeCookTime.value,
-      serving_size: recipeServing.value,
-      description: recipeDescription.value
-    });
+  handleToggleRecipeForm() {
+    this.props.handleToggleRecipeForm();
     this.setState({
-      newRecipe: this.state.newRecipe
+      currentStep: 0
+    });
+  }
+
+
+  handleAddNewRecipe(e) {
+    e.preventDefault();
+
+    let newRecipe = Object.assign(this.state.newRecipe, {user_id: this.props.appState.currentUser.user_id});
+    this.props.userRecipes.push(newRecipe);
+    console.log(newRecipe);
+    axios.post('/api/add_recipe', newRecipe)
+    .then((response) => {
+      console.log(response);
+      this.props.updateRecipes(this.props.userRecipes);
+      this.setState({
+        currentStep: 0
+      });
+    })
+    .catch((err) => {
+      throw err;
     });
 
   }
-
 
   handleAddIngredient() {
     let { recipeIngredient, recipeIngQty } = this.refs;
@@ -200,6 +207,36 @@ export default class RecipeForm extends React.Component {
 
     recipeInstruction.value = "";
     recipeInstruction.focus();
+  }
+
+  saveFieldsToState() {
+
+    const { recipeName, recipeImage, recipeCookTime, recipeServing, recipeDescription } = this.refs;
+
+    let newRecipeName = !validator.isEmpty(recipeName.value) ? validator.trim(recipeName.value) : null;
+    let newRecipeImage = !validator.isEmpty(recipeImage.value) && validator.isURL(recipeImage.value) ? validator.trim(recipeImage.value) : null;
+    let newRecipeCookTime = !validator.isEmpty(recipeCookTime.value) && validator.isNumeric(recipeCookTime.value) ? validator.trim(recipeCookTime.value) : null;
+    let newRecipeServing = !validator.isEmpty(recipeServing.value) && validator.isNumeric(recipeServing.value) ? validator.trim(recipeServing.value) : null;
+    let newRecipeDescription = !validator.isEmpty(recipeDescription.value) ? validator.trim(recipeDescription.value) : null;
+
+    if(newRecipeName && newRecipeCookTime && newRecipeServing) {
+      this.state.newRecipe = Object.assign(this.state.newRecipe, {
+        name: newRecipeName,
+        recipe_image: newRecipeImage,
+        cooking_time: newRecipeCookTime,
+        serving_size: newRecipeServing,
+        blurb: newRecipeDescription
+      });
+      this.setState({
+        newRecipe: this.state.newRecipe,
+        error: null
+      });
+    }
+    else {
+      this.setState({
+        error: 'Please fill out the required fields'
+      });
+    }
   }
 
 
