@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 const mode = "development";
-// const mode = "production";
+
 module.exports = {
   mode,
   devtool: 'inline-source-map',
@@ -20,11 +20,6 @@ module.exports = {
     path: path.join(__dirname, 'public'),
     filename: '[name].min.js'
   },
-  // node: {
-  //   fs: 'empty',
-  //   net: 'empty',
-  //   tls: 'empty'
-  // },
   resolve: {
     alias: {
       'waypoints': 'waypoints/lib/jquery.waypoints.js'
@@ -53,7 +48,7 @@ module.exports = {
           loader: 'css-loader',
           options: {
             minimize: true,
-            // sourceMap: mode === 'development',
+            sourceMap: mode === 'development',
             importLoaders: 3,
           },
         },

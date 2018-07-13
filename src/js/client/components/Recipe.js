@@ -33,7 +33,9 @@ export default class Recipe extends React.Component {
               <a class="c-recipe-detail__action" href="#" onClick={ handleToggleRecipeDetail }><i class="fa fa-times"></i></a>
             </div>
             <div class="c-recipe-detail__info">
-              <div class="c-recipe-detail__left" style={recipeImageStyles}></div>
+              <div class="c-recipe-detail__left">
+                <img class="c-recipe-detail__image" src={imgUrl} alt={name} />
+              </div>
               <div class="c-recipe-detail__right">
                 <h3 class="c-recipe-detail__recipe-name">{name}</h3>
                 <p class="c-recipe-detail__blurb">{blurb}</p>

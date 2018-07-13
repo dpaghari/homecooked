@@ -44,7 +44,7 @@ export default class Cookbook extends React.Component {
   render () {
     let { appState, updateAppState } = this.props;
     let { recipe, isActive, idx } = this.state.recipeDetail;
-    console.log(this.state.userRecipes);
+    console.log('this.state.userRecipes', this.state.userRecipes);
     if(appState.loggedIn){
       return (
         <section class="c-cookbook">
@@ -139,6 +139,7 @@ export default class Cookbook extends React.Component {
 
   deleteRecipe(recipe, recipeIndex, e) {
     e.preventDefault();
+    console.log('recipe:', recipe);
     axios.post('/api/delete_recipe', {recipe_id: recipe.recipe_id})
     .then((response) => {
       this.state.userRecipes.splice(recipeIndex, 1);

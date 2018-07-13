@@ -4,9 +4,9 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "concurrently 'webpack --mode development --watch --progress' 'nodemon public/server/server.js'",
-    "pack:dev": "webpack --mode development --progress",
-    "pack:prod": "webpack --mode production --progress",
+    "start": "concurrently 'webpack --mode=development --watch --progress' 'nodemon public/server/server.js'",
+    "pack:dev": "webpack --mode=development --progress",
+    "pack:prod": "webpack --mode=production --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Daniel Pagharion",

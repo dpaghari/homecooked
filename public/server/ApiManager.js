@@ -266,6 +266,7 @@ var ApiManager = (function(dbWrapper) {
     let { db, mysql } = dbWrapper;
     let { recipe_id } = payload;
     recipe_id = parseInt(recipe_id);
+    console.log(recipe_id);
     let query = "DELETE FROM `recipes` where recipe_id = ?";
     db.query(query, [recipe_id], function(err, rows) {
       if(err) throw err;

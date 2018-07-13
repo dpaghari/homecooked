@@ -1,3 +1,8 @@
+// mongodb uri: mongodb://heroku_x8m53gnh:u48jcn16ffkibd0pjjclvgv108@ds133601.mlab.com:33601/heroku_x8m53gnh
+// local: mongodb://localhost:27017/homecooked
+// To-do: switch to mongodb
+
+
 var mysql = require('mysql');
 var dbWrapper = (function(mysql) {
   var pool;
