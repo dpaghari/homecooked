@@ -12,13 +12,19 @@ export default class App extends React.Component {
     this.state = {
       loggedIn: false,
       currentPage: 'Home',
-      currentUser: {}
+      currentUser: {
+        // name: "Daniel",
+        // user_id: 2,
+        // profile_picture: "https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/31131270_10214106691836126_6397608758125527040_n.jpg?_nc_cat=0&oh=aed28f41fa138de102820680eb3d9a8a&oe=5B957335"
+      }
     };
   }
 
   componentWillMount() {
 
     const isLoggedIn = getCookie('isLoggedIn') ? JSON.parse(getCookie('isLoggedIn')) : false;
+    // const isLoggedIn = true;
+    // console.log(isLoggedIn);
     if(isLoggedIn) {
       this.setState({
         loggedIn: true,

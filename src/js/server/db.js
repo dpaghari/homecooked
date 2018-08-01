@@ -19,9 +19,9 @@ var dbWrapper = (function(mysql) {
     pool = mysql.createPool({
       host : 'localhost',
       user : 'root',
-      port: 3306,
       password: '',
-      database : 'homecooked'
+      database : 'homecooked',
+      socketPath: "/tmp/mysql.sock"
     });
   }
   return {
