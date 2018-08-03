@@ -4,11 +4,14 @@ const path = require('path');
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
+const mongoose = require('mongoose') //mongodb
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/homecooked'
 
 // Middleware
 const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
+const logger = require('morgan')
 
 // Includes
 const ApiManager = require("./ApiManager.js");
@@ -27,6 +30,7 @@ let appState = initialState;
 
 // App Settings
 app.use(express.static('public'));
+app.use(logger('dev'))
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
@@ -207,6 +211,13 @@ app.post('/api/delete_recipe', upload.array(), function(req, res) {
 
 });
 
-app.listen(process.env.PORT || 3000, function() {
+//connects to mongodb 
+mongoose.connect(MONGODB_URI, (err) => {
+	console.log(err || `Connected to MongoDB.`)
+})
+
+app.listen(process.env.PORT || 3001, function() {
   console.log('Homecooked listening on port 3000!');
 });
+
+

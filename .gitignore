@@ -3,3 +3,4 @@ node_modules/*
 *.zip
 *.hot-update.json
 *.hot-update.js
+.env

@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { setCookie, getCookie } from '../../util.js';
+import httpClient from '../../httpClient.js';
 
 import Header from '../components/Header';
 // import Footer from '../components/Footer';
@@ -41,7 +42,8 @@ export default class App extends React.Component {
     // pass the appState to the route component
     let page = React.cloneElement(this.props.children, {
       appState: this.state,
-      updateAppState: this.updateAppState.bind(this)
+      updateAppState: this.updateAppState.bind(this),
+      logInSuccess: this.onLoginSuccess.bind(this)
     });
 
     return (
@@ -55,5 +57,10 @@ export default class App extends React.Component {
   updateAppState(newState) {
     if(newState) this.setState(newState);
   }
+
+  onLoginSuccess(user) {
+		this.setState({ currentUser: httpClient.getCurrentUser() })
+	}
+
 
 }
