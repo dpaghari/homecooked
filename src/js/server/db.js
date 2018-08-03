@@ -20,8 +20,7 @@ var dbWrapper = (function(mysql) {
       host : 'localhost',
       user : 'root',
       password: '',
-      database : 'homecooked',
-      socketPath: "/tmp/mysql.sock"
+      database : 'homecooked'
     });
   }
   return {
