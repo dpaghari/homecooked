@@ -53,3 +53,5 @@ httpClient.logOut = function() {
 	delete this.defaults.headers.common.token
 	return true
 }
+
+export default httpClient

@@ -38,7 +38,7 @@ export default class Login extends React.Component {
 
 
   renderLoginForm() {
-    const { name, password, imageUrl, } = this.state.fields
+    var { name, password, imageUrl, } = this.state.fields
     if(this.state.showRegister) {
       return (
         <form class="c-register__form" onChange={this.onInputChange.bind(this)} onSubmit={this.handleSubmitRegister.bind(this)}>
@@ -56,7 +56,7 @@ export default class Login extends React.Component {
       );
     }
     else {
-      const { name, password} = this.state.fields
+      var { name, password } = this.state.fields
       return (
         <form class="c-login__form" onChange={this.onInputChange.bind(this)} onSubmit={this.handleSubmitLogin.bind(this)}>
           {this.renderErrorMsg()}
@@ -91,13 +91,20 @@ export default class Login extends React.Component {
 
   handleShowRegister(e) {
     e.preventDefault();
-    this.setState({ showRegister: !this.state.showRegister });
+    this.setState({ 
+      fields:{
+        name:'',
+        password:'',
+        imageUrl:''
+      },
+      showRegister: !this.state.showRegister 
+    });
   }
 
   onInputChange(evt){
-    console.log(evt.target.value)
     this.setState({
       fields: {
+        ...this.state.fields,
         [evt.target.name]:evt.target.value
       }
     })
@@ -105,75 +112,34 @@ export default class Login extends React.Component {
 
   handleSubmitLogin(e) {
     e.preventDefault();
-    httpClient.logIn(this.state.logInFields).then(user =>{
+    httpClient.logIn(this.state.fields).then(user =>{
       this.setState({
-        logInFields:{
+        fields:{
           name:'',
           password:''
         }
+      })
+      console.log(this.props)
+      if (user){
+        this.props.logInSuccess()
+      }
+    })
+  }
+
+  handleSubmitRegister(e) {
+    e.preventDefault();
+    httpClient.signUp(this.state.fields).then(user =>{
+      this.setState({
+        fields:{
+          name:'',
+          password:'',
+          imageUrl:'',
+        },
+        showRegister: !this.state.showRegister
       })
       if (user){
         this.props.onLoginSuccess(user)
       }
     })
-
-    // let { userName, userPassword } = this.refs;
-    // let userCreds = {
-    //   'action': 'login',
-    //   'user_name': userName.value,
-    //   'password': userPassword.value
-    // };
-    // axios.post('/', userCreds).then((response) => {
-    //   if(typeof response.data.appState.error === 'undefined') {
-    //     let { loggedIn, currentPage, currentUser } = response.data.appState;
-    //     setCookie('isLoggedIn', true);
-    //     setCookie('currentUser', JSON.stringify(currentUser));
-    //     this.props.updateAppState({
-    //       loggedIn,
-    //       currentPage,
-    //       currentUser
-    //     });
-    //   }
-    //   else {
-    //     userName.focus();
-    //     this.setState({errorMsg: response.data.appState.error});
-    //   }
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
-
-    // this.refs.userName.value = this.refs.userPassword.value = "";
-}
-
-  handleSubmitRegister(e) {
-    e.preventDefault();
-    // TO-DO: validation for newUserPicture to be a valid asset url
-    let { newUserName, newUserPassword, confirmNewUserPassword, newUserPicture } = this.refs;
-    if (newUserPassword.value === confirmNewUserPassword.value) {
-      let userCreds = {
-        'action': 'register',
-        'name': newUserName.value,
-        'password': newUserPassword.value,
-        'profile_picture': newUserPicture.value
-      };
-
-      axios.post('/', userCreds).then((response) => {
-
-        if(response.data.appState) {
-          let { loggedIn, currentPage, currentUser } = response.data.appState;
-
-          this.props.updateAppState({
-            loggedIn,
-            currentPage,
-            currentUser
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-      this.refs.userName.value = this.refs.userPassword.value = "";
-    }
   }
 }

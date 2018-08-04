@@ -12,11 +12,10 @@ export default class Home extends React.Component {
 
   render() {
 
-    let { appState, updateAppState } = this.props;
-
-    if(appState.loggedIn)
+    let { appState, updateAppState, logInSuccess } = this.props;
+    if(appState.currentUser)
       return <Dashboard updateAppState={updateAppState} appState={appState} />;
     else
-      return <Login updateAppState={updateAppState.bind(this)} />;
+      return <Login updateAppState={updateAppState.bind(this)} logInSuccess={logInSuccess.bind(this)}/>;
   }
 }

@@ -7,6 +7,10 @@ export default class Dashboard extends React.Component {
     super(props);
     this.state = {};
   }
+
+  componentDidMount(){
+    console.log(this.props)
+  }
   render() {
     let { currentUser } = this.props.appState;
     return (
