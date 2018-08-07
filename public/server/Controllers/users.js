@@ -20,7 +20,7 @@ module.exports = {
   // make sure log in is correct
   authenticate: (req, res) => {
    // check if the user exists
-		User.findOne({email: req.body.email}, (err, user) => {
+		User.findOne({name: req.body.name}, (err, user) => {
 			// if there's no user or the password is invalid
 			if(!user || !user.validPassword(req.body.password)) {
 				// deny access

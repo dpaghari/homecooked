@@ -44,7 +44,6 @@ export default class Login extends React.Component {
   renderLoginForm() {
     var { name, password, imageUrl, email, location } = this.state.fields
     if(this.state.showRegister) {
-      console.log(this.state.fields)
       return (
         <form class="c-register__form" onChange={this.onInputChange.bind(this)} onSubmit={this.handleSubmitRegister.bind(this)}>
           <a href="#" onClick={this.handleShowRegister.bind(this)} class="c-register__link">Go Back to Login</a>
@@ -127,7 +126,6 @@ export default class Login extends React.Component {
           password:''
         }
       })
-      console.log(this.props)
       if (user){
         this.props.logInSuccess()
       }
