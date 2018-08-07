@@ -30,7 +30,7 @@ let appState = initialState;
 
 // App Settings
 app.use(express.static('public'));
-app.use(logger('dev'))
+app.use(logger('dev'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
