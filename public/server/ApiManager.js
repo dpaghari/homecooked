@@ -1,4 +1,4 @@
-var dbWrapper = require("./db.js");
+
 var ApiManager = (function(dbWrapper) {
 
   function getUsers(callback) {
