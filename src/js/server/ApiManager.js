@@ -43,8 +43,9 @@ var ApiManager = (function(dbWrapper) {
     let { db } = dbWrapper;
     let { user_name, password } = user_info;
     db.getConnection(function(err, connection) {
+    if(err) throw err;
     connection.query("SELECT `user_id`, `name`, `profile_picture` FROM `users` WHERE `name` = ? AND `password` = ?", [user_name, password], (err, rows, fields) => {
-      if(err) throw err;
+
       if(typeof rows !== "undefined" && typeof rows[0] !== "undefined"){
         let user = rows[0];
         connection.release();

@@ -4,3 +4,5 @@ node_modules/*
 *.hot-update.json
 *.hot-update.js
 .env
+*.log
+*.log.*

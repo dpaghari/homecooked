@@ -4,7 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "concurrently 'webpack --mode=development --watch --progress' 'nodemon public/server/server.js'",
+    "start": "concurrently 'webpack --mode=development --watch --progress' 'nodemon src/js/server/server.js'",
     "pack:dev": "webpack --mode=development --progress",
     "pack:prod": "webpack --mode=production --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -38,6 +38,7 @@
     "validator": "^6.2.1"
   },
   "devDependencies": {
+    "autoprefixer": "^9.0.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-react-html-attrs": "^2.0.0",
@@ -50,7 +51,7 @@
     "concurrently": "^3.5.1",
     "css-loader": "^0.28.11",
     "mini-css-extract-plugin": "^0.4.0",
-    "node-sass": "^4.8.3",
+    "node-sass": "^4.9.2",
     "nodemon": "^1.11.0",
     "postcss-loader": "^2.1.4",
     "redux-logger": "^2.6.1",

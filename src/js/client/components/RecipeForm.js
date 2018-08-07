@@ -73,13 +73,13 @@ export default class RecipeForm extends React.Component {
           <label for="recipeName">Recipe Name</label>
           <input name="recipe-name" type="text" ref="recipeName" placeholder="Recipe Name" required data-validators="isEmpty,trim"/>
           <label for="recipeImage">Recipe Image URL</label>
-          <input name="recipe-image" type="text" ref="recipeImage" placeholder="Recipe Image URL" required/>
+          <input name="recipe-image" type="text" ref="recipeImage" placeholder="Recipe Image URL" required data-validators="isEmpty,trim"/>
           <label for="recipeCookTime">Cooking Time</label>
-          <input name="recipe-cooktime" type="text" ref="recipeCookTime" placeholder="Cooking Time" required/>
+          <input name="recipe-cooktime" type="text" ref="recipeCookTime" placeholder="Cooking Time" required data-validators="isEmpty,trim"/>
           <label for="recipeServing">Serves How many?</label>
-          <input name="recipe-serving" type="text" ref="recipeServing" placeholder="Serving Size" required/>
+          <input name="recipe-serving" type="text" ref="recipeServing" placeholder="Serving Size" required data-validators="isEmpty,trim"/>
           <label for="recipeDescription">Description</label>
-          <textarea name="recipe-desc" cols="100" rows="6" ref="recipeDescription" placeholder="Description" required/>
+          <textarea name="recipe-desc" cols="100" rows="6" ref="recipeDescription" placeholder="Description" required data-validators="isEmpty,trim"/>
           <a href="#" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
             <i class="fas fa-arrow-right"></i>
           </a>
@@ -90,7 +90,7 @@ export default class RecipeForm extends React.Component {
       return (
         <fieldset class="c-new-recipe__step--two">
           <label for="recipeIngredient">Ingredient Name</label>
-          <input type="text" ref="recipeIngredient" placeholder="Ingredient"/>
+          <input name="recipe-ingredient-name" type="text" ref="recipeIngredient" placeholder="Ingredient"/>
           <label for="recipeIngQty">Ingredient Quantity</label>
           <input type="text" ref="recipeIngQty" placeholder="Qty"/>
           <a href="#" class="c-new-recipe__add-button" onClick={this.handleAddIngredient.bind(this)}>Add Ingredient<i class="fa fa-plus"></i></a>
@@ -144,22 +144,28 @@ export default class RecipeForm extends React.Component {
   handleClickNext() {
     let { currentStep } = this.state;
     if(currentStep < 2) {
-      if( currentStep === 0) this.saveFieldsToState();
-
-
-      let isValidated = this.checkFields();
-      console.log(isValidated);
-      if(isValidated.isValid) {
-        console.log('hay');
+      if( currentStep === 0) {
+        this.saveFieldsToState();
+        let isValidated = this.checkFields();
+        console.log(isValidated, this.state.error);
+        if(isValidated.isValid) {
+          console.log('hay');
+          this.state.currentStep++;
+          this.setState({
+            currentStep: this.state.currentStep
+          });
+        }
+        else {
+          console.log(isValidated.error);
+          this.setState({
+            error: isValidated.error
+          });
+        }
+      }
+      else {
         this.state.currentStep++;
         this.setState({
           currentStep: this.state.currentStep
-        });
-      }
-      else {
-        console.log(isValidated.error);
-        this.setState({
-          error: isValidated.error
         });
       }
     }
@@ -172,6 +178,7 @@ export default class RecipeForm extends React.Component {
        if (this.refs.hasOwnProperty(field)) {
          let currField = this.refs[field];
          let validators = currField.dataset.validators;
+         console.log(currField);
          if(validator.isEmpty(currField.value)) {
            console.log(currField.name);
             return {
@@ -179,9 +186,18 @@ export default class RecipeForm extends React.Component {
               error: `${currField.name} is empty`
             };
          }
+         else {
+           return {
+             isValid: true,
+             error: null
+           };
+         }
        }
      }
-     return false;
+     return {
+       isValid: false,
+       error: null
+     };
   }
 
   handleToggleRecipeForm() {
@@ -254,7 +270,7 @@ export default class RecipeForm extends React.Component {
     let newRecipeCookTime = !validator.isEmpty(recipeCookTime.value) && validator.isNumeric(recipeCookTime.value) ? validator.trim(recipeCookTime.value) : null;
     let newRecipeServing = !validator.isEmpty(recipeServing.value) && validator.isNumeric(recipeServing.value) ? validator.trim(recipeServing.value) : null;
     let newRecipeDescription = !validator.isEmpty(recipeDescription.value) ? validator.trim(recipeDescription.value) : null;
-
+    console.log(newRecipeName, newRecipeCookTime, newRecipeServing);
     if(newRecipeName && newRecipeCookTime && newRecipeServing) {
       this.state.newRecipe = Object.assign(this.state.newRecipe, {
         name: newRecipeName,

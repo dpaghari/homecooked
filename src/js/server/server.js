@@ -17,13 +17,12 @@ const logger = require('morgan')
 const ApiManager = require("./ApiManager.js");
 
 const initialState = {
-  loggedIn: false,
+  loggedIn: true,
   currentUser: {
-    // name: "Daniel",
-    // user_id: 2,
-    // profile_picture: "https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/31131270_10214106691836126_6397608758125527040_n.jpg?_nc_cat=0&oh=aed28f41fa138de102820680eb3d9a8a&oe=5B957335"
-  },
-  // currentPage: "Home"
+    name: "Daniel",
+    user_id: 2,
+    profile_picture: "https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/31131270_10214106691836126_6397608758125527040_n.jpg?_nc_cat=0&oh=aed28f41fa138de102820680eb3d9a8a&oe=5B957335"
+  }
 };
 
 let appState = initialState;
@@ -39,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 //############
 
 app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, '../index.html'), function(err) {
+  res.sendFile(__dirname + '../../../public/index.html', function(err) {
     if (err) {
       res.status(500).send(err)
     }
