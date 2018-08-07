@@ -62,6 +62,6 @@
     "waypoints": "^4.0.1",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.1.5"
-  },
-  "proxy": "http://localhost:3000"
+  }
+  
 }

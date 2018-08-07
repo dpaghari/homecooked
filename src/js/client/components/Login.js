@@ -138,7 +138,7 @@ export default class Login extends React.Component {
         showRegister: !this.state.showRegister
       })
       if (user){
-        this.props.onLoginSuccess(user)
+        this.props.logInSuccess()
       }
     })
   }
