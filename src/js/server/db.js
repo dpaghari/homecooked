@@ -20,13 +20,16 @@ var dbWrapper = (function(mysql) {
       host : 'localhost',
       user : 'root',
       password: '',
-      database : 'homecooked'
+      database : 'homecooked',
+      port: 3306
     });
   }
+  
   return {
     mysql,
     db: pool
   };
-
 })(mysql);
+
+
 module.exports = dbWrapper;

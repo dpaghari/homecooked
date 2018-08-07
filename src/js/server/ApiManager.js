@@ -42,7 +42,6 @@ var ApiManager = (function(dbWrapper) {
   function authUser(user_info, callback) {
     let { db } = dbWrapper;
     let { user_name, password } = user_info;
-
     db.getConnection(function(err, connection) {
     if(err) throw err;
     connection.query("SELECT `user_id`, `name`, `profile_picture` FROM `users` WHERE `name` = ? AND `password` = ?", [user_name, password], (err, rows, fields) => {
@@ -66,7 +65,7 @@ var ApiManager = (function(dbWrapper) {
     let { name, password, profile_picture } = new_user_info;
     db.getConnection(function(err, connection) {
       connection.query('INSERT INTO `users` SET ?', {name, password, profile_picture}, function (err, rows, fields) {
-        if(err) throw err;
+        if(err) console.log(err);
         if(typeof callback === "function") {
           let id = rows.insertId;
           connection.release();
@@ -145,6 +144,7 @@ var ApiManager = (function(dbWrapper) {
       });
     });
   }
+
   function getUserMealPlan(userInfo, callback) {
     let mealplan = [];
     let { user_id } = userInfo;
