@@ -6,6 +6,8 @@ import { getCookie, setCookie } from '../../util';
 
 // import Footer from './Footer';
 
+
+
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +16,8 @@ export default class Login extends React.Component {
         name:'',
         password:'',
         imageUrl:'',
+        email:'',
+        location:''
       },
       showRegister: false,
       errorMsg: null
@@ -21,6 +25,7 @@ export default class Login extends React.Component {
   }
 
   componentWillMount() {}
+
   componentDidMount() {}
 
   render() {
@@ -36,19 +41,23 @@ export default class Login extends React.Component {
     );
   }
 
-
   renderLoginForm() {
-    var { name, password, imageUrl, } = this.state.fields
+    var { name, password, imageUrl, email, location } = this.state.fields
     if(this.state.showRegister) {
+      console.log(this.state.fields)
       return (
         <form class="c-register__form" onChange={this.onInputChange.bind(this)} onSubmit={this.handleSubmitRegister.bind(this)}>
           <a href="#" onClick={this.handleShowRegister.bind(this)} class="c-register__link">Go Back to Login</a>
           <label for="userName">Username</label>
           <input class="c-login__input" type="text" ref="newUserName" placeholder="Username" name="name" value={name}/>
+          <label for="email">Email</label>
+          <input class="c-login__input" type="text" placeholder="Email" name="email" value={email}/>
           <label for="userName">Password</label>
           <input class="c-login__input" type="password" ref="newUserPassword" name="password" value={password}/>
           <label for="confirmNewUserPassword">Confirm Password</label>
           <input class="c-login__input" type="password" ref="confirmNewUserPassword" />
+          <label for="location1">Location</label>
+          <input class="c-login__input" type="text" placeholder="Location" name="location" value={location}/>
           <label for="newUserPicture">Profile Picture Image URL</label>
           <input class="c-login__input" type="text" ref="newUserPicture" name="imageUrl" value={imageUrl}/>
           <button class="c-login__button" type="submit">Register</button>
@@ -56,7 +65,6 @@ export default class Login extends React.Component {
       );
     }
     else {
-      var { name, password } = this.state.fields
       return (
         <form class="c-login__form" onChange={this.onInputChange.bind(this)} onSubmit={this.handleSubmitLogin.bind(this)}>
           {this.renderErrorMsg()}
@@ -92,10 +100,10 @@ export default class Login extends React.Component {
   handleShowRegister(e) {
     e.preventDefault();
     this.setState({ 
-      fields:{
+      fields: {
         name:'',
         password:'',
-        imageUrl:''
+        email:''
       },
       showRegister: !this.state.showRegister 
     });

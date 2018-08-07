@@ -44,7 +44,7 @@ export default class App extends React.Component {
       appState: this.state,
       updateAppState: this.updateAppState.bind(this),
       logInSuccess: this.onLoginSuccess.bind(this),
-      currentUser: this.state.currentUser
+      currentUser: this.state.currentUser,
     });
 
     return (
@@ -72,6 +72,8 @@ export default class App extends React.Component {
       curentUser:null
     })
   }
+
+ 
 
 
 }

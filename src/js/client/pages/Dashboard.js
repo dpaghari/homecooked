@@ -38,7 +38,7 @@ export default class Dashboard extends React.Component {
             </span>
             <span class="c-user-info__location">
               <i class="fas fa-map-marker"></i>
-              <span>San Francisco, CA</span>
+              <span>{currentUser.location}</span>
             </span>
             <span class="c-user-info__styles">
               <i class="fas fa-utensils"></i>
