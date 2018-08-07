@@ -28,7 +28,7 @@ export default class Dashboard extends React.Component {
     return (
       <section class="c-dashboard__greeting">
         <div class="c-dashboard__profile-pic">
-        <img src={profile_picture}  alt={currentUser.name}/>
+        <img src={currentUser.imageUrl}  alt={currentUser.name}/>
         </div>
         <div class="c-user-info">
           <div class="c-user-info__bio">

@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt-nodejs')
 const userSchema = new mongoose.Schema({
     name: ({type:String, required: true}),
     password: ({type:String, required: true}),
-    imageUrl: ({type: String})
+		imageUrl: ({type: String})
 })
 
 // adds a method to a user document object to create a hashed password
