@@ -52,11 +52,11 @@ export default class Login extends React.Component {
           <input class="c-login__input" type="text" ref="newUserName" placeholder="Username" name="name" value={name}/>
           <label for="email">Email</label>
           <input class="c-login__input" type="text" placeholder="Email" name="email" value={email}/>
-          <label for="userName">Password</label>
+          <label for="Password">Password</label>
           <input class="c-login__input" type="password" ref="newUserPassword" name="password" value={password}/>
           <label for="confirmNewUserPassword">Confirm Password</label>
           <input class="c-login__input" type="password" ref="confirmNewUserPassword" />
-          <label for="location1">Location</label>
+          <label for="location">Location</label>
           <input class="c-login__input" type="text" placeholder="Location" name="location" value={location}/>
           <label for="newUserPicture">Profile Picture Image URL</label>
           <input class="c-login__input" type="text" ref="newUserPicture" name="imageUrl" value={imageUrl}/>
@@ -70,7 +70,7 @@ export default class Login extends React.Component {
           {this.renderErrorMsg()}
           <label for="userName">Username</label>
           <input class="c-login__input" type="text" ref="userName" placeholder="Username" name="name" value={name}/>
-          <label for="userName">Password</label>
+          <label for="Password">Password</label>
           <input class="c-login__input" type="password" ref="userPassword" name="password" value={password}/>
           <button class="c-login__button" type="submit">Login</button>
           <a href="#" onClick={this.handleShowRegister.bind(this)} class="c-register__link">Need an account?</a>
