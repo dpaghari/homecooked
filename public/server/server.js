@@ -13,11 +13,11 @@ const upload = multer(); // for parsing multipart/form-data
 const logger = require('morgan')
 
 // Includes
-const ApiManager = require("./ApiManager.js");
+// const ApiManager = require("./ApiManager.js");
 const usersRoutes = require("./Routes/users.js")
 
 const initialState = {
-  
+
 };
 
 let appState = initialState;
