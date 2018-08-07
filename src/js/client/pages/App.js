@@ -11,31 +11,25 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
+      // loggedIn: false,
       currentPage: 'Home',
-      currentUser: {
-        // name: "Daniel",
-        // user_id: 2,
-        // profile_picture: "https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/31131270_10214106691836126_6397608758125527040_n.jpg?_nc_cat=0&oh=aed28f41fa138de102820680eb3d9a8a&oe=5B957335"
-      }
+      currentUser: httpClient.getCurrentUser()
     };
   }
 
   componentWillMount() {
 
-    const isLoggedIn = getCookie('isLoggedIn') ? JSON.parse(getCookie('isLoggedIn')) : false;
-    // const isLoggedIn = true;
-    // console.log(isLoggedIn);
-    if(isLoggedIn) {
+    // const isLoggedIn = getCookie('isLoggedIn') ? JSON.parse(getCookie('isLoggedIn')) : false;
+    if(this.state.currentUser) {
       this.setState({
-        loggedIn: true,
-        currentUser: JSON.parse(getCookie('currentUser'))
+        // loggedIn: true,
+        currentUser: httpClient.getCurrentUser()
       });
     }
     else {
       this.setState({
-        loggedIn: false,
-        currentUser: {}
+        // loggedIn: false,
+        currentUser: null
       });
     }
   }
@@ -49,12 +43,13 @@ export default class App extends React.Component {
     let page = React.cloneElement(this.props.children, {
       appState: this.state,
       updateAppState: this.updateAppState.bind(this),
-      logInSuccess: this.onLoginSuccess.bind(this)
+      logInSuccess: this.onLoginSuccess.bind(this),
+      currentUser: this.state.currentUser
     });
 
     return (
       <main>
-        <Header updateAppState={this.updateAppState.bind(this)}/>
+        <Header updateAppState={this.updateAppState.bind(this)} onLogOut={this.logOutHandler.bind(this)}/>
           {page}
       </main>
     );
@@ -64,9 +59,19 @@ export default class App extends React.Component {
     if(newState) this.setState(newState);
   }
 
-  onLoginSuccess(user) {
-		this.setState({ currentUser: httpClient.getCurrentUser() })
-	}
+  onLoginSuccess() {
+		this.setState({ 
+      loggedIn: true,
+      currentUser: httpClient.getCurrentUser() 
+    })
+  }
+  
+  logOutHandler(){
+    httpClient.logOut()
+    this.setState({
+      curentUser:null
+    })
+  }
 
 
 }

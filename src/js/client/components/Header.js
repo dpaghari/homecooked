@@ -24,12 +24,8 @@ export default class Header extends React.Component {
 
   handleLogoutUser(e) {
     e.preventDefault();
-    setCookie('isLoggedIn', false);
-    this.props.updateAppState({
-      loggedIn: false,
-      currentPage: 'Home',
-      currentUser: {}
-    });
+    // setCookie('isLoggedIn', false);
+    this.props.onLogOut()
     window.location = '/';
   }
 }

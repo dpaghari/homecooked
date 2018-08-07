@@ -9,6 +9,7 @@ const mode = "development";
 
 module.exports = {
   mode,
+  //optimizes 
   devtool: 'inline-source-map',
   entry: {
     client: [
