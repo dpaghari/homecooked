@@ -19,8 +19,13 @@ module.exports = {
   },
   // make sure log in is correct
   authenticate: (req, res) => {
-   // check if the user exists
-		User.findOne({name: req.body.name}, (err, user) => {
+    // query defines whether to find by username or email depending on the users input
+    const query={
+      $or:[{'name': req.body.name},{'email': req.body.name}]
+  }
+   // check if the username or email exists
+		User.findOne(query, (err, user) => {
+      console.log(user)
 			// if there's no user or the password is invalid
 			if(!user || !user.validPassword(req.body.password)) {
 				// deny access
@@ -44,9 +49,7 @@ module.exports = {
   update: (req, res)=>{
     User.findById(req.params.id, (err, user) => {
 			if(!req.body.password) delete req.body.password
-			console.log(req.body)
 			Object.assign(user, req.body)
-			console.log(user)
 			user.save((err, updatedUser) => {
 				if (err) console.log(err)
 				res.json({success: true, message: "User updated.", updatedUser})

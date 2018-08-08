@@ -20,13 +20,17 @@ export default class Login extends React.Component {
         location:''
       },
       showRegister: false,
-      errorMsg: null
+      errorMsg: null,
     };
   }
 
   componentWillMount() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.setState({
+      emailOrUsername:this.state.fields.name
+    })
+  }
 
   render() {
     return (
@@ -68,7 +72,7 @@ export default class Login extends React.Component {
         <form class="c-login__form" onChange={this.onInputChange.bind(this)} onSubmit={this.handleSubmitLogin.bind(this)}>
           {this.renderErrorMsg()}
           <label for="userName">Username</label>
-          <input class="c-login__input" type="text" ref="userName" placeholder="Username" name="name" value={name}/>
+          <input class="c-login__input" type="text" ref="userName" placeholder="Username" name='name' value={name}/>
           <label for="Password">Password</label>
           <input class="c-login__input" type="password" ref="userPassword" name="password" value={password}/>
           <button class="c-login__button" type="submit">Login</button>
@@ -80,7 +84,6 @@ export default class Login extends React.Component {
   }
 
   renderErrorMsg() {
-
     if(this.state.errorMsg === null) return null;
     setTimeout(() => {
       this.setState({errorMsg: null});
@@ -102,7 +105,9 @@ export default class Login extends React.Component {
       fields: {
         name:'',
         password:'',
-        email:''
+        email:'',
+        location:'',
+        imageUrl:''
       },
       showRegister: !this.state.showRegister 
     });
@@ -140,6 +145,8 @@ export default class Login extends React.Component {
           name:'',
           password:'',
           imageUrl:'',
+          location:'',
+          email:'',
         },
         showRegister: !this.state.showRegister
       })
