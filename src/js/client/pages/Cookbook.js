@@ -23,18 +23,18 @@ export default class Cookbook extends React.Component {
 
   componentWillMount() {
     let { appState } = this.props;
-    let userId = appState.currentUser.user_id;
-    axios.post('/api/get_user_recipes', {
-      user_id: userId
-    })
-    .then((response) => {
-
-      if(response.data.length) {
-        this.setState({
-          userRecipes: response.data
-        });
-      }
-    });
+    // let userId = appState.currentUser.user_id;
+    // axios.post('/api/get_user_recipes', {
+    //   user_id: userId
+    // })
+    // .then((response) => {
+    //
+    //   if(response.data.length) {
+    //     this.setState({
+    //       userRecipes: response.data
+    //     });
+    //   }
+    // });
   }
 
   updateRecipes(newRecipes) {
@@ -44,8 +44,8 @@ export default class Cookbook extends React.Component {
   render () {
     let { appState, updateAppState } = this.props;
     let { recipe, isActive, idx } = this.state.recipeDetail;
-    console.log('this.state.userRecipes', this.state.userRecipes);
-    if(appState.loggedIn){
+    console.log('this.state.userRecipes', appState.currentUser);
+    if(appState.currentUser){
       return (
         <section class="c-cookbook">
           <h1 class="c-cookbook__heading">Cookbook</h1>
@@ -70,6 +70,9 @@ export default class Cookbook extends React.Component {
       );
     }
     else {
+      // window.location.href = '/';
+      console.log(this.props);
+      this.props.history.push('/');
       return <Login updateAppState={updateAppState.bind(this)} />;
     }
   }

@@ -1,28 +1,28 @@
-const User = require('../Model/Users.js')
-require('dotenv').config()
-const { signToken } = require('../userAuth.js')
+const User = require('../Models/Users.js');
+require('dotenv').config();
+const { signToken } = require('../userAuth.js');
 
 module.exports = {
   // show all users
   index: (req,res) =>{
     User.find({}, (err, demUsers)=>{
-      if (err) return err
-      res.json(demUsers)
-    })
+      if (err) return err;
+      res.json(demUsers);
+    });
   },
   // show a specific user
   show:(req,res)=>{
     User.findById(req.params.id, (err, datUser)=>{
-      if (err) return err
-      res.json(datUser)
-    })
+      if (err) return err;
+      res.json(datUser);
+    });
   },
   // make sure log in is correct
   authenticate: (req, res) => {
     // query defines whether to find by username or email depending on the users input
     const query={
       $or:[{'name': req.body.name},{'email': req.body.name}]
-  }
+  };
    // check if the username or email exists
 		User.findOne(query, (err, user) => {
 			// if there's no user or the password is invalid
@@ -58,7 +58,7 @@ module.exports = {
   //deletes user from database forever
   destroy: (req, res)=>{
     User.findByIdAndRemove(req.params.id, (err, deletedUser)=>{
-      res.json({success:true, message: deletedUser + "removed from database"})
-    })
+      res.json({success:true, message: deletedUser + "removed from database"});
+    });
   }
-}
+};
