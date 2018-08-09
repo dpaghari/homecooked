@@ -2,19 +2,19 @@ const path = require('path');
 
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose') //mongodb
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/homecooked'
-require('dotenv').load()
+const mongoose = require('mongoose'); //mongodb
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/homecooked';
+require('dotenv').load();
 
 // Middleware
 const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
-const logger = require('morgan')
+const logger = require('morgan');
 
 // Includes
 // const ApiManager = require("./ApiManager.js");
-const usersRoutes = require("./Routes/users.js")
+const usersRoutes = require("./Routes/users.js");
 
 const initialState = {
 
@@ -22,8 +22,12 @@ const initialState = {
 
 let appState = initialState;
 
+console.log(path.join(__dirname, '/./Views'));
 // App Settings
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname + '/../public')));
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, '/./views/'));
 app.use(logger('dev'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -33,17 +37,14 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 // ROUTING
 //############
 
-app.use('/api/users', usersRoutes)
 
 
+
+app.use('/api/users', usersRoutes);
 app.get('/*', function(req, res) {
-  res.sendFile(__dirname + '/index.html', function(err) {
-    if (err) {
-      res.status(500).send(err)
-    }
-  })
+  // res.sendFile(__dirname + '/index.html', function(err) {
+  res.render('index');
 });
-
 //############
 // SERVICES
 //############
