@@ -25,7 +25,6 @@ module.exports = {
   }
    // check if the username or email exists
 		User.findOne(query, (err, user) => {
-      console.log(user)
 			// if there's no user or the password is invalid
 			if(!user || !user.validPassword(req.body.password)) {
 				// deny access
