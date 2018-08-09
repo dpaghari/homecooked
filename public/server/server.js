@@ -35,6 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 app.use('/api/users', usersRoutes)
 
+
 app.get('/*', function(req, res) {
   res.sendFile(__dirname + '/index.html', function(err) {
     if (err) {
