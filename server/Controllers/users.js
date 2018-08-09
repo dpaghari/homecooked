@@ -1,4 +1,4 @@
-const User = require('../Model/Users.js');
+const User = require('../Models/Users.js');
 require('dotenv').config();
 const { signToken } = require('../userAuth.js');
 

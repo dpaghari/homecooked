@@ -4,7 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "concurrently 'webpack --mode=development --watch --progress' 'nodemon public/server/server.js'",
+    "start": "concurrently 'webpack --mode=development --watch --progress' 'nodemon server/server.js'",
     "pack:dev": "webpack --mode=development --progress",
     "pack:prod": "webpack --mode=production --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,7 +25,7 @@
     "morgan": "^1.9.0",
     "multer": "^1.3.0",
     "mysql": "^2.16.0",
-    "npm": "^6.3.0",
+    "pug": "^2.0.3",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
     "react-css-transition-replace": "^1.2.0-beta",

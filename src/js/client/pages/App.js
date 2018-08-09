@@ -17,6 +17,10 @@ export default class App extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    console.log(this.state);
+  }
+
   componentWillMount() {
 
     // const isLoggedIn = getCookie('isLoggedIn') ? JSON.parse(getCookie('isLoggedIn')) : false;
@@ -34,6 +38,7 @@ export default class App extends React.Component {
     }
   }
   componentDidMount() {
+
 
   }
 
@@ -60,12 +65,12 @@ export default class App extends React.Component {
   }
 
   onLoginSuccess() {
-		this.setState({ 
+		this.setState({
       loggedIn: true,
-      currentUser: httpClient.getCurrentUser() 
+      currentUser: httpClient.getCurrentUser()
     })
   }
-  
+
   logOutHandler(){
     httpClient.logOut()
     this.setState({
@@ -73,7 +78,7 @@ export default class App extends React.Component {
     })
   }
 
- 
+
 
 
 }

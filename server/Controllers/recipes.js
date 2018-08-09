@@ -1,4 +1,4 @@
-const Recipe = require('../Model/Recipes.js');
+const Recipe = require('../Models/Recipes.js');
 require('dotenv').config();
 const { signToken } = require('../userAuth.js');
 
