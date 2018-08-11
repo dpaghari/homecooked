@@ -3,13 +3,15 @@ const path = require('path');
 
 const Autoprefixer = require('autoprefixer');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 const mode = "development";
 
 module.exports = {
   mode,
-  //optimizes 
+  //optimizes
   devtool: 'inline-source-map',
   entry: {
     client: [
@@ -18,7 +20,7 @@ module.exports = {
     ]
   },
   output: {
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, 'public/dist'),
     filename: '[name].min.js'
   },
   resolve: {
@@ -88,6 +90,7 @@ module.exports = {
   ],
   },
   plugins: [
+    new CleanWebpackPlugin(['public/dist']),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
