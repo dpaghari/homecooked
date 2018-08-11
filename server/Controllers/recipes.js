@@ -1,11 +1,12 @@
 const Recipe = require('../Models/Recipes.js');
 require('dotenv').config();
-const { signToken } = require('../userAuth.js');
+const { signToken, verifyToken } = require('../userAuth.js');
 
 module.exports = {
   index: (req,res)=>{
     Recipe.find({}, (err, allDemRecipes)=>{
       if (err) return err;
+      console.log(allDemRecipes)
       res.json(allDemRecipes);
     });
   },
@@ -22,7 +23,7 @@ module.exports = {
     });
   },
   showPosts: (req,res)=>{
-    Recipe.find({'user.id': req.user.id}, (err, usersRecipe)=>{
+    Recipe.find({'user': req.params.id}, (err, usersRecipe)=>{
       if (err) return err;
       res.json(usersRecipe);
     });

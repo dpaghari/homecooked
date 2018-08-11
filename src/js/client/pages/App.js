@@ -11,7 +11,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // loggedIn: false,
+      token: null,
       currentPage: 'Home',
       currentUser: httpClient.getCurrentUser()
     };
@@ -64,17 +64,18 @@ export default class App extends React.Component {
     if(newState) this.setState(newState);
   }
 
-  onLoginSuccess() {
+  onLoginSuccess(token) {
 		this.setState({
-      loggedIn: true,
-      currentUser: httpClient.getCurrentUser()
+      currentUser: httpClient.getCurrentUser(),
+      token
     })
   }
 
   logOutHandler(){
     httpClient.logOut()
     this.setState({
-      curentUser:null
+      curentUser:null,
+      token:null
     })
   }
 

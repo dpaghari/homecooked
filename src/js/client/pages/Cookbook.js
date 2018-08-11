@@ -3,6 +3,7 @@ import React from 'react';
 import Login from '../components/Login';
 import Recipe from '../components/Recipe';
 import RecipeForm from '../components/RecipeForm';
+import httpClient from '../../httpClient.js';
 
 import axios from 'axios';
 
@@ -37,6 +38,12 @@ export default class Cookbook extends React.Component {
     // });
   }
 
+  componentDidMount (){
+    httpClient.userRecipes(this.props.currentUser._id).then((serverResponse) =>{
+      console.log(serverResponse)
+    })
+  }
+
   updateRecipes(newRecipes) {
     this.setState({recipeForm: newRecipes});
   }
@@ -65,7 +72,8 @@ export default class Cookbook extends React.Component {
                       isActive={this.state.recipeForm.isActive}
                       userRecipes={this.state.userRecipes}
                       updateRecipes={this.updateRecipes.bind(this)}
-                      handleToggleRecipeForm={this.handleToggleRecipeForm.bind(this)} />
+                      handleToggleRecipeForm={this.handleToggleRecipeForm.bind(this)}
+                      currentUser={this.props.currentUser} />
         </section>
       );
     }

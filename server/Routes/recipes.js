@@ -12,7 +12,7 @@ recipeRouter.route('/add_recipe')
 recipeRouter.route('/get_recipes/:id')
   .get(recipeCtrl.show)
 
-recipeRouter.route('get_users_recipe/:id')
+recipeRouter.route('/get_users_recipe/:id')
   .get(recipeCtrl.showPosts)
 
 
