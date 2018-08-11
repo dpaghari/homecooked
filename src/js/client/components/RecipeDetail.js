@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default class Recipe extends React.Component {
+export default class RecipeDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,15 +10,14 @@ export default class Recipe extends React.Component {
 
 
   render() {
-
-    const { recipe_id, ingredients, instructions, recipe_image, name, blurb } = this.props.recipe;
+    const { recipe_id, ingredients, instructions, imageUrl, name, description } = this.props.recipe;
     const { handleToggleRecipeDetail,
             renderIngredientList,
             renderInstructionsList,
             deleteRecipe,
             isActive } = this.props;
 
-    const imgUrl = recipe_image ? recipe_image : './img/placeholder-recipe.jpg';
+    const imgUrl = imageUrl ? imageUrl : './img/placeholder-recipe.jpg';
 
 
     if(isActive) {
@@ -38,7 +37,7 @@ export default class Recipe extends React.Component {
               </div>
               <div class="c-recipe-detail__right">
                 <h3 class="c-recipe-detail__recipe-name">{name}</h3>
-                <p class="c-recipe-detail__blurb">{blurb}</p>
+                <p class="c-recipe-detail__blurb">{description}</p>
                 <h4>
                   <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                   Ingredients

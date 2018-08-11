@@ -32,7 +32,6 @@ export default class RecipeForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.state)
     this.setState({
       isActive: nextProps.isActive
     })
@@ -47,7 +46,6 @@ export default class RecipeForm extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.currentUser)
     this.setState({
       newRecipe: {
         ...this.state.newRecipe,
@@ -80,7 +78,6 @@ export default class RecipeForm extends React.Component {
         }
       })
     }
-    console.log(this.state.newRecipe)
   }
 
   render() {
@@ -219,20 +216,20 @@ export default class RecipeForm extends React.Component {
           currentStep: this.state.currentStep
         });
       }
-      console.log(this.state)
-    
+
+
   }
 
   checkFields() {
-     console.log(this.refs);
+
      let isValid = false;
      for (var field in this.refs) {
        if (this.refs.hasOwnProperty(field)) {
          let currField = this.refs[field];
          let validators = currField.dataset.validators;
-         console.log(currField);
+
          if(validator.isEmpty(currField.value)) {
-           console.log(currField.name);
+
             return {
               isValid: false,
               error: `${currField.name} is empty`
@@ -263,24 +260,13 @@ export default class RecipeForm extends React.Component {
 
   handleAddNewRecipe(e) {
     e.preventDefault();
-    console.log(this.state.newRecipe.user)
-    httpClient.userRecipe(this.state.newRecipe).then(serverResponse=>{
-      console.log(serverResponse)
-    })
-    // let newRecipe = Object.assign(this.state.newRecipe, {user_id: this.props.appState.currentUser.user_id});
-    // this.props.userRecipes.push(newRecipe);
-    // axios.post('/api/add_recipe', newRecipe)
-    // .then((response) => {
-    //   console.log(response);
-    //   this.props.updateRecipes(this.props.userRecipes);
-    //   this.setState({
-    //     currentStep: 0
-    //   });
-    // })
-    // .catch((err) => {
-    //   throw err;
-    // });
-
+    let newRecipe = this.state.newRecipe;
+    this.props.userRecipes.push(newRecipe);
+    this.props.updateRecipes(this.props.userRecipes);
+    httpClient.newRecipe(this.state.newRecipe);
+    this.setState({
+      currentStep: 0
+    });
   }
 
   handleAddIngredient() {
@@ -317,7 +303,7 @@ export default class RecipeForm extends React.Component {
       currInt:''
     });
 
-    
+
     recipeInstruction.focus();
   }
 
