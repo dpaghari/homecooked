@@ -131,6 +131,7 @@ export default class Login extends React.Component {
           password:''
         }
       })
+      console.log(user)
       if (user){
         this.props.logInSuccess()
       }

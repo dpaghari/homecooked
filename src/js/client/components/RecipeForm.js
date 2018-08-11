@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import validator from 'validator';
+import httpClient from '../../httpClient.js';
 
 export default class RecipeForm extends React.Component {
   constructor(props) {
@@ -8,14 +9,22 @@ export default class RecipeForm extends React.Component {
     this.state = {
       isActive: false || this.props.isActive,
       newRecipe: {
+        user:{},
         name: '',
-        recipe_image: '',
-        cooking_time: '',
-        serving_size: '',
-        blurb: '',
+        imageUrl: '',
+        cookingTime: {
+          hours:'',
+          minutes:'',
+          seconds:''
+        },
+        servingSize: '',
+        description: '',
         ingredients: [],
-        instructions: []
+        instructions: [],
       },
+      currIng:'',
+      currQty:'',
+      currInt:'',
       currentStep: 0,
       currentFields: [],
       error: null
@@ -23,17 +32,55 @@ export default class RecipeForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(this.state)
     this.setState({
       isActive: nextProps.isActive
     })
   }
 
   componentDidUpdate() {
-    for (var ref in this.refs) {
-      if (this.refs.hasOwnProperty(ref)) {
-        this.refs[ref].value = "";
+    // for (var ref in this.refs) {
+    //   if (this.refs.hasOwnProperty(ref)) {
+    //     this.refs[ref].value = "";
+    //   }
+    // }
+  }
+
+  componentDidMount() {
+    console.log(this.props.currentUser)
+    this.setState({
+      newRecipe: {
+        ...this.state.newRecipe,
+        user: this.props.currentUser
       }
+    })
+  }
+
+  onInputChange(evt){
+    if(evt.target.name === 'hours' || evt.target.name === 'minutes' || evt.target.name === 'seconds'){
+      this.setState({
+        newRecipe: {
+          ...this.state.newRecipe,
+          cookingTime : {
+            ...this.state.newRecipe.cookingTime,
+            [evt.target.name]:evt.target.value
+          }
+        }
+      })
+    } else if (evt.target.name === 'currIng' || evt.target.name === 'currQty' || evt.target.name === 'currInt'){
+      this.setState({
+        ...this.state,
+        [evt.target.name]:evt.target.value
+      })
+    } else {
+      this.setState({
+        newRecipe: {
+          ...this.state.newRecipe,
+          [evt.target.name]:evt.target.value
+        }
+      })
     }
+    console.log(this.state.newRecipe)
   }
 
   render() {
@@ -47,7 +94,7 @@ export default class RecipeForm extends React.Component {
                 <i class="fa fa-times"></i>
               </a>
             </div>
-            <form class="c-new-recipe__form" onSubmit={this.handleAddNewRecipe.bind(this)}>
+            <form class="c-new-recipe__form" onChange={this.onInputChange.bind(this)} onSubmit={this.handleAddNewRecipe.bind(this)}>
               { this.renderError() }
               { this.renderCurrFieldSet() }
             </form>
@@ -66,20 +113,23 @@ export default class RecipeForm extends React.Component {
 
 
   renderCurrFieldSet() {
-    const { currentStep, error } = this.state;
+    const { currentStep, error, currIng, currQty, currInt } = this.state;
+    const { name, imageUrl, servingSize, description, cookingTime } = this.state.newRecipe
     if(currentStep === 0) {
       return (
         <fieldset class="c-new-recipe__step--one">
           <label for="recipeName">Recipe Name</label>
-          <input name="recipe-name" type="text" ref="recipeName" placeholder="Recipe Name" required data-validators="isEmpty,trim"/>
+          <input name="name" type="text" ref="recipeName" placeholder="Recipe Name" required data-validators="isEmpty,trim" value={name}/>
           <label for="recipeImage">Recipe Image URL</label>
-          <input name="recipe-image" type="text" ref="recipeImage" placeholder="Recipe Image URL" required data-validators="isEmpty,trim"/>
+          <input name="imageUrl" type="text" ref="recipeImage" placeholder="Recipe Image URL" required data-validators="isEmpty,trim" value={imageUrl}/>
           <label for="recipeCookTime">Cooking Time</label>
-          <input name="recipe-cooktime" type="text" ref="recipeCookTime" placeholder="Cooking Time" required data-validators="isEmpty,trim"/>
+          <input name="hours" type="number" ref="recipeCookTime" placeholder="Hours" required data-validators="isEmpty,trim" value={cookingTime.hours}/>
+          <input name="minutes" type="number" ref="recipeCookTime" placeholder="Minutes" required data-validators="isEmpty,trim" value={cookingTime.minutes}/>
+          <input name="seconds" type="number" ref="recipeCookTime" placeholder="Seconds" required data-validators="isEmpty,trim" value={cookingTime.seconds}/>
           <label for="recipeServing">Serves How many?</label>
-          <input name="recipe-serving" type="text" ref="recipeServing" placeholder="Serving Size" required data-validators="isEmpty,trim"/>
+          <input name="servingSize" type="number" ref="recipeServing" placeholder="Serving Size" required data-validators="isEmpty,trim" value={servingSize}/>
           <label for="recipeDescription">Description</label>
-          <textarea name="recipe-desc" cols="100" rows="6" ref="recipeDescription" placeholder="Description" required data-validators="isEmpty,trim"/>
+          <textarea name="description" cols="100" rows="6" ref="recipeDescription" placeholder="Description" required data-validators="isEmpty,trim" value={description}/>
           <a href="#" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
             <i class="fas fa-arrow-right"></i>
           </a>
@@ -90,9 +140,9 @@ export default class RecipeForm extends React.Component {
       return (
         <fieldset class="c-new-recipe__step--two">
           <label for="recipeIngredient">Ingredient Name</label>
-          <input name="recipe-ingredient-name" type="text" ref="recipeIngredient" placeholder="Ingredient"/>
+          <input name="currIng" type="text" ref="recipeIngredient" placeholder="Ingredient" value={currIng}/>
           <label for="recipeIngQty">Ingredient Quantity</label>
-          <input type="text" ref="recipeIngQty" placeholder="Qty"/>
+          <input name="currQty" type="text" ref="recipeIngQty" placeholder="Qty" value={currQty} />
           <a href="#" class="c-new-recipe__add-button" onClick={this.handleAddIngredient.bind(this)}>Add Ingredient<i class="fa fa-plus"></i></a>
           <a href="#" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
             <i class="fas fa-arrow-right"></i>
@@ -104,7 +154,7 @@ export default class RecipeForm extends React.Component {
       return (
         <fieldset class="c-new-recipe__step--three">
           <label for="recipeInstruction">Instruction</label>
-          <input type="text" ref="recipeInstruction" placeholder="Chop up garlic"/>
+          <input name="currInt" type="text" ref="recipeInstruction" placeholder="Chop up garlic" value={currInt}/>
           <a href="#" class="c-new-recipe__add-button" onClick={this.handleAddInstruction.bind(this)}>Add Instruction<i class="fa fa-plus"></i></a>
           {/* {<button type="button" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
             <i class="fas fa-arrow-right"></i>
@@ -144,31 +194,33 @@ export default class RecipeForm extends React.Component {
   handleClickNext() {
     let { currentStep } = this.state;
     if(currentStep < 2) {
-      if( currentStep === 0) {
-        this.saveFieldsToState();
-        let isValidated = this.checkFields();
-        console.log(isValidated, this.state.error);
-        if(isValidated.isValid) {
-          console.log('hay');
-          this.state.currentStep++;
-          this.setState({
-            currentStep: this.state.currentStep
-          });
-        }
-        else {
-          console.log(isValidated.error);
-          this.setState({
-            error: isValidated.error
-          });
-        }
-      }
-      else {
+      // if( currentStep === 0) {
+      //   this.saveFieldsToState();
+      //   let isValidated = this.checkFields();
+      //   console.log(isValidated, this.state.error);
+      //   if(isValidated.isValid) {
+      //     console.log('hay');
+      //     this.state.currentStep++;
+      //     this.setState({
+      //       currentStep: this.state.currentStep
+      //     });
+      //   }
+      //   else {
+      //     console.log(isValidated.error);
+      //     this.setState({
+      //       error: isValidated.error
+      //     });
+      //   }
+      // }
+      // else {
         this.state.currentStep++;
         this.setState({
+          ...this.state,
           currentStep: this.state.currentStep
         });
       }
-    }
+      console.log(this.state)
+    
   }
 
   checkFields() {
@@ -203,6 +255,7 @@ export default class RecipeForm extends React.Component {
   handleToggleRecipeForm() {
     this.props.handleToggleRecipeForm();
     this.setState({
+      ...this.state,
       currentStep: 0
     });
   }
@@ -210,54 +263,61 @@ export default class RecipeForm extends React.Component {
 
   handleAddNewRecipe(e) {
     e.preventDefault();
-
-    let newRecipe = Object.assign(this.state.newRecipe, {user_id: this.props.appState.currentUser.user_id});
-    this.props.userRecipes.push(newRecipe);
-    axios.post('/api/add_recipe', newRecipe)
-    .then((response) => {
-      console.log(response);
-      this.props.updateRecipes(this.props.userRecipes);
-      this.setState({
-        currentStep: 0
-      });
+    console.log(this.state.newRecipe.user)
+    httpClient.userRecipe(this.state.newRecipe).then(serverResponse=>{
+      console.log(serverResponse)
     })
-    .catch((err) => {
-      throw err;
-    });
+    // let newRecipe = Object.assign(this.state.newRecipe, {user_id: this.props.appState.currentUser.user_id});
+    // this.props.userRecipes.push(newRecipe);
+    // axios.post('/api/add_recipe', newRecipe)
+    // .then((response) => {
+    //   console.log(response);
+    //   this.props.updateRecipes(this.props.userRecipes);
+    //   this.setState({
+    //     currentStep: 0
+    //   });
+    // })
+    // .catch((err) => {
+    //   throw err;
+    // });
 
   }
 
   handleAddIngredient() {
-    let { recipeIngredient, recipeIngQty } = this.refs;
+    let { currIng, currQty } = this.state;
+    let { recipeIngredient } = this.refs;
     let newIngredient = {
-      name: recipeIngredient.value,
-      quantity: recipeIngQty.value
+      name: currIng,
+      quantity: currQty
     };
 
     this.state.newRecipe.ingredients.push(newIngredient);
     this.state.newRecipe = Object.assign({}, this.state.newRecipe, {ingredients: this.state.newRecipe.ingredients});
     this.setState({
-      newRecipe: this.state.newRecipe
+      newRecipe: this.state.newRecipe,
+      currIng:'',
+      currQty:''
     });
 
-    recipeIngredient.value = recipeIngQty.value = "";
     recipeIngredient.focus();
   }
 
 
   handleAddInstruction() {
+    let { currInt } = this.state
     let { recipeInstruction } = this.refs;
     let newInstruction = {
-      name: recipeInstruction.value
+      name: currInt
     };
 
     this.state.newRecipe.instructions.push(newInstruction);
     this.state.newRecipe = Object.assign({}, this.state.newRecipe, {instructions: this.state.newRecipe.instructions});
     this.setState({
-      newRecipe: this.state.newRecipe
+      newRecipe: this.state.newRecipe,
+      currInt:''
     });
 
-    recipeInstruction.value = "";
+    
     recipeInstruction.focus();
   }
 
@@ -270,7 +330,7 @@ export default class RecipeForm extends React.Component {
     let newRecipeCookTime = !validator.isEmpty(recipeCookTime.value) && validator.isNumeric(recipeCookTime.value) ? validator.trim(recipeCookTime.value) : null;
     let newRecipeServing = !validator.isEmpty(recipeServing.value) && validator.isNumeric(recipeServing.value) ? validator.trim(recipeServing.value) : null;
     let newRecipeDescription = !validator.isEmpty(recipeDescription.value) ? validator.trim(recipeDescription.value) : null;
-    console.log(newRecipeName, newRecipeCookTime, newRecipeServing);
+    // console.log(newRecipeName, newRecipeCookTime, newRecipeServing);
     if(newRecipeName && newRecipeCookTime && newRecipeServing) {
       this.state.newRecipe = Object.assign(this.state.newRecipe, {
         name: newRecipeName,

@@ -54,4 +54,21 @@ httpClient.logOut = function() {
 	return true
 }
 
+// #######################
+// #HTTPCLIENT FOR RECIPE#
+// #######################
+
+httpClient.newRecipe = function (data){
+	return this({method: 'post', url:'/api/recipe/add_recipe', data: data})
+};
+
+httpClient.allRecipes = function () {
+	return this({method: 'get', url:'/api/recipe/get_recipes'})
+};
+
+httpClient.userRecipes = function (id) {
+	return this({method: 'get', url:`/api/recipe/get_users_recipe/${id}`})
+};
+
+
 export default httpClient

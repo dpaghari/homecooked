@@ -14,7 +14,8 @@ const logger = require('morgan');
 
 // Includes
 // const ApiManager = require("./ApiManager.js");
-const usersRoutes = require("./Routes/users.js");
+const usersRoutes = require('./Routes/users.js');
+const recipeRoutes = require('./Routes/recipes.js');
 
 const initialState = {
 
@@ -37,10 +38,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 // ROUTING
 //############
 
-
-
-
 app.use('/api/users', usersRoutes);
+app.use('/api/recipe',recipeRoutes);
+
 app.get('/*', function(req, res) {
   // res.sendFile(__dirname + '/index.html', function(err) {
   res.render('index');

@@ -28,32 +28,32 @@ module.exports = {
 			// if there's no user or the password is invalid
 			if(!user || !user.validPassword(req.body.password)) {
 				// deny access
-				return res.json({success: false, message: "Invalid credentials."})
+				return res.json({success: false, message: "Invalid credentials."});
 			}
 
 			const token = signToken(user)
-			res.json({success: true, message: "Token attached.", token})
-		})
+			res.json({success: true, message: "Token attached.", token});
+		});
   },
   //creates user
   create: (req, res) => {
 		User.create(req.body, (err, user) => {
-			if(err) return res.json({success: false, code: err.code})
+			if(err) return res.json({success: false, code: err.code});
 			// once user is created, generate a token to "log in":
 			const token = signToken(user)
-			res.json({success: true, message: "User created. Token attached.", token})
-		})
+			res.json({success: true, message: "User created. Token attached.", token});
+		});
   },
   //updates user info
   update: (req, res)=>{
     User.findById(req.params.id, (err, user) => {
-			if(!req.body.password) delete req.body.password
-			Object.assign(user, req.body)
+			if(!req.body.password) delete req.body.password;
+			Object.assign(user, req.body);
 			user.save((err, updatedUser) => {
-				if (err) console.log(err)
-				res.json({success: true, message: "User updated.", updatedUser})
-			})
-		})
+				if (err) console.log(err);
+				res.json({success: true, message: "User updated.", updatedUser});
+			});
+		});
   },
   //deletes user from database forever
   destroy: (req, res)=>{
