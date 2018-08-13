@@ -3,7 +3,8 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose'); //mongodb
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/homecooked';
+const MONGODB_URI =
+  process.env.MONGODB_URI || 'mongodb://localhost:27017/homecooked';
 require('dotenv').load();
 
 // Middleware
@@ -17,9 +18,7 @@ const logger = require('morgan');
 const usersRoutes = require('./Routes/users.js');
 const recipeRoutes = require('./Routes/recipes.js');
 
-const initialState = {
-
-};
+const initialState = {};
 
 let appState = initialState;
 
@@ -32,13 +31,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-
 //############
 // ROUTING
 //############
 
 app.use('/api/users', usersRoutes);
-app.use('/api/recipe',recipeRoutes);
+app.use('/api/recipe', recipeRoutes);
 
 app.get('/*', function(req, res) {
   // res.sendFile(__dirname + '/index.html', function(err) {
@@ -210,9 +208,12 @@ app.get('/*', function(req, res) {
 // });
 
 //connects to mongodb
-mongoose.connect(MONGODB_URI, (err) => {
-	console.log(err || `Connected to MongoDB.`)
-})
+mongoose.connect(
+  MONGODB_URI,
+  err => {
+    console.log(err || `Connected to MongoDB.`);
+  }
+);
 
 app.listen(process.env.PORT || 3000, function() {
   console.log('Homecooked listening on port 3000!');

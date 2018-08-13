@@ -18,10 +18,11 @@ import Explore from './pages/Explore';
 render(
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-    <IndexRoute component={Home}/>
-    <Route path="/cookbook" component={Cookbook}></Route>
-    <Route path="/settings" component={Settings}></Route>
-    <Route path="/explore" component={Explore}></Route>
+      <IndexRoute component={Home} />
+      <Route path="/cookbook" component={Cookbook} />
+      <Route path="/settings" component={Settings} />
+      <Route path="/explore" component={Explore} />
     </Route>
   </Router>,
-  document.getElementById('app'));
+  document.getElementById('app')
+);

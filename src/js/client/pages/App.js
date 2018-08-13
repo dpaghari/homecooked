@@ -22,25 +22,20 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-
     // const isLoggedIn = getCookie('isLoggedIn') ? JSON.parse(getCookie('isLoggedIn')) : false;
-    if(this.state.currentUser) {
+    if (this.state.currentUser) {
       this.setState({
         // loggedIn: true,
         currentUser: httpClient.getCurrentUser()
       });
-    }
-    else {
+    } else {
       this.setState({
         // loggedIn: false,
         currentUser: null
       });
     }
   }
-  componentDidMount() {
-
-
-  }
+  componentDidMount() {}
 
   render() {
     // this.props.children = React Router route component
@@ -49,37 +44,36 @@ export default class App extends React.Component {
       appState: this.state,
       updateAppState: this.updateAppState.bind(this),
       logInSuccess: this.onLoginSuccess.bind(this),
-      currentUser: this.state.currentUser,
+      currentUser: this.state.currentUser
     });
 
     return (
       <main>
-        <Header updateAppState={this.updateAppState.bind(this)} onLogOut={this.logOutHandler.bind(this)}/>
-          {page}
+        <Header
+          updateAppState={this.updateAppState.bind(this)}
+          onLogOut={this.logOutHandler.bind(this)}
+        />
+        {page}
       </main>
     );
   }
 
   updateAppState(newState) {
-    if(newState) this.setState(newState);
+    if (newState) this.setState(newState);
   }
 
   onLoginSuccess(token) {
-		this.setState({
+    this.setState({
       currentUser: httpClient.getCurrentUser(),
       token
-    })
+    });
   }
 
-  logOutHandler(){
-    httpClient.logOut()
+  logOutHandler() {
+    httpClient.logOut();
     this.setState({
-      curentUser:null,
-      token:null
-    })
+      curentUser: null,
+      token: null
+    });
   }
-
-
-
-
 }
