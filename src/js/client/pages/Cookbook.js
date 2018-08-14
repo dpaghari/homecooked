@@ -146,22 +146,11 @@ export default class Cookbook extends React.Component {
     let { appState } = this.props;
     const profile_picture = appState.currentUser.imageUrl;
 
-    recipe.ingredients =
-      typeof recipe.ingredients === 'string'
-        ? JSON.parse(recipe.ingredients)
-        : recipe.ingredients;
-    recipe.instructions =
-      typeof recipe.instructions === 'string'
-        ? JSON.parse(recipe.instructions)
-        : recipe.instructions;
-    let imgUrl = recipe.imageUrl
-      ? recipe.imageUrl
-      : './img/placeholder-recipe.jpg';
+    recipe.ingredients = typeof recipe.ingredients === 'string' ? JSON.parse(recipe.ingredients) : recipe.ingredients;
+    recipe.instructions = typeof recipe.instructions === 'string' ? JSON.parse(recipe.instructions) : recipe.instructions;
+    let imgUrl = recipe.imageUrl ? recipe.imageUrl : './img/placeholder-recipe.jpg';
     let { hours, minutes, seconds } = recipe.cookingTime;
-    let classList =
-      idx === 0
-        ? 'c-user-recipes__list-item--featured'
-        : 'c-user-recipes__list-item';
+    let classList = idx === 0 ? 'c-user-recipes__list-item--featured' : 'c-user-recipes__list-item';
     return (
       <li
         onClick={this.handleToggleRecipeDetail.bind(this, recipe, idx)}
