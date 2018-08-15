@@ -4,15 +4,15 @@ const { signToken, verifyToken } = require('../userAuth.js');
 "use strict";
 module.exports = {
   index: (req,res)=>{
-    Recipe.find({}).populate('user').exec((err,allDemRecipes) => {
+    Recipe.find({}).populate('user', '_id name imageUrl location').exec((err,allDemRecipes) => {
       if (err) return err;
-      let allRecipes = allDemRecipes.map((el, idx) => {
-        el.user.email = undefined;
-        el.user.password = undefined;
-        return el;
-      });
-      console.log(allRecipes);
-      res.json(allRecipes);
+      // let allRecipes = allDemRecipes.map((el, idx) => {
+      //   el.user.email = undefined;
+      //   el.user.password = undefined;
+      //   return el;
+      // });
+      console.log(allDemRecipes)
+      res.json(allDemRecipes);
     });
   },
   create: (req,res)=>{
