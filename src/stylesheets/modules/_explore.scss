@@ -1,0 +1,6 @@
+.c-explore {
+  @extend .c-cookbook;
+  &__heading {
+    @extend .c-cookbook__heading;
+  }
+}

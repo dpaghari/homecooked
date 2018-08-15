@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Login from '../components/Login';
+import httpClient from '../../httpClient';
 
 
 export default class Explore extends React.Component {
@@ -12,25 +13,41 @@ export default class Explore extends React.Component {
   }
 
 
-  componentWillMount() {
+  componentDidMount() {
     let { appState } = this.props;
 
-    let userId = appState.currentUser.user_id;
+    let userId = appState.currentUser._id;
     this.getGlobalRecipes(userId);
   }
 
   getGlobalRecipes(userId) {
-    axios.post('/api/get_global_recipes', {
-      user_id: userId
-    })
-    .then((response) => {
-
-      if(response.data.length) {
+    httpClient.allRecipesExceptUser(userId).then((response) => {
+      if(response.length) {
         this.setState({
-          global_recipes: response.data
+          global_recipes: response
         });
       }
     });
+  }
+
+  render() {
+    let { appState, updateAppState } = this.props;
+
+    if(appState.currentUser) {
+      return (
+        <div class="c-explore">
+          <h1 class="c-explore__heading">Explore</h1>
+          <div class="c-explore__page container">
+            <section class="c-user-recipes container">
+              {this.renderRecipesList()}
+            </section>
+          </div>
+        </div>
+      );
+    }
+    else {
+      return <Login updateAppState={updateAppState.bind(this)} />;
+    }
   }
 
   renderRecipesList() {
@@ -47,25 +64,40 @@ export default class Explore extends React.Component {
   }
 
   renderRecipe(recipe, idx) {
+    const {
+      name,
+      imageUrl,
+      cookingTime,
+      servingSize,
+      description
+    } = recipe;
+    const {
+      hours,
+      minutes,
+      seconds
+    } = cookingTime;
+
+    console.log(recipe);
+    let imgUrl = recipe.imageUrl ? recipe.imageUrl : './img/placeholder-recipe.jpg';
+
     return (
       <li key={idx} class="c-user-recipes__list-item">
-        <div class="c-user-recipes__left">
-          <strong>{recipe.name}</strong>
-          <img src={recipe.recipe_image} alt={recipe.name} />
-          <p>Cooking Time: {recipe.cooking_time}</p>
-          <p>Serving Size: {recipe.serving_size}</p>
-          <p>Description: {recipe.blurb}</p>
-        </div>
-        <div class="c-user-recipes__right">
-          <div class="c-user-recipes__actions">
-            <a onClick={ this.handleAddToCookbook.bind(this, recipe.recipe_id, idx) } href="#">Add To Cookbook</a>
+        <div class="c-user-recipes__wrapper">
+          <img class="c-user-recipes__image" src={imgUrl} alt={recipe.name} />
+          <div class="c-user-recipes__info">
+            <strong class=".c-recipe-detail__recipe-name">{recipe.name}</strong>
+            <div class="c-user-recipes__user-lockup">
+              <span class="c-user-recipes__cook-time">
+                {hours}
+                {minutes}
+                {seconds}
+              </span>
+              <span class="c-user-recipes__serving-size">
+                {recipe.servingSize}
+              </span>
+            </div>
+            <p class="c-user-recipes__blurb">{recipe.description}</p>
           </div>
-          <ul class="c-ingredient-list">
-            { this.renderIngredientList(recipe.ingredients) }
-          </ul>
-          <ol class="c-instruction-list">
-            { this.renderInstructionsList(recipe.instructions) }
-          </ol>
         </div>
       </li>
     );
@@ -101,36 +133,15 @@ export default class Explore extends React.Component {
 
   renderInstructionsList(instructions) {
     if(instructions !== null && instructions.length > 0) {
-      return instructions.map((step, idx) => {
-
+      return instructions.map((instruction, idx) => {
         return (
           <li key={idx} class="c-instruction">
-            <p>{step}</p>
+            <p>{instruction.name}</p>
           </li>
-        )
+        );
       });
     }
     else return null;
-  }
-
-
-
-  render() {
-    let { appState, updateAppState } = this.props;
-
-    if(appState.loggedIn) {
-      return (
-        <div class="c-explore">
-          <h1> Explore Page! </h1>
-          <div class="c-explore__recipes">
-            {this.renderRecipesList()}
-          </div>
-        </div>
-      );
-    }
-    else {
-      return <Login updateAppState={updateAppState.bind(this)} />;
-    }
   }
 
 }

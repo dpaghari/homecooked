@@ -24,12 +24,6 @@ export default class Cookbook extends React.Component {
 
   componentWillMount() {
     let { appState } = this.props;
-    // if (this.props.currentUser) {
-    //   httpClient.userRecipes(this.props.currentUser._id).then(response => {
-    //     this.setState({
-    //       userRecipes: response.data
-    //     });
-    //   });
   }
 
   componentDidMount() {
