@@ -12,9 +12,12 @@ httpClient.setToken = function(token) {
   return token;
 };
 
+// #######################
+// #HTTPCLIENT FOR User#
+// #######################
+
 httpClient.getCurrentUser = function() {
   const token = this.getToken();
-  // console.log(token)
   if (token) return jwtDecode(token);
   return null;
 };
@@ -58,6 +61,10 @@ httpClient.logOut = function() {
   return true;
 };
 
+httpClient.getUser = function(id) {
+  return this({ method: 'get', url: `api/users/${id}`});
+};
+
 // #######################
 // #HTTPCLIENT FOR RECIPE#
 // #######################
@@ -74,7 +81,7 @@ httpClient.allRecipesExceptUser = function(id) {
   let filteredRecipes = new Promise((resolve, reject) => {
     this({ method: 'get', url: `/api/recipe/get_recipes` }).then((res) => {
       let allRecipes = res.data;
-      resolve(allRecipes.filter((el) => el.user !== id));
+      resolve(allRecipes.filter((el) => el.user._id !== id));
     })
     .catch((err) => reject(err));
   });

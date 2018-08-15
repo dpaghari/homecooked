@@ -9,4 +9,7 @@ usersRouter.route('/')
 usersRouter.route('/authenticate')
   .post(usersCtrl.authenticate);
 
+usersRouter.route('/:id').get(usersCtrl.show);
+
+
 module.exports= usersRouter;

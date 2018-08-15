@@ -101,7 +101,7 @@ export default class Login extends React.Component {
 
   handleShowRegister(e) {
     e.preventDefault();
-    this.setState({ 
+    this.setState({
       fields: {
         name:'',
         password:'',
@@ -109,7 +109,7 @@ export default class Login extends React.Component {
         location:'',
         imageUrl:''
       },
-      showRegister: !this.state.showRegister 
+      showRegister: !this.state.showRegister
     });
   }
 
@@ -130,8 +130,7 @@ export default class Login extends React.Component {
           name:'',
           password:''
         }
-      })
-      console.log(user)
+      });
       if (user){
         this.props.logInSuccess()
       }

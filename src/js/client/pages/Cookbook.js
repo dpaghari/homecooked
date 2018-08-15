@@ -32,7 +32,6 @@ export default class Cookbook extends React.Component {
         this.setState({
           userRecipes: response.data
         });
-        console.log(this.state.userRecipes);
       });
     }
   }
@@ -45,7 +44,6 @@ export default class Cookbook extends React.Component {
     this.setState({
       userRecipes: [...this.state.userRecipes, recipe]
     });
-    console.log(this.state.userRecipes);
   }
 
   render() {
@@ -92,7 +90,6 @@ export default class Cookbook extends React.Component {
 
   renderUserRecipes(recipes) {
     if (this.state.userRecipes.length) {
-      console.log('can read recipes');
       return (
         <section class="c-user-recipes container">
           <ul class="c-user-recipes__list">
@@ -108,7 +105,6 @@ export default class Cookbook extends React.Component {
         </section>
       );
     } else {
-      console.log('cant read recipes');
       return (
         <section class="c-user-recipes container">
           <ul class="c-user-recipes__list">
@@ -126,12 +122,9 @@ export default class Cookbook extends React.Component {
   }
 
   renderRecipesList(recipes) {
-    // let recipes = this.state.userRecipes;
-    console.log('rendering list');
     if (this.state.userRecipes.length > 0) {
       return recipes.map(this.renderRecipe.bind(this));
     } else {
-      console.log('returning null');
       return null;
     }
   }
@@ -175,7 +168,6 @@ export default class Cookbook extends React.Component {
 
   deleteRecipe(id) {
     httpClient.deleteRecipe(id).then(response => {
-      console.log(response);
       this.setState({
         recipeDetail: {
           ...this.state.recipeDetail,

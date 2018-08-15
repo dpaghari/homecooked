@@ -68,6 +68,7 @@ export default class Explore extends React.Component {
       name,
       imageUrl,
       cookingTime,
+      user,
       servingSize,
       description
     } = recipe;
@@ -77,7 +78,6 @@ export default class Explore extends React.Component {
       seconds
     } = cookingTime;
 
-    console.log(recipe);
     let imgUrl = recipe.imageUrl ? recipe.imageUrl : './img/placeholder-recipe.jpg';
 
     return (
@@ -87,6 +87,7 @@ export default class Explore extends React.Component {
           <div class="c-user-recipes__info">
             <strong class=".c-recipe-detail__recipe-name">{recipe.name}</strong>
             <div class="c-user-recipes__user-lockup">
+              <img src={user.imageUrl} class="c-user-recipes__user-image" />
               <span class="c-user-recipes__cook-time">
                 {hours}
                 {minutes}
@@ -110,7 +111,7 @@ export default class Explore extends React.Component {
       follower_id: user_id
     })
     .then((response) => {
-      console.log(response.data);
+
     })
     .catch((err) => {
       throw err;

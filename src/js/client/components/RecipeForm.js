@@ -46,7 +46,6 @@ export default class RecipeForm extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.props);
     this.setState({
       newRecipe: {
         ...this.state.newRecipe,
@@ -313,16 +312,16 @@ export default class RecipeForm extends React.Component {
       // if( currentStep === 0) {
       //   this.saveFieldsToState();
       //   let isValidated = this.checkFields();
-      //   console.log(isValidated, this.state.error);
+
       //   if(isValidated.isValid) {
-      //     console.log('hay');
+
       //     this.state.currentStep++;
       //     this.setState({
       //       currentStep: this.state.currentStep
       //     });
       //   }
       //   else {
-      //     console.log(isValidated.error);
+
       //     this.setState({
       //       error: isValidated.error
       //     });
@@ -475,7 +474,7 @@ export default class RecipeForm extends React.Component {
     let newRecipeDescription = !validator.isEmpty(recipeDescription.value)
       ? validator.trim(recipeDescription.value)
       : null;
-    // console.log(newRecipeName, newRecipeCookTime, newRecipeServing);
+    
     if (newRecipeName && newRecipeCookTime && newRecipeServing) {
       this.state.newRecipe = Object.assign(this.state.newRecipe, {
         name: newRecipeName,

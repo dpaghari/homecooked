@@ -1,13 +1,18 @@
 const Recipe = require('../Models/Recipes.js');
 require('dotenv').config();
 const { signToken, verifyToken } = require('../userAuth.js');
-
+"use strict";
 module.exports = {
   index: (req,res)=>{
-    Recipe.find({}, (err, allDemRecipes)=>{
+    Recipe.find({}).populate('user').exec((err,allDemRecipes) => {
       if (err) return err;
-      console.log(allDemRecipes)
-      res.json(allDemRecipes);
+      let allRecipes = allDemRecipes.map((el, idx) => {
+        el.user.email = undefined;
+        el.user.password = undefined;
+        return el;
+      });
+      console.log(allRecipes);
+      res.json(allRecipes);
     });
   },
   create: (req,res)=>{

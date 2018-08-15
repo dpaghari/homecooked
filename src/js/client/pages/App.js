@@ -18,7 +18,6 @@ export default class App extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state);
   }
 
   componentWillMount() {

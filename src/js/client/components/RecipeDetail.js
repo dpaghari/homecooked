@@ -29,7 +29,6 @@ export default class RecipeDetail extends React.Component {
       const recipeImageStyles = {
         backgroundImage: `url('${imgUrl}')`
       };
-      console.log(this.props.recipe);
       return (
         <div class="c-recipe-detail l-modal">
           <div class="c-recipe-detail__wrapper">
