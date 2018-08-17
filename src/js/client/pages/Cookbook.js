@@ -17,7 +17,8 @@ export default class Cookbook extends React.Component {
       },
       recipeDetail: {
         isActive: false,
-        recipe: {}
+        recipe: {},
+        edit: false
       }
     };
   }
@@ -58,15 +59,14 @@ export default class Cookbook extends React.Component {
             <RecipeDetail
               recipe={recipe}
               isActive={isActive}
-              renderIngredientList={this.renderIngredientList}
-              renderInstructionsList={this.renderInstructionsList}
+              editIsActive={this.state.recipeDetail.edit}
+              renderIngredientList={this.renderIngredientList.bind(this)}
+              renderInstructionsList={this.renderInstructionsList.bind(this)}
               userRecipes={this.state.userRecipes}
               deleteRecipe={this.deleteRecipe.bind(this)}
-              handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(
-                this,
-                recipe,
-                idx
-              )}
+              editForm={this.handleEditForm.bind(this)}
+              handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this)
+            }
             />
           </div>
           <RecipeForm
@@ -140,7 +140,8 @@ export default class Cookbook extends React.Component {
     let classList = idx === 0 ? 'c-user-recipes__list-item--featured' : 'c-user-recipes__list-item';
     return (
       <li
-        onClick={this.handleToggleRecipeDetail.bind(this, recipe, idx)}
+        onMouseOver={()=>this.handleSetRecipe(recipe)}
+        onClick={this.handleToggleRecipeDetail.bind(this)}
         key={idx}
         class={classList}
       >
@@ -171,7 +172,8 @@ export default class Cookbook extends React.Component {
       this.setState({
         recipeDetail: {
           ...this.state.recipeDetail,
-          isActive: false
+          isActive: false,
+          edit: false
         },
         userRecipes: this.state.userRecipes.filter(recipe => recipe._id !== id)
       });
@@ -203,6 +205,15 @@ export default class Cookbook extends React.Component {
     } else return null;
   }
 
+  handleEditForm(){
+    this.setState({
+      recipeDetail:{
+        ...this.state.recipeDetail,
+        edit: true
+      }
+    })
+  }
+
   handleToggleRecipeForm() {
     this.setState({
       recipeForm: {
@@ -211,14 +222,22 @@ export default class Cookbook extends React.Component {
     });
   }
 
-  handleToggleRecipeDetail(recipe, idx, e) {
-    if (e) e.preventDefault();
+  handleToggleRecipeDetail() {
+    // if (e) e.preventDefault();
     this.setState({
       recipeDetail: {
+        ...this.state.recipeDetail,
         isActive: !this.state.recipeDetail.isActive,
-        recipe,
-        idx
+        edit: false
       }
     });
+  }
+
+  handleSetRecipe(recipe){
+    this.setState({
+      recipeDetail:{
+        recipe
+      }
+    })
   }
 }

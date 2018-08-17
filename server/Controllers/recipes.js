@@ -11,7 +11,6 @@ module.exports = {
       //   el.user.password = undefined;
       //   return el;
       // });
-      console.log(allDemRecipes)
       res.json(allDemRecipes);
     });
   },
