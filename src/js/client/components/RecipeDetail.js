@@ -1,4 +1,5 @@
 import React from 'react';
+import httpClient from '../../httpClient.js';
 
 export default class RecipeDetail extends React.Component {
   constructor(props) {
@@ -19,7 +20,6 @@ export default class RecipeDetail extends React.Component {
         ingredients: [],
         instructions: []
       },
-      currVal:'',
     };
   }
 
@@ -124,7 +124,7 @@ export default class RecipeDetail extends React.Component {
                         instructions.map((step, idx) => {
                           return (
                             <li key={idx} class="c-instruction">
-                              <input name={idx} type='text' value={step.name}></input>
+                              <input onChange={this.onInputChange.bind(this)} data-id={idx} name='instruction' type='text' defaultValue={step.name}></input>
                             </li>
                           );
                         })
@@ -134,6 +134,14 @@ export default class RecipeDetail extends React.Component {
                     )
                   }
                 </ol>
+                {this.props.editIsActive
+                  ?(
+                    <button onClick={() => this.handleSave(_id)}> save </button>
+                  )
+                  :(
+                    <span></span>
+                  )
+                }
               </div>
             </div>
           </div>
@@ -147,17 +155,40 @@ export default class RecipeDetail extends React.Component {
      this.setState({
         ...this.state.editRecipe,
         ingredients:this.updateIngredient(evt,this.state.editRecipe.ingredients)
+    });
+  } else if (evt.target.name === 'instruction'){
+    this.setState({
+      ...this.state.editRecipe,
+      instructions: this.updateInstruction(evt, this.state.editRecipe.instructions)
     })
-    console.log(this.state.editRecipe.ingredients)
   }
 }
 
   updateIngredient(evt,ingredients){
     return ingredients.map(ingredient => {
       if (ingredients.indexOf(ingredient) === parseInt(evt.target.dataset.id)) {
-         return Object.assign(ingredient, { [evt.target.name]:evt.target.value })
+         return Object.assign(ingredient, { [evt.target.name]: evt.target.value });
+      } else {
+        return ingredient
+      }
+    });
+  }
+
+  updateInstruction(evt, instructions){
+    return instructions.map(instruction =>{
+      if (instructions.indexOf(instruction) === parseInt(evt.target.dataset.id)){
+        return Object.assign(instruction, { name: evt.target.value })
+      } else {
+        return instruction
       }
     })
+  }
+
+  handleSave(id){
+    httpClient.updateRecipe(id, this.state.editRecipe).then(response =>{
+    this.props.editForm()
+    })
+    console.log(this.state.edit)
   }
 
   handleStateLoadUp(){

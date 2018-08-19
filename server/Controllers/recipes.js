@@ -35,7 +35,7 @@ module.exports = {
   update: (req,res)=>{
     Recipe.findById(req.params.id, (err,recipe)=>{
       Object.assign(recipe, req.body);
-      recipe.save((err,updatedUser)=>{
+      recipe.save((err,updatedRecipe)=>{
         if (err) return err;
         res.json({success: true, message: "recipe updated", updatedRecipe});
       });

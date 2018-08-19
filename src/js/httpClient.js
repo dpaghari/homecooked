@@ -90,6 +90,10 @@ httpClient.allRecipesExceptUser = function(id) {
   return filteredRecipes;
 };
 
+httpClient.updateRecipe = function (id, info){
+	return this({method: 'patch', url: `/api/recipe/update_recipe/${id}`, data: info})
+}
+
 httpClient.userRecipes = function(id) {
   return this({ method: 'get', url: `/api/recipe/get_users_recipe/${id}` });
 };

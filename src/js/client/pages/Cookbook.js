@@ -209,7 +209,7 @@ export default class Cookbook extends React.Component {
     this.setState({
       recipeDetail:{
         ...this.state.recipeDetail,
-        edit: true
+        edit: !this.state.recipeDetail.edit
       }
     })
   }
