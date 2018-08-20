@@ -80,7 +80,8 @@ httpClient.allRecipes = function() {
 httpClient.allRecipesExceptUser = function(id) {
   let filteredRecipes = new Promise((resolve, reject) => {
     this({ method: 'get', url: `/api/recipe/get_recipes` }).then((res) => {
-      let allRecipes = res.data;
+			let allRecipes = res.data;
+			console.log(allRecipes)
       resolve(allRecipes.filter((el) => el.user._id !== id));
     })
     .catch((err) => reject(err));
@@ -88,6 +89,10 @@ httpClient.allRecipesExceptUser = function(id) {
 
   return filteredRecipes;
 };
+
+httpClient.updateRecipe = function (id, info){
+	return this({method: 'patch', url: `/api/recipe/update_recipe/${id}`, data: info})
+}
 
 httpClient.userRecipes = function(id) {
   return this({ method: 'get', url: `/api/recipe/get_users_recipe/${id}` });
