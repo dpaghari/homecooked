@@ -8,7 +8,7 @@ export default class RecipeDetail extends React.Component {
       edit: false || this.props.editIsActive,
       editRecipe: {
         user: '',
-        name:'' ,
+        name: '',
         imageUrl: '',
         cookingTime: {
           hours: '',
@@ -19,7 +19,7 @@ export default class RecipeDetail extends React.Component {
         description: '',
         ingredients: [],
         instructions: []
-      },
+      }
     };
   }
 
@@ -79,40 +79,60 @@ export default class RecipeDetail extends React.Component {
                 <img class="c-recipe-detail__image" src={imgUrl} alt={name} />
               </div>
               <div class="c-recipe-detail__right">
-                {this.props.editIsActive
-                ?(
+                {this.props.editIsActive ? (
                   <div>
-                    <input onChange={this.onInputChange.bind(this)} data-name='name' name='name' type='text' defaultValue={this.state.editRecipe.name}></input>
-                    <input onChange={this.onInputChange.bind(this)} data-name='description' name='description' type='text' defaultValue={this.state.editRecipe.description}></input>
+                    <input
+                      onChange={this.onInputChange.bind(this)}
+                      data-name="name"
+                      name="name"
+                      type="text"
+                      defaultValue={name}
+                    />
+                    <input
+                      onChange={this.onInputChange.bind(this)}
+                      data-name="description"
+                      name="description"
+                      type="text"
+                      defaultValue={description}
+                    />
                   </div>
-                )
-                :(
+                ) : (
                   <div>
-                  <h3 class="c-recipe-detail__recipe-name">{name}</h3>
-                  <p class="c-recipe-detail__blurb">{description}</p>
+                    <h3 class="c-recipe-detail__recipe-name">
+                      {this.state.editRecipe.name}
+                    </h3>
+                    <p class="c-recipe-detail__blurb">
+                      {this.state.editRecipe.description}
+                    </p>
                   </div>
-                )
-                }
+                )}
                 <h4>
                   <i class="fa fa-shopping-cart" aria-hidden="true" />
                   Ingredients
                 </h4>
                 <ul class="c-ingredient-list">
                   {this.props.editIsActive
-                  ?(
-                    ingredients.map((ingredient, idx) => {
-                      return (
-                        <li key={idx} class="c-ingredients">
-                          <input onChange={this.onInputChange.bind(this)} data-id={idx} name='quantity' type='text' defaultValue={ingredient.quantity}></input>
-                          <input onChange={this.onInputChange.bind(this)} data-id={idx} name='name' type='text' defaultValue={ingredient.name}></input>
-                        </li>
-                      );
-                    })
-                  )
-                  :(
-                    renderIngredientList(ingredients)
-                  )
-                  }
+                    ? ingredients.map((ingredient, idx) => {
+                        return (
+                          <li key={idx} class="c-ingredients">
+                            <input
+                              onChange={this.onInputChange.bind(this)}
+                              data-id={idx}
+                              name="quantity"
+                              type="text"
+                              defaultValue={ingredient.quantity}
+                            />
+                            <input
+                              onChange={this.onInputChange.bind(this)}
+                              data-id={idx}
+                              name="name"
+                              type="text"
+                              defaultValue={ingredient.name}
+                            />
+                          </li>
+                        );
+                      })
+                    : renderIngredientList(ingredients)}
                 </ul>
                 <h4>
                   <i class="fa fa-list-ol" aria-hidden="true" />
@@ -120,28 +140,26 @@ export default class RecipeDetail extends React.Component {
                 </h4>
                 <ol class="c-instruction-list">
                   {this.props.editIsActive
-                    ?(
-                        instructions.map((step, idx) => {
-                          return (
-                            <li key={idx} class="c-instruction">
-                              <input onChange={this.onInputChange.bind(this)} data-id={idx} name='instruction' type='text' defaultValue={step.name}></input>
-                            </li>
-                          );
-                        })
-                      )
-                    :(
-                        renderInstructionsList(instructions)
-                    )
-                  }
+                    ? instructions.map((step, idx) => {
+                        return (
+                          <li key={idx} class="c-instruction">
+                            <input
+                              onChange={this.onInputChange.bind(this)}
+                              data-id={idx}
+                              name="instruction"
+                              type="text"
+                              defaultValue={step.name}
+                            />
+                          </li>
+                        );
+                      })
+                    : renderInstructionsList(instructions)}
                 </ol>
-                {this.props.editIsActive
-                  ?(
-                    <button onClick={() => this.handleSave(_id)}> save </button>
-                  )
-                  :(
-                    <span></span>
-                  )
-                }
+                {this.props.editIsActive ? (
+                  <button onClick={() => this.handleSave(_id)}> save </button>
+                ) : (
+                  <span />
+                )}
               </div>
             </div>
           </div>
@@ -151,64 +169,75 @@ export default class RecipeDetail extends React.Component {
   }
 
   onInputChange(evt) {
-    if (evt.target.dataset.name === 'name' || evt.target.dataset.name === 'description'){
+    if (
+      evt.target.dataset.name === 'name' ||
+      evt.target.dataset.name === 'description'
+    ) {
       this.setState({
         editRecipe: {
           ...this.state.editRecipe,
-        [evt.target.name]:evt.target.value
+          [evt.target.name]: evt.target.value
         }
       });
-    } else if(evt.target.name === 'name' || evt.target.name === 'quantity'){
-     this.setState({
-        editRecipe:{
-          ...this.state.editRecipe,
-        ingredients:this.updateIngredient(evt,this.state.editRecipe.ingredients)
-        }
-      });
-    } else if (evt.target.name === 'instruction'){
+    } else if (evt.target.name === 'name' || evt.target.name === 'quantity') {
       this.setState({
-        editRecipe:{
+        editRecipe: {
           ...this.state.editRecipe,
-        instructions: this.updateInstruction(evt, this.state.editRecipe.instructions)
+          ingredients: this.updateIngredient(
+            evt,
+            this.state.editRecipe.ingredients
+          )
         }
-      })
+      });
+    } else if (evt.target.name === 'instruction') {
+      this.setState({
+        editRecipe: {
+          ...this.state.editRecipe,
+          instructions: this.updateInstruction(
+            evt,
+            this.state.editRecipe.instructions
+          )
+        }
+      });
     }
-    console.log(this.state.editRecipe.name, this.state.editRecipe.description)
   }
 
-  updateIngredient(evt,ingredients){
+  updateIngredient(evt, ingredients) {
     return ingredients.map(ingredient => {
       if (ingredients.indexOf(ingredient) === parseInt(evt.target.dataset.id)) {
-         return Object.assign(ingredient, { [evt.target.name]: evt.target.value });
+        return Object.assign(ingredient, {
+          [evt.target.name]: evt.target.value
+        });
       } else {
-        return ingredient
+        return ingredient;
       }
     });
   }
 
-  updateInstruction(evt, instructions){
-    return instructions.map(instruction =>{
-      if (instructions.indexOf(instruction) === parseInt(evt.target.dataset.id)){
-        return Object.assign(instruction, { name: evt.target.value })
+  updateInstruction(evt, instructions) {
+    return instructions.map(instruction => {
+      if (
+        instructions.indexOf(instruction) === parseInt(evt.target.dataset.id)
+      ) {
+        return Object.assign(instruction, { name: evt.target.value });
       } else {
-        return instruction
+        return instruction;
       }
-    })
+    });
   }
 
-  handleSave(id){
-    httpClient.updateRecipe(id, this.state.editRecipe).then(response =>{
-    this.props.editForm()
-    })
-    
+  handleSave(id) {
+    httpClient.updateRecipe(id, this.state.editRecipe).then(response => {
+      this.props.editForm();
+    });
   }
 
-  handleStateLoadUp(){
+  handleStateLoadUp() {
     this.setState({
       edit: false || this.props.editIsActive,
       editRecipe: {
         user: this.props.recipe.user,
-        name:this.props.recipe.name ,
+        name: this.props.recipe.name,
         imageUrl: this.props.recipe.imageUrl,
         cookingTime: {
           hours: this.props.recipe.cookingTime.hours,
@@ -219,8 +248,7 @@ export default class RecipeDetail extends React.Component {
         description: this.props.recipe.description,
         ingredients: this.props.recipe.ingredients,
         instructions: this.props.recipe.instructions
-      },
-    })
-
+      }
+    });
   }
 }

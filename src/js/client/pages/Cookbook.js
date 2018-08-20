@@ -211,7 +211,7 @@ export default class Cookbook extends React.Component {
         ...this.state.recipeDetail,
         edit: !this.state.recipeDetail.edit
       }
-    })
+    });
   }
 
   handleToggleRecipeForm() {
@@ -238,6 +238,6 @@ export default class Cookbook extends React.Component {
       recipeDetail:{
         recipe
       }
-    })
+    });
   }
 }
