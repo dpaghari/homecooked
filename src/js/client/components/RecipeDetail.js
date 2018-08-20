@@ -82,8 +82,8 @@ export default class RecipeDetail extends React.Component {
                 {this.props.editIsActive
                 ?(
                   <div>
-                  <input name='name' type='text' value={name}></input>
-                  <input name='description' type='text' value={description}></input>
+                    <input onChange={this.onInputChange.bind(this)} data-name='name' name='name' type='text' defaultValue={this.state.editRecipe.name}></input>
+                    <input onChange={this.onInputChange.bind(this)} data-name='description' name='description' type='text' defaultValue={this.state.editRecipe.description}></input>
                   </div>
                 )
                 :(
@@ -151,18 +151,30 @@ export default class RecipeDetail extends React.Component {
   }
 
   onInputChange(evt) {
-    if(evt.target.name === 'name' || evt.target.name === 'quantity'){
+    if (evt.target.dataset.name === 'name' || evt.target.dataset.name === 'description'){
+      this.setState({
+        editRecipe: {
+          ...this.state.editRecipe,
+        [evt.target.name]:evt.target.value
+        }
+      });
+    } else if(evt.target.name === 'name' || evt.target.name === 'quantity'){
      this.setState({
-        ...this.state.editRecipe,
+        editRecipe:{
+          ...this.state.editRecipe,
         ingredients:this.updateIngredient(evt,this.state.editRecipe.ingredients)
-    });
-  } else if (evt.target.name === 'instruction'){
-    this.setState({
-      ...this.state.editRecipe,
-      instructions: this.updateInstruction(evt, this.state.editRecipe.instructions)
-    })
+        }
+      });
+    } else if (evt.target.name === 'instruction'){
+      this.setState({
+        editRecipe:{
+          ...this.state.editRecipe,
+        instructions: this.updateInstruction(evt, this.state.editRecipe.instructions)
+        }
+      })
+    }
+    console.log(this.state.editRecipe.name, this.state.editRecipe.description)
   }
-}
 
   updateIngredient(evt,ingredients){
     return ingredients.map(ingredient => {
@@ -188,7 +200,7 @@ export default class RecipeDetail extends React.Component {
     httpClient.updateRecipe(id, this.state.editRecipe).then(response =>{
     this.props.editForm()
     })
-    console.log(this.state.edit)
+    
   }
 
   handleStateLoadUp(){
@@ -204,10 +216,11 @@ export default class RecipeDetail extends React.Component {
           seconds: this.props.recipe.cookingTime.seconds
         },
         servingSize: this.props.recipe.servingSize,
-        description: this.props.recipe.descripion,
+        description: this.props.recipe.description,
         ingredients: this.props.recipe.ingredients,
         instructions: this.props.recipe.instructions
       },
     })
+
   }
 }
