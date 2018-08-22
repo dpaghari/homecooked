@@ -37,14 +37,6 @@ export default class RecipeForm extends React.Component {
     });
   }
 
-  componentDidUpdate() {
-    // for (var ref in this.refs) {
-    //   if (this.refs.hasOwnProperty(ref)) {
-    //     this.refs[ref].value = "";
-    //   }
-    // }
-  }
-
   componentDidMount() {
     this.setState({
       newRecipe: {
@@ -52,40 +44,6 @@ export default class RecipeForm extends React.Component {
         user: this.props.currentUser
       }
     });
-  }
-
-  onInputChange(evt) {
-    if (
-      evt.target.name === 'hours' ||
-      evt.target.name === 'minutes' ||
-      evt.target.name === 'seconds'
-    ) {
-      this.setState({
-        newRecipe: {
-          ...this.state.newRecipe,
-          cookingTime: {
-            ...this.state.newRecipe.cookingTime,
-            [evt.target.name]: evt.target.value
-          }
-        }
-      });
-    } else if (
-      evt.target.name === 'currIng' ||
-      evt.target.name === 'currQty' ||
-      evt.target.name === 'currInt'
-    ) {
-      this.setState({
-        ...this.state,
-        [evt.target.name]: evt.target.value
-      });
-    } else {
-      this.setState({
-        newRecipe: {
-          ...this.state.newRecipe,
-          [evt.target.name]: evt.target.value
-        }
-      });
-    }
   }
 
   render() {
@@ -120,6 +78,40 @@ export default class RecipeForm extends React.Component {
     if (this.state.error) {
       return <span style={{ color: 'red' }}>{this.state.error}</span>;
     } else return null;
+  }
+
+  onInputChange(evt) {
+    if (
+      evt.target.name === 'hours' ||
+      evt.target.name === 'minutes' ||
+      evt.target.name === 'seconds'
+    ) {
+      this.setState({
+        newRecipe: {
+          ...this.state.newRecipe,
+          cookingTime: {
+            ...this.state.newRecipe.cookingTime,
+            [evt.target.name]: evt.target.value
+          }
+        }
+      });
+    } else if (
+      evt.target.name === 'currIng' ||
+      evt.target.name === 'currQty' ||
+      evt.target.name === 'currInt'
+    ) {
+      this.setState({
+        ...this.state,
+        [evt.target.name]: evt.target.value
+      });
+    } else {
+      this.setState({
+        newRecipe: {
+          ...this.state.newRecipe,
+          [evt.target.name]: evt.target.value
+        }
+      });
+    }
   }
 
   renderCurrFieldSet() {
@@ -205,6 +197,7 @@ export default class RecipeForm extends React.Component {
           />
           <a
             href="#"
+            onMouseOver={() => this.handleValidator(this.state.newRecipe)}
             onClick={this.handleClickNext.bind(this)}
             class="c-new-recipe__next"
           >
@@ -308,7 +301,8 @@ export default class RecipeForm extends React.Component {
 
   handleClickNext() {
     let { currentStep } = this.state;
-    if (currentStep < 2) {
+    console.log(this.state.error, currentStep);
+    if (currentStep < 2 && this.state.error === null) {
       // if( currentStep === 0) {
       //   this.saveFieldsToState();
       //   let isValidated = this.checkFields();
@@ -366,6 +360,19 @@ export default class RecipeForm extends React.Component {
     this.props.handleToggleRecipeForm();
     this.setState({
       ...this.state,
+      newRecipe: {
+        name: '',
+        imageUrl: '',
+        cookingTime: {
+          hours: '',
+          minutes: '',
+          seconds: ''
+        },
+        servingSize: '',
+        description: '',
+        ingredients: [],
+        instructions: []
+      },
       currentStep: 0
     });
   }
@@ -444,6 +451,33 @@ export default class RecipeForm extends React.Component {
     recipeInstruction.focus();
   }
 
+  handleValidator(object) {
+    let isValid = false;
+    for (var property in object) {
+      if (object.hasOwnProperty(property)) {
+        if (object[property] === '') {
+          return this.setState({
+            error: `All Fields Required`
+          });
+        } else if (property === 'cookingTime') {
+          for (var prop in object[property]) {
+            if (object[property][prop] === '') {
+              return this.handleValidator(object[prop]);
+            }
+          }
+        } else {
+          isValid = true;
+        }
+      }
+    }
+    console.log(isValid);
+    if (isValid) {
+      this.setState({
+        error: null
+      });
+    }
+  }
+
   saveFieldsToState() {
     const {
       recipeName,
@@ -474,7 +508,7 @@ export default class RecipeForm extends React.Component {
     let newRecipeDescription = !validator.isEmpty(recipeDescription.value)
       ? validator.trim(recipeDescription.value)
       : null;
-    
+
     if (newRecipeName && newRecipeCookTime && newRecipeServing) {
       this.state.newRecipe = Object.assign(this.state.newRecipe, {
         name: newRecipeName,

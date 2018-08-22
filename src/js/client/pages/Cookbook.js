@@ -17,7 +17,7 @@ export default class Cookbook extends React.Component {
       },
       recipeDetail: {
         isActive: false,
-        recipe: {},
+        recipe: null,
         edit: false
       }
     };
@@ -37,10 +37,6 @@ export default class Cookbook extends React.Component {
     }
   }
 
-  // updateRecipes(newRecipes) {
-  //   this.setState({ userRecipes: newRecipes });
-  // }
-
   addNewRecipe(recipe) {
     this.setState({
       userRecipes: [...this.state.userRecipes, recipe]
@@ -48,6 +44,7 @@ export default class Cookbook extends React.Component {
   }
 
   render() {
+    console.log('cookbook re rendered after changing recipe detail');
     let { appState, updateAppState } = this.props;
     let { recipe, isActive, idx } = this.state.recipeDetail;
     if (appState.currentUser) {
@@ -65,8 +62,9 @@ export default class Cookbook extends React.Component {
               userRecipes={this.state.userRecipes}
               deleteRecipe={this.deleteRecipe.bind(this)}
               editForm={this.handleEditForm.bind(this)}
-              handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this)
-            }
+              handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(
+                this
+              )}
             />
           </div>
           <RecipeForm
@@ -133,14 +131,25 @@ export default class Cookbook extends React.Component {
     let { appState } = this.props;
     const profile_picture = appState.currentUser.imageUrl;
 
-    recipe.ingredients = typeof recipe.ingredients === 'string' ? JSON.parse(recipe.ingredients) : recipe.ingredients;
-    recipe.instructions = typeof recipe.instructions === 'string' ? JSON.parse(recipe.instructions) : recipe.instructions;
-    let imgUrl = recipe.imageUrl ? recipe.imageUrl : './img/placeholder-recipe.jpg';
+    recipe.ingredients =
+      typeof recipe.ingredients === 'string'
+        ? JSON.parse(recipe.ingredients)
+        : recipe.ingredients;
+    recipe.instructions =
+      typeof recipe.instructions === 'string'
+        ? JSON.parse(recipe.instructions)
+        : recipe.instructions;
+    let imgUrl = recipe.imageUrl
+      ? recipe.imageUrl
+      : './img/placeholder-recipe.jpg';
     let { hours, minutes, seconds } = recipe.cookingTime;
-    let classList = idx === 0 ? 'c-user-recipes__list-item--featured' : 'c-user-recipes__list-item';
+    let classList =
+      idx === 0
+        ? 'c-user-recipes__list-item--featured'
+        : 'c-user-recipes__list-item';
     return (
       <li
-        onMouseOver={()=>this.handleSetRecipe(recipe)}
+        onMouseOver={() => this.handleSetRecipe(recipe)}
         onClick={this.handleToggleRecipeDetail.bind(this)}
         key={idx}
         class={classList}
@@ -152,12 +161,12 @@ export default class Cookbook extends React.Component {
             <div class="c-user-recipes__user-lockup">
               <img src={profile_picture} class="c-user-recipes__user-image" />
               <span class="c-user-recipes__cook-time">
-                {hours}
-                {minutes}
-                {seconds}
+                {`${hours} h`}
+                {`${minutes} m`}
+                {`${seconds} s`}
               </span>
               <span class="c-user-recipes__serving-size">
-                {recipe.servingSize}
+                {`${recipe.servingSize} servings`}
               </span>
             </div>
             <p class="c-user-recipes__blurb">{recipe.description}</p>
@@ -205,9 +214,9 @@ export default class Cookbook extends React.Component {
     } else return null;
   }
 
-  handleEditForm(){
+  handleEditForm() {
     this.setState({
-      recipeDetail:{
+      recipeDetail: {
         ...this.state.recipeDetail,
         edit: !this.state.recipeDetail.edit
       }
@@ -223,7 +232,6 @@ export default class Cookbook extends React.Component {
   }
 
   handleToggleRecipeDetail() {
-    // if (e) e.preventDefault();
     this.setState({
       recipeDetail: {
         ...this.state.recipeDetail,
@@ -233,9 +241,9 @@ export default class Cookbook extends React.Component {
     });
   }
 
-  handleSetRecipe(recipe){
+  handleSetRecipe(recipe) {
     this.setState({
-      recipeDetail:{
+      recipeDetail: {
         recipe
       }
     });

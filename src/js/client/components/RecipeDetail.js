@@ -25,14 +25,6 @@ export default class RecipeDetail extends React.Component {
 
   render() {
     const {
-      _id,
-      ingredients,
-      instructions,
-      imageUrl,
-      name,
-      description
-    } = this.props.recipe;
-    const {
       handleToggleRecipeDetail,
       renderIngredientList,
       renderInstructionsList,
@@ -41,9 +33,16 @@ export default class RecipeDetail extends React.Component {
       isActive
     } = this.props;
 
-    const imgUrl = imageUrl ? imageUrl : './img/placeholder-recipe.jpg';
-
     if (isActive) {
+      const {
+        _id,
+        ingredients,
+        instructions,
+        imageUrl,
+        name,
+        description
+      } = this.props.recipe;
+      const imgUrl = imageUrl ? imageUrl : './img/placeholder-recipe.jpg';
       const recipeImageStyles = {
         backgroundImage: `url('${imgUrl}')`
       };
@@ -98,12 +97,8 @@ export default class RecipeDetail extends React.Component {
                   </div>
                 ) : (
                   <div>
-                    <h3 class="c-recipe-detail__recipe-name">
-                      {this.state.editRecipe.name}
-                    </h3>
-                    <p class="c-recipe-detail__blurb">
-                      {this.state.editRecipe.description}
-                    </p>
+                    <h3 class="c-recipe-detail__recipe-name">{name}</h3>
+                    <p class="c-recipe-detail__blurb">{description}</p>
                   </div>
                 )}
                 <h4>
