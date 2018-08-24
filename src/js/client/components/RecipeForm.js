@@ -455,7 +455,7 @@ export default class RecipeForm extends React.Component {
     let isValid = false;
     for (var property in object) {
       if (object.hasOwnProperty(property)) {
-        if (object[property] === '') {
+        if (object[property] === '' || !validator.isURL(object['imageUrl'])) {
           return this.setState({
             error: `All Fields Required`
           });
@@ -476,6 +476,7 @@ export default class RecipeForm extends React.Component {
         error: null
       });
     }
+    console.log(validator.isURL(object['imageUrl']));
   }
 
   saveFieldsToState() {
