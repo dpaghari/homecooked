@@ -77,16 +77,28 @@ httpClient.allRecipes = function() {
   return this({ method: 'get', url: '/api/recipe/get_recipes' });
 };
 
-httpClient.allRecipesExceptUser = function(id) {
+httpClient.allUnownedRecipes = function(id) {
   let filteredRecipes = new Promise((resolve, reject) => {
     this({ method: 'get', url: `/api/recipe/get_recipes` }).then((res) => {
       let allRecipes = res.data;
-      resolve(allRecipes.filter((el) => el.user._id !== id));
+      resolve(allRecipes.filter((recipe) => {
+        let notOwnRecipe = recipe.user._id !== id;
+        // let notFollowedRecipe = recipe.followers.indexOf(id) === -1;
+        // console.log(notOwnRecipe, notFollowedRecipe);
+        if(notOwnRecipe) {
+          return true;
+        }
+        else return false;
+      }));
     })
     .catch((err) => reject(err));
   });
 
   return filteredRecipes;
+};
+
+httpClient.addUserToRecipeFollowers = function(data) {
+  return this({ method: 'put', url: `/api/recipe/update_recipe/${data._id}`, data});
 };
 
 httpClient.userRecipes = function(id) {

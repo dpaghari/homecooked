@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema({
     password: ({type:String, required: true,trim: true}),
 		imageUrl: ({type: String,trim: true}),
 		location: ({type: String, trim: true}),
-
 });
 
 // adds a method to a user document object to create a hashed password

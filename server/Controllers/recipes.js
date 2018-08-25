@@ -1,9 +1,9 @@
 const Recipe = require('../Models/Recipes.js');
 require('dotenv').config();
 const { signToken, verifyToken } = require('../userAuth.js');
-"use strict";
+
 module.exports = {
-  index: (req,res)=>{
+  index: (req,res) => {
     Recipe.find({}).populate('user').exec((err,allDemRecipes) => {
       if (err) return err;
       let allRecipes = allDemRecipes.map((el, idx) => {
@@ -11,41 +11,43 @@ module.exports = {
         el.user.password = undefined;
         return el;
       });
-      console.log(allRecipes);
       res.json(allRecipes);
     });
   },
-  create: (req,res)=>{
-    Recipe.create(req.body, (err,newRecipe)=>{
+  create: (req,res) => {
+    console.log('creating new recipe');
+    Recipe.create(req.body, (err,newRecipe) => {
+      console.log(err);
       if (err) return err;
       res.json({success: true, message: "recipe created", newRecipe});
     });
   },
-  show: (req,res) =>{
-    Recipe.findById(req.params.id, (err, datRecipe)=>{
+  show: (req,res) => {
+    Recipe.findById(req.params.id, (err, datRecipe) => {
       if (err) return err;
       res.json(datRecipe);
     });
   },
-  showPosts: (req,res)=>{
-    Recipe.find({'user': req.params.id}, (err, usersRecipe)=>{
+  showPosts: (req,res) => {
+    Recipe.find({'user': req.params.id}, (err, usersRecipe) => {
       if (err) return err;
       res.json(usersRecipe);
     });
   },
-  update: (req,res)=>{
-    Recipe.findById(req.params.id, (err,recipe)=>{
+  update: (req,res) => {
+    Recipe.findById(req.params.id, (err,recipe) => {
       Object.assign(recipe, req.body);
-      recipe.save((err,updatedUser)=>{
+      recipe.save((err,recipe) => {
+        console.log(err);
+        console.log('saving');
         if (err) return err;
-        res.json({success: true, message: "recipe updated", updatedRecipe});
+        res.json({success: true, message: "recipe updated", recipe});
       });
     });
   },
-  destroy: (req,res)=>{
-    Recipe.findByIdAndRemove(req.params.id, (err, deletedRecipe)=>{
+  destroy: (req,res) => {
+    Recipe.findByIdAndRemove(req.params.id, (err, deletedRecipe) => {
       res.json({message: "recipe deleted", deletedRecipe});
     });
   }
-
 };

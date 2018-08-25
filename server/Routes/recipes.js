@@ -13,4 +13,6 @@ recipeRouter.route('/get_users_recipe/:id').get(recipeCtrl.showPosts);
 
 recipeRouter.route('/delete_recipe/:id').delete(recipeCtrl.destroy);
 
+recipeRouter.route('/update_recipe/:id').put(recipeCtrl.update);
+
 module.exports = recipeRouter;
