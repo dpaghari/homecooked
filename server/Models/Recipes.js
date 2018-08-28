@@ -13,7 +13,8 @@ const recipeSchema = new mongoose.Schema({
   servingSize: { type: String },
   description: { type: String },
   ingredients: [{ name: String, quantity: String }],
-  instructions: [{ name: String }]
+  instructions: [{ name: String }],
+  tags: [{ name: String }]
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);
