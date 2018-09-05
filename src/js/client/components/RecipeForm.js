@@ -378,6 +378,7 @@ export default class RecipeForm extends React.Component {
       this.setState({
         isActive: false || this.props.isActive,
         newRecipe: {
+          user: this.state.newRecipe.user,
           name: '',
           imageUrl: '',
           cookingTime: {
@@ -474,7 +475,7 @@ export default class RecipeForm extends React.Component {
     let newRecipeDescription = !validator.isEmpty(recipeDescription.value)
       ? validator.trim(recipeDescription.value)
       : null;
-    
+
     if (newRecipeName && newRecipeCookTime && newRecipeServing) {
       this.state.newRecipe = Object.assign(this.state.newRecipe, {
         name: newRecipeName,

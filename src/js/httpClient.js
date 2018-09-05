@@ -70,6 +70,7 @@ httpClient.getUser = function(id) {
 // #######################
 
 httpClient.newRecipe = function(data) {
+  console.log(data);
   return this({ method: 'post', url: '/api/recipe/add_recipe', data: data });
 };
 
@@ -82,7 +83,10 @@ httpClient.allUnownedRecipes = function(id) {
     this({ method: 'get', url: `/api/recipe/get_recipes` }).then((res) => {
       let allRecipes = res.data;
       resolve(allRecipes.filter((recipe) => {
+        // if(recipe.user) {
+        console.log(recipe);
         let notOwnRecipe = recipe.user._id !== id;
+        // }
         // let notFollowedRecipe = recipe.followers.indexOf(id) === -1;
         // console.log(notOwnRecipe, notFollowedRecipe);
         if(notOwnRecipe) {
@@ -97,9 +101,9 @@ httpClient.allUnownedRecipes = function(id) {
   return filteredRecipes;
 };
 
-httpClient.addUserToRecipeFollowers = function(data) {
-  return this({ method: 'put', url: `/api/recipe/update_recipe/${data._id}`, data});
-};
+// httpClient.addUserToRecipeFollowers = function(data) {
+//   return this({ method: 'put', url: `/api/recipe/update_recipe/${data._id}`, data});
+// };
 
 httpClient.userRecipes = function(id) {
   return this({ method: 'get', url: `/api/recipe/get_users_recipe/${id}` });

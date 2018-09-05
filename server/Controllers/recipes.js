@@ -7,15 +7,18 @@ module.exports = {
     Recipe.find({}).populate('user').exec((err,allDemRecipes) => {
       if (err) return err;
       let allRecipes = allDemRecipes.map((el, idx) => {
-        el.user.email = undefined;
-        el.user.password = undefined;
-        return el;
+        if(el) {
+          el.user.email = undefined;
+          el.user.password = undefined;
+          return el;
+        }
       });
       res.json(allRecipes);
     });
   },
   create: (req,res) => {
     console.log('creating new recipe');
+    console.log('inc data', req.body);
     Recipe.create(req.body, (err,newRecipe) => {
       console.log(err);
       if (err) return err;

@@ -22,9 +22,8 @@ const recipeSchema = new mongoose.Schema({
       quantity:String
     }
   ],
-  instructions:[{name:String}],
-  // followers: [{type: mongoose.Schema.Types.ObjectId, unique: true}],
-  refRecipe: { type: mongoose.Schema.Types.ObjectId}
+  instructions:[{name:String}]
+  // refRecipe: { type: mongoose.Schema.Types.ObjectId}
 });
 
 const Recipe = mongoose.model("Recipe", recipeSchema);

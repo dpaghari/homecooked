@@ -107,13 +107,14 @@ export default class Explore extends React.Component {
   handleAddToCookbook(idx) {
     let newExploreRecipe = this.state.global_recipes[idx];
     let user =  this.props.appState.currentUser;
-    console.log(newExploreRecipe._id);
+
     let copiedRecipeWithCurrUser = {
       ...newExploreRecipe,
       user,
-      refRecipe: newExploreRecipe._id,
+      // refRecipe: newExploreRecipe._id,
       _id: undefined
     };
+    console.log(copiedRecipeWithCurrUser);
     // let removedRecipe = this.state.global_recipes.splice(idx, 1);
     httpClient.newRecipe(copiedRecipeWithCurrUser).then((response) => {
       console.log('copied new recipe',response);
