@@ -14,17 +14,18 @@ export default class RecipeForm extends React.Component {
         imageUrl: '',
         cookingTime: {
           hours: '',
-          minutes: '',
-          seconds: ''
+          minutes: ''
         },
         servingSize: '',
         description: '',
         ingredients: [],
-        instructions: []
+        instructions: [],
+        tags: []
       },
       currIng: '',
       currQty: '',
       currInt: '',
+      currTag: '',
       currentStep: 0,
       currentFields: [],
       error: null
@@ -81,11 +82,7 @@ export default class RecipeForm extends React.Component {
   }
 
   onInputChange(evt) {
-    if (
-      evt.target.name === 'hours' ||
-      evt.target.name === 'minutes' ||
-      evt.target.name === 'seconds'
-    ) {
+    if (evt.target.name === 'hours' || evt.target.name === 'minutes') {
       this.setState({
         newRecipe: {
           ...this.state.newRecipe,
@@ -98,7 +95,8 @@ export default class RecipeForm extends React.Component {
     } else if (
       evt.target.name === 'currIng' ||
       evt.target.name === 'currQty' ||
-      evt.target.name === 'currInt'
+      evt.target.name === 'currInt' ||
+      evt.target.name === 'currTag'
     ) {
       this.setState({
         ...this.state,
@@ -114,8 +112,22 @@ export default class RecipeForm extends React.Component {
     }
   }
 
+  renderTags() {
+    const { tags } = this.state.newRecipe;
+    return tags.map((tag, idx) => {
+      return <li key={idx}>{tag.name}</li>;
+    });
+  }
+
   renderCurrFieldSet() {
-    const { currentStep, error, currIng, currQty, currInt } = this.state;
+    const {
+      currentStep,
+      error,
+      currIng,
+      currQty,
+      currInt,
+      currTag
+    } = this.state;
     const {
       name,
       imageUrl,
@@ -165,15 +177,6 @@ export default class RecipeForm extends React.Component {
             data-validators="isEmpty,trim"
             value={cookingTime.minutes}
           />
-          <input
-            name="seconds"
-            type="number"
-            ref="recipeCookTime"
-            placeholder="Seconds"
-            required
-            data-validators="isEmpty,trim"
-            value={cookingTime.seconds}
-          />
           <label for="recipeServing">Serves How many?</label>
           <input
             name="servingSize"
@@ -195,9 +198,25 @@ export default class RecipeForm extends React.Component {
             data-validators="isEmpty,trim"
             value={description}
           />
+          <label for="tags">Tags</label>
+          <input
+            name="currTag"
+            type="text"
+            ref="foodTag"
+            placeholder="tag"
+            value={currTag}
+          />
           <a
             href="#"
-            onMouseOver={() => this.handleValidator(this.state.newRecipe)}
+            class="c-new-recipe___next"
+            onClick={this.handleAddTag.bind(this)}
+          >
+            Add
+          </a>
+          {this.renderTags()}
+          <a
+            href="#"
+            onMouseDown={() => this.handleValidator(this.state.newRecipe)}
             onClick={this.handleClickNext.bind(this)}
             class="c-new-recipe__next"
           >
@@ -301,7 +320,6 @@ export default class RecipeForm extends React.Component {
 
   handleClickNext() {
     let { currentStep } = this.state;
-    console.log(this.state.error, currentStep);
     if (currentStep < 2 && this.state.error === null) {
       // if( currentStep === 0) {
       //   this.saveFieldsToState();
@@ -361,6 +379,7 @@ export default class RecipeForm extends React.Component {
     this.setState({
       ...this.state,
       newRecipe: {
+        user: this.props.currentUser,
         name: '',
         imageUrl: '',
         cookingTime: {
@@ -371,20 +390,22 @@ export default class RecipeForm extends React.Component {
         servingSize: '',
         description: '',
         ingredients: [],
-        instructions: []
+        instructions: [],
+        tags: []
       },
-      currentStep: 0
+      currentStep: 0,
+      error: null
     });
   }
 
   handleAddNewRecipe(e) {
     e.preventDefault();
     let newRecipe = this.state.newRecipe;
-    // this.props.updateRecipes(this.props.userRecipes);
     httpClient.newRecipe(this.state.newRecipe).then(response => {
       this.setState({
         isActive: false || this.props.isActive,
         newRecipe: {
+          user: this.props.currentUser,
           name: '',
           imageUrl: '',
           cookingTime: {
@@ -395,7 +416,8 @@ export default class RecipeForm extends React.Component {
           servingSize: '',
           description: '',
           ingredients: [],
-          instructions: []
+          instructions: [],
+          tags: []
         },
         currIng: '',
         currQty: '',
@@ -451,6 +473,25 @@ export default class RecipeForm extends React.Component {
     recipeInstruction.focus();
   }
 
+  handleAddTag() {
+    let { currTag } = this.state;
+    let { foodTag } = this.refs;
+    let newTag = {
+      name: currTag
+    };
+
+    this.state.newRecipe.tags.push(newTag);
+    this.state.newRecipe = Object.assign({}, this.state.newRecipe, {
+      tags: this.state.newRecipe.tags
+    });
+    this.setState({
+      newRecipe: this.state.newRecipe,
+      currTag: ''
+    });
+
+    foodTag.focus();
+  }
+
   handleValidator(object) {
     let isValid = false;
     for (var property in object) {
@@ -476,7 +517,6 @@ export default class RecipeForm extends React.Component {
         error: null
       });
     }
-    console.log(validator.isURL(object['imageUrl']));
   }
 
   saveFieldsToState() {

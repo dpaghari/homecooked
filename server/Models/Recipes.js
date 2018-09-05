@@ -7,8 +7,7 @@ const recipeSchema = new mongoose.Schema({
   imageUrl: { type: String },
   cookingTime: {
     hours: { type: String, default: 0 },
-    minutes: { type: String, default: 0 },
-    seconds: { type: String, default: 0 }
+    minutes: { type: String, default: 0 }
   },
   servingSize: { type: String },
   description: { type: String },
