@@ -81,19 +81,9 @@ httpClient.allRecipes = function() {
 httpClient.allUnownedRecipes = function(id) {
   let filteredRecipes = new Promise((resolve, reject) => {
     this({ method: 'get', url: `/api/recipe/get_recipes` }).then((res) => {
-      let allRecipes = res.data;
-      resolve(allRecipes.filter((recipe) => {
-        // if(recipe.user) {
-        console.log(recipe);
-        let notOwnRecipe = recipe.user._id !== id;
-        // }
-        // let notFollowedRecipe = recipe.followers.indexOf(id) === -1;
-        // console.log(notOwnRecipe, notFollowedRecipe);
-        if(notOwnRecipe) {
-          return true;
-        }
-        else return false;
-      }));
+			let allRecipes = res.data;
+			console.log(allRecipes)
+      resolve(allRecipes.filter((el) => el.user._id !== id));
     })
     .catch((err) => reject(err));
   });
@@ -101,9 +91,9 @@ httpClient.allUnownedRecipes = function(id) {
   return filteredRecipes;
 };
 
-// httpClient.addUserToRecipeFollowers = function(data) {
-//   return this({ method: 'put', url: `/api/recipe/update_recipe/${data._id}`, data});
-// };
+httpClient.updateRecipe = function (id, info){
+	return this({method: 'patch', url: `/api/recipe/update_recipe/${id}`, data: info})
+}
 
 httpClient.userRecipes = function(id) {
   return this({ method: 'get', url: `/api/recipe/get_users_recipe/${id}` });

@@ -18,7 +18,7 @@ export default class Explore extends React.Component {
 
     let userId = appState.currentUser._id;
     this.getGlobalRecipes(userId);
-    console.log(this.state.global_recipes);
+    console.log(this.state)
   }
 
   getGlobalRecipes(userId) {

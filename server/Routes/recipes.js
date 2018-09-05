@@ -7,6 +7,8 @@ recipeRouter.route('/get_recipes').get(recipeCtrl.index);
 
 recipeRouter.route('/add_recipe').post(recipeCtrl.create);
 
+recipeRouter.route('/update_recipe/:id').patch(recipeCtrl.update);
+
 recipeRouter.route('/get_recipes/:id').get(recipeCtrl.show);
 
 recipeRouter.route('/get_users_recipe/:id').get(recipeCtrl.showPosts);

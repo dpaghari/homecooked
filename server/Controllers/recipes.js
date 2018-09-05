@@ -3,17 +3,10 @@ require('dotenv').config();
 const { signToken, verifyToken } = require('../userAuth.js');
 
 module.exports = {
-  index: (req,res) => {
-    Recipe.find({}).populate('user').exec((err,allDemRecipes) => {
+  index: (req,res)=>{
+    Recipe.find({}).populate('user', '_id name imageUrl location').exec((err,allDemRecipes) => {
       if (err) return err;
-      let allRecipes = allDemRecipes.map((el, idx) => {
-        if(el) {
-          el.user.email = undefined;
-          el.user.password = undefined;
-          return el;
-        }
-      });
-      res.json(allRecipes);
+      res.json(allDemRecipes);
     });
   },
   create: (req,res) => {
@@ -40,11 +33,9 @@ module.exports = {
   update: (req,res) => {
     Recipe.findById(req.params.id, (err,recipe) => {
       Object.assign(recipe, req.body);
-      recipe.save((err,recipe) => {
-        console.log(err);
-        console.log('saving');
+      recipe.save((err,updatedRecipe) => {
         if (err) return err;
-        res.json({success: true, message: "recipe updated", recipe});
+        res.json({success: true, message: "recipe updated", updatedRecipe});
       });
     });
   },
