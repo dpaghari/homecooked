@@ -22,12 +22,11 @@ export default class Explore extends React.Component {
   }
 
   getGlobalRecipes(userId) {
-    httpClient.allRecipesExceptUser(userId).then((response) => {
-      if(response.length) {
-        this.setState({
-          global_recipes: response
-        });
-      }
+    httpClient.allUnownedRecipes(userId).then((response) => {
+      console.log(response);
+      this.setState({
+        global_recipes: response
+      });
     });
   }
 
@@ -82,7 +81,7 @@ export default class Explore extends React.Component {
     let imgUrl = recipe.imageUrl ? recipe.imageUrl : './img/placeholder-recipe.jpg';
 
     return (
-      <li key={idx} class="c-user-recipes__list-item">
+      <li onClick={this.handleAddToCookbook.bind(this, idx)} key={idx} class="c-user-recipes__list-item">
         <div class="c-user-recipes__wrapper">
           <img class="c-user-recipes__image" src={imgUrl} alt={recipe.name} />
           <div class="c-user-recipes__info">
@@ -105,18 +104,32 @@ export default class Explore extends React.Component {
     );
   }
 
-  handleAddToCookbook(recipe_id) {
-    let user_id =  this.props.appState.currentUser.user_id;
-    axios.post('/api/add_follower_to_recipe', {
-      recipe_id,
-      follower_id: user_id
-    })
-    .then((response) => {
+  handleAddToCookbook(idx) {
+    let newExploreRecipe = this.state.global_recipes[idx];
+    let user =  this.props.appState.currentUser;
 
-    })
-    .catch((err) => {
-      throw err;
-    })
+    let copiedRecipeWithCurrUser = {
+      ...newExploreRecipe,
+      user,
+      // refRecipe: newExploreRecipe._id,
+      _id: undefined
+    };
+    console.log(copiedRecipeWithCurrUser);
+    // let removedRecipe = this.state.global_recipes.splice(idx, 1);
+    httpClient.newRecipe(copiedRecipeWithCurrUser).then((response) => {
+      console.log('copied new recipe',response);
+      // this.setState({
+      //   global_recipes: this.state.global_recipes
+      // });
+    }).catch((err) => console.log(err));
+    // newExploreRecipe.followers.push(user._id)
+    // httpClient.addUserToRecipeFollowers({
+    //   ...newExploreRecipe,
+    //   followers: newExploreRecipe.followers
+    // }).then((response) => {
+    //   console.log(response);
+    // }).catch((err) => console.log(err));
+
   }
 
   renderIngredientList(ingredients) {

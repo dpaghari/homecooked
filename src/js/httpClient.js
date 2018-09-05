@@ -62,7 +62,7 @@ httpClient.logOut = function() {
 };
 
 httpClient.getUser = function(id) {
-  return this({ method: 'get', url: `api/users/${id}`});
+  return this({ method: 'get', url: `api/users/${id}` });
 };
 
 // #######################
@@ -70,6 +70,7 @@ httpClient.getUser = function(id) {
 // #######################
 
 httpClient.newRecipe = function(data) {
+  console.log(data);
   return this({ method: 'post', url: '/api/recipe/add_recipe', data: data });
 };
 
@@ -77,22 +78,32 @@ httpClient.allRecipes = function() {
   return this({ method: 'get', url: '/api/recipe/get_recipes' });
 };
 
-httpClient.allRecipesExceptUser = function(id) {
+httpClient.allUnownedRecipes = function(id) {
   let filteredRecipes = new Promise((resolve, reject) => {
-    this({ method: 'get', url: `/api/recipe/get_recipes` }).then((res) => {
-			let allRecipes = res.data;
-			console.log(allRecipes)
-      resolve(allRecipes.filter((el) => el.user._id !== id));
-    })
-    .catch((err) => reject(err));
+    this({ method: 'get', url: `/api/recipe/get_recipes` })
+      .then(res => {
+        let allRecipes = res.data;
+        console.log(allRecipes);
+        resolve(
+          allRecipes.filter(el => {
+            if (el.user) return el.user._id !== id;
+            else return false;
+          })
+        );
+      })
+      .catch(err => reject(err));
   });
 
   return filteredRecipes;
 };
 
-httpClient.updateRecipe = function (id, info){
-	return this({method: 'patch', url: `/api/recipe/update_recipe/${id}`, data: info})
-}
+httpClient.updateRecipe = function(id, info) {
+  return this({
+    method: 'patch',
+    url: `/api/recipe/update_recipe/${id}`,
+    data: info
+  });
+};
 
 httpClient.userRecipes = function(id) {
   return this({ method: 'get', url: `/api/recipe/get_users_recipe/${id}` });
