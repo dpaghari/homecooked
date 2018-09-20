@@ -26,7 +26,7 @@ let appState = initialState;
 app.use(express.static(path.join(__dirname + '/../public')));
 
 app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, '/./Views/'));
+app.set('views', path.join(__dirname, './Views/'));
 app.use(logger('dev'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
