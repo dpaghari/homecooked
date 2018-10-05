@@ -41,7 +41,6 @@ app.use('/api/recipe', recipeRoutes);
 
 app.get('/*', function(req, res) {
   // res.sendFile(__dirname + '/index.html', function(err) {
-  console.log(__dirname)
   res.render('index');
 });
 //############

@@ -6,4 +6,4 @@ node_modules/*
 *.log
 *.log.*
 .env
-public/dist/
+# public/dist/
