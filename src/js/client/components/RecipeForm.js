@@ -14,8 +14,7 @@ export default class RecipeForm extends React.Component {
         imageUrl: '',
         cookingTime: {
           hours: '',
-          minutes: '',
-          seconds: ''
+          minutes: ''
         },
         servingSize: '',
         description: '',
@@ -57,8 +56,7 @@ export default class RecipeForm extends React.Component {
   onInputChange(evt) {
     if (
       evt.target.name === 'hours' ||
-      evt.target.name === 'minutes' ||
-      evt.target.name === 'seconds'
+      evt.target.name === 'minutes'
     ) {
       this.setState({
         newRecipe: {
@@ -134,12 +132,13 @@ export default class RecipeForm extends React.Component {
     if (currentStep === 0) {
       return (
         <fieldset class="c-new-recipe__step--one">
+          <h4 class="c-new-recipe__heading">Add New Recipe</h4>
           <label for="recipeName">Recipe Name</label>
           <input
             name="name"
             type="text"
             ref="recipeName"
-            placeholder="Recipe Name"
+            placeholder="e.g Shrimp Scampi"
             required
             data-validators="isEmpty,trim"
             value={name}
@@ -149,45 +148,41 @@ export default class RecipeForm extends React.Component {
             name="imageUrl"
             type="text"
             ref="recipeImage"
-            placeholder="Recipe Image URL"
+            placeholder="e.g http://free-images.com/shrimp-scampi.jpg"
             required
             data-validators="isEmpty,trim"
             value={imageUrl}
           />
           <label for="recipeCookTime">Cooking Time</label>
-          <input
-            name="hours"
-            type="number"
-            ref="recipeCookTime"
-            placeholder="Hours"
-            required
-            data-validators="isEmpty,trim"
-            value={cookingTime.hours}
-          />
-          <input
-            name="minutes"
-            type="number"
-            ref="recipeCookTime"
-            placeholder="Minutes"
-            required
-            data-validators="isEmpty,trim"
-            value={cookingTime.minutes}
-          />
-          <input
-            name="seconds"
-            type="number"
-            ref="recipeCookTime"
-            placeholder="Seconds"
-            required
-            data-validators="isEmpty,trim"
-            value={cookingTime.seconds}
-          />
-          <label for="recipeServing">Serves How many?</label>
+          <div>
+            <label for="hours">Hours</label>
+            <input
+              name="hours"
+              type="number"
+              ref="recipeCookTime"
+              placeholder="e.g 2"
+              required
+              data-validators="isEmpty,trim"
+              value={cookingTime.hours}
+            />
+            <label for="minutes">Minutes</label>
+            <input
+              name="minutes"
+              type="number"
+              ref="recipeCookTime"
+              placeholder="e.g 45"
+              required
+              data-validators="isEmpty,trim"
+              max="60"
+              value={cookingTime.minutes}
+            />
+          </div>
+          <label for="recipeServing">Serves how many?</label>
           <input
             name="servingSize"
             type="number"
             ref="recipeServing"
-            placeholder="Serving Size"
+            placeholder="2"
             required
             data-validators="isEmpty,trim"
             value={servingSize}
@@ -198,7 +193,7 @@ export default class RecipeForm extends React.Component {
             cols="100"
             rows="6"
             ref="recipeDescription"
-            placeholder="Description"
+            placeholder="One of my holiday go-tos"
             required
             data-validators="isEmpty,trim"
             value={description}
@@ -207,7 +202,7 @@ export default class RecipeForm extends React.Component {
             href="#"
             onClick={this.handleClickNext.bind(this)}
             class="c-new-recipe__next"
-          >
+          >Next
             <i class="fas fa-arrow-right" />
           </a>
         </fieldset>
@@ -215,22 +210,27 @@ export default class RecipeForm extends React.Component {
     } else if (currentStep === 1) {
       return (
         <fieldset class="c-new-recipe__step--two">
-          <label for="recipeIngredient">Ingredient Name</label>
-          <input
-            name="currIng"
-            type="text"
-            ref="recipeIngredient"
-            placeholder="Ingredient"
-            value={currIng}
-          />
-          <label for="recipeIngQty">Ingredient Quantity</label>
-          <input
-            name="currQty"
-            type="text"
-            ref="recipeIngQty"
-            placeholder="Qty"
-            value={currQty}
-          />
+          <h4 class="c-new-recipe__heading">Ingredients</h4>
+          <div class="c-new-recipe__field">
+            <label for="recipeIngredient">Ingredient Name</label>
+            <input
+              name="currIng"
+              type="text"
+              ref="recipeIngredient"
+              placeholder="Ingredient"
+              value={currIng}
+            />
+          </div>
+          <div class="c-new-recipe__field">
+            <label for="recipeIngQty">Ingredient Quantity</label>
+            <input
+              name="currQty"
+              type="text"
+              ref="recipeIngQty"
+              placeholder="Qty"
+              value={currQty}
+            />
+          </div>
           <a
             href="#"
             class="c-new-recipe__add-button"
@@ -243,7 +243,7 @@ export default class RecipeForm extends React.Component {
             href="#"
             onClick={this.handleClickNext.bind(this)}
             class="c-new-recipe__next"
-          >
+          >Next
             <i class="fas fa-arrow-right" />
           </a>
         </fieldset>
@@ -273,8 +273,8 @@ export default class RecipeForm extends React.Component {
           <a
             href="#"
             onClick={this.handleAddNewRecipe.bind(this)}
-            class="c-new-recipe__submit"
-          >
+            class="c-new-recipe__submit c-new-recipe__next"
+          >Finish
             <i class="fas fa-clipboard-check" />
           </a>
         </fieldset>
@@ -383,8 +383,7 @@ export default class RecipeForm extends React.Component {
           imageUrl: '',
           cookingTime: {
             hours: '',
-            minutes: '',
-            seconds: ''
+            minutes: ''
           },
           servingSize: '',
           description: '',
