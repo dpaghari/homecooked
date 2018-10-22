@@ -1,4 +1,23 @@
 .c-new-recipe {
+  &__heading {
+    font-size: 2rem;
+    margin-bottom: 24px;
+    text-align: center;
+    margin: 0 auto 24px;
+    font-family: $font-stack;
+    font-weight: 500;
+    display: inline-block;
+    padding: 12px 0;
+    border-bottom: 5px solid black;
+    border-top: 5px solid black;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  &__field {
+    display: flex;
+  }
+
   &__add-button {
     margin: 0 auto;
     text-align: center;
@@ -11,25 +30,28 @@
     transition: 0.2s background ease-in-out;
     i {
       margin-left: 24px;
-      font-size: 12px;
+      font-size: 1rem;
     }
   }
 
-  &__submit {
-    font-size: 24px;
-    color: $notSoDark;
-    position: absolute;
-    right: 24px;
-    top: 50%;
-  }
+  // &__submit {
+  //   font-size: 1rem;
+  //   color: $notSoDark;
+  //   position: absolute;
+  //   right: 24px;
+  //   top: 50%;
+  // }
 
   &__wrapper {
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background: white;
     position: relative;
+    width: 100%;
+    max-width: 900px;
     &:hover .c-new-recipe__action {
       opacity: 1;
     }
@@ -73,17 +95,31 @@
       justify-content: center;
       align-items: center;
       border: none;
-      width: 80%;
+      width: 90%;
       margin: 0 auto;
       padding: 12px;
+      label {
+        margin: 12px 0;
+        &[for="hours"], &[for="minutes"] {
+          font-size: 0.8rem;
+        }
+      }
 
       input,
       textarea {
         border: 1px solid $borderColor;
         padding: 12px;
         width: 100%;
-        max-width: 500px;
-        margin: 12px auto;
+        margin-bottom: 12px; 
+        &[name="hours"], &[name="minutes"] {
+          display: inline-block;
+          width: 50%;
+          max-width: 100px;
+          margin: 0px 12px;
+        }
+        &[name="servingSize"] {
+          max-width: 100px;
+        }
       }
     }
   }
@@ -93,12 +129,24 @@
     text-align: center;
   }
 
-  &__next {
-    font-size: 24px;
+  &__next, &__finish {
+    font-size: 1.5rem;
     color: $notSoDark;
-    position: absolute;
-    right: 24px;
-    top: 50%;
+    padding: 12px 24px;
+    border: 1px solid $notSoDark;
+    max-width: 200px;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
+    margin-top: 24px;
+    transition: 0.2s all ease-in-out;
+    box-shadow: 1px 1px 0px rgba(0,0,0,.1);
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(0,0,0,.1);
+    }
   }
 
   .c-ingredient-list,

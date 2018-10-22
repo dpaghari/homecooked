@@ -23,10 +23,11 @@ const initialState = {};
 let appState = initialState;
 
 // App Settings
-app.use(express.static(path.join(__dirname + '/../public')));
+app.use(express.static(path.join(__dirname + './../public')));
 
+console.log(__dirname);
 app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, '/./Views/'));
+app.set('views',  './server/views');
 app.use(logger('dev'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
