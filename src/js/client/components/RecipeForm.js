@@ -19,13 +19,11 @@ export default class RecipeForm extends React.Component {
         servingSize: '',
         description: '',
         ingredients: [],
-        instructions: [],
-        tags: []
+        instructions: []
       },
       currIng: '',
       currQty: '',
       currInt: '',
-      currTag: '',
       currentStep: 0,
       currentFields: [],
       error: null
@@ -82,6 +80,7 @@ export default class RecipeForm extends React.Component {
   }
 
   onInputChange(evt) {
+    const { tags } = this.state;
     if (evt.target.name === 'hours' || evt.target.name === 'minutes') {
       this.setState({
         newRecipe: {
@@ -198,22 +197,6 @@ export default class RecipeForm extends React.Component {
             data-validators="isEmpty,trim"
             value={description}
           />
-          <label for="tags">Tags</label>
-          <input
-            name="currTag"
-            type="text"
-            ref="foodTag"
-            placeholder="tag"
-            value={currTag}
-          />
-          <a
-            href="#"
-            class="c-new-recipe___next"
-            onClick={this.handleAddTag.bind(this)}
-          >
-            Add
-          </a>
-          {this.renderTags()}
           <a
             href="#"
             onMouseDown={() => this.handleValidator(this.state.newRecipe)}
