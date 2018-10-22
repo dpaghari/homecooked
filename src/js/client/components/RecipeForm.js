@@ -36,14 +36,6 @@ export default class RecipeForm extends React.Component {
     });
   }
 
-  componentDidUpdate() {
-    // for (var ref in this.refs) {
-    //   if (this.refs.hasOwnProperty(ref)) {
-    //     this.refs[ref].value = "";
-    //   }
-    // }
-  }
-
   componentDidMount() {
     this.setState({
       newRecipe: {
@@ -52,6 +44,7 @@ export default class RecipeForm extends React.Component {
       }
     });
   }
+
 
   onInputChange(evt) {
     if (
@@ -120,8 +113,54 @@ export default class RecipeForm extends React.Component {
     } else return null;
   }
 
+  onInputChange(evt) {
+    const { tags } = this.state;
+    if (evt.target.name === 'hours' || evt.target.name === 'minutes') {
+      this.setState({
+        newRecipe: {
+          ...this.state.newRecipe,
+          cookingTime: {
+            ...this.state.newRecipe.cookingTime,
+            [evt.target.name]: evt.target.value
+          }
+        }
+      });
+    } else if (
+      evt.target.name === 'currIng' ||
+      evt.target.name === 'currQty' ||
+      evt.target.name === 'currInt' ||
+      evt.target.name === 'currTag'
+    ) {
+      this.setState({
+        ...this.state,
+        [evt.target.name]: evt.target.value
+      });
+    } else {
+      this.setState({
+        newRecipe: {
+          ...this.state.newRecipe,
+          [evt.target.name]: evt.target.value
+        }
+      });
+    }
+  }
+
+  renderTags() {
+    const { tags } = this.state.newRecipe;
+    return tags.map((tag, idx) => {
+      return <li key={idx}>{tag.name}</li>;
+    });
+  }
+
   renderCurrFieldSet() {
-    const { currentStep, error, currIng, currQty, currInt } = this.state;
+    const {
+      currentStep,
+      error,
+      currIng,
+      currQty,
+      currInt,
+      currTag
+    } = this.state;
     const {
       name,
       imageUrl,
@@ -200,6 +239,7 @@ export default class RecipeForm extends React.Component {
           />
           <a
             href="#"
+            onMouseDown={() => this.handleValidator(this.state.newRecipe)}
             onClick={this.handleClickNext.bind(this)}
             class="c-new-recipe__next"
           >Next
@@ -308,7 +348,7 @@ export default class RecipeForm extends React.Component {
 
   handleClickNext() {
     let { currentStep } = this.state;
-    if (currentStep < 2) {
+    if (currentStep < 2 && this.state.error === null) {
       // if( currentStep === 0) {
       //   this.saveFieldsToState();
       //   let isValidated = this.checkFields();
@@ -366,19 +406,34 @@ export default class RecipeForm extends React.Component {
     this.props.handleToggleRecipeForm();
     this.setState({
       ...this.state,
-      currentStep: 0
+      newRecipe: {
+        user: this.props.currentUser,
+        name: '',
+        imageUrl: '',
+        cookingTime: {
+          hours: '',
+          minutes: '',
+          seconds: ''
+        },
+        servingSize: '',
+        description: '',
+        ingredients: [],
+        instructions: [],
+        tags: []
+      },
+      currentStep: 0,
+      error: null
     });
   }
 
   handleAddNewRecipe(e) {
     e.preventDefault();
     let newRecipe = this.state.newRecipe;
-    // this.props.updateRecipes(this.props.userRecipes);
     httpClient.newRecipe(this.state.newRecipe).then(response => {
       this.setState({
         isActive: false || this.props.isActive,
         newRecipe: {
-          user: this.state.newRecipe.user,
+          user: this.props.currentUser,
           name: '',
           imageUrl: '',
           cookingTime: {
@@ -388,7 +443,8 @@ export default class RecipeForm extends React.Component {
           servingSize: '',
           description: '',
           ingredients: [],
-          instructions: []
+          instructions: [],
+          tags: []
         },
         currIng: '',
         currQty: '',
@@ -442,6 +498,52 @@ export default class RecipeForm extends React.Component {
     });
 
     recipeInstruction.focus();
+  }
+
+  handleAddTag() {
+    let { currTag } = this.state;
+    let { foodTag } = this.refs;
+    let newTag = {
+      name: currTag
+    };
+
+    this.state.newRecipe.tags.push(newTag);
+    this.state.newRecipe = Object.assign({}, this.state.newRecipe, {
+      tags: this.state.newRecipe.tags
+    });
+    this.setState({
+      newRecipe: this.state.newRecipe,
+      currTag: ''
+    });
+
+    foodTag.focus();
+  }
+
+  handleValidator(object) {
+    let isValid = false;
+    for (var property in object) {
+      if (object.hasOwnProperty(property)) {
+        if (object[property] === '' || !validator.isURL(object['imageUrl'])) {
+          return this.setState({
+            error: `All Fields Required`
+          });
+        } else if (property === 'cookingTime') {
+          for (var prop in object[property]) {
+            if (object[property][prop] === '') {
+              return this.handleValidator(object[prop]);
+            }
+          }
+        } else {
+          isValid = true;
+        }
+      }
+    }
+    console.log(isValid);
+    if (isValid) {
+      this.setState({
+        error: null
+      });
+    }
   }
 
   saveFieldsToState() {
