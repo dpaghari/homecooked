@@ -23,16 +23,62 @@ export default class RecipeDetail extends React.Component {
     };
   }
 
+  renderDeleteBtn() {
+    if (this.props.deleteRecipe && typeof(this.props.deleteRecipe) === "function") { 
+      return (
+        <a
+          class="c-recipe-detail__action"
+          href="#"
+          onClick={() => this.props.deleteRecipe(this.props.recipe._id)}
+        >
+          <i class="fa fa-trash" />
+        </a>
+      );
+    } else {
+      return null;
+    }
+  }
+  renderEditBtn() {
+    if (this.props.editForm && typeof(this.props.editForm) === "function") { 
+      return (
+        <a
+          class="c-recipe-detail__action"
+          href="#"
+          onClick={this.props.editForm}
+          onMouseOver={this.handleStateLoadUp.bind(this)}
+        >
+          <i class="fa fa-edit" />
+        </a>
+      );
+    } else {
+      return null;
+    }
+  }
+  renderAddBtn() {
+    console.log(this.props);
+    if (this.props.handleAddToCookbook && typeof(this.props.handleAddToCookbook) === "function") { 
+      return (
+        <a
+          class="c-recipe-detail__action"
+          href="#"
+          onClick={this.props.handleAddToCookbook(this.props.recipeIdx)}
+          onMouseOver={this.handleStateLoadUp.bind(this)}
+        >
+          <i class="fa fa-plus" />
+        </a>
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
     const {
       handleToggleRecipeDetail,
       renderIngredientList,
       renderInstructionsList,
-      deleteRecipe,
-      editForm,
       isActive
     } = this.props;
-
     if (isActive) {
       const {
         _id,
@@ -50,21 +96,9 @@ export default class RecipeDetail extends React.Component {
         <div class="c-recipe-detail l-modal">
           <div class="c-recipe-detail__wrapper">
             <div class="c-recipe-detail__actions">
-              <a
-                class="c-recipe-detail__action"
-                href="#"
-                onClick={editForm}
-                onMouseOver={this.handleStateLoadUp.bind(this)}
-              >
-                <i class="fa fa-edit" />
-              </a>
-              <a
-                class="c-recipe-detail__action"
-                href="#"
-                onClick={() => deleteRecipe(_id)}
-              >
-                <i class="fa fa-trash" />
-              </a>
+              { this.renderEditBtn() }
+              { this.renderDeleteBtn() }
+              { this.renderAddBtn() }
               <a
                 class="c-recipe-detail__action"
                 href="#"

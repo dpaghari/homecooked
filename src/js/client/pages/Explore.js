@@ -3,27 +3,33 @@ import axios from 'axios';
 import Login from '../components/Login';
 import httpClient from '../../httpClient';
 
+import RecipePage from './RecipePage';
+import RecipeDetail from "../components/RecipeDetail";
 
-export default class Explore extends React.Component {
+// export default class Explore extends React.Component {
+export default class Explore extends RecipePage {
   constructor(props) {
     super(props);
     this.state = {
-      global_recipes: []
+      global_recipes: [],
+      recipeDetail: {
+        isActive: false,
+        recipe: null,
+        edit: false,
+        idx: null
+      }
     };
   }
 
 
   componentDidMount() {
     let { appState } = this.props;
-
     let userId = appState.currentUser._id;
     this.getGlobalRecipes(userId);
-    console.log(this.state)
   }
 
   getGlobalRecipes(userId) {
     httpClient.allUnownedRecipes(userId).then((response) => {
-      console.log(response);
       this.setState({
         global_recipes: response
       });
@@ -31,7 +37,9 @@ export default class Explore extends React.Component {
   }
 
   render() {
-    let { appState, updateAppState } = this.props;
+    
+    const { appState, updateAppState } = this.props;
+    const { recipe, isActive, idx } = this.state.recipeDetail;
 
     if(appState.currentUser) {
       return (
@@ -40,6 +48,17 @@ export default class Explore extends React.Component {
           <div class="c-explore__page container">
             <section class="c-user-recipes container">
               {this.renderRecipesList()}
+              <RecipeDetail
+                recipe={recipe}
+                isActive={isActive}
+                recipeIdx={idx}
+                editIsActive={this.state.recipeDetail.edit}
+                renderIngredientList={this.renderIngredientList.bind(this)}
+                renderInstructionsList={this.renderInstructionsList.bind(this)}
+                userRecipes={this.state.userRecipes}
+                handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this)}
+                handleAddToCookbook={this.handleAddToCookbook.bind(this)}
+              />
             </section>
           </div>
         </div>
@@ -81,7 +100,11 @@ export default class Explore extends React.Component {
     let imgUrl = recipe.imageUrl ? recipe.imageUrl : './img/placeholder-recipe.jpg';
 
     return (
-      <li onClick={this.handleAddToCookbook.bind(this, idx)} key={idx} class="c-user-recipes__list-item">
+      <li onMouseOver={this.handleSetRecipe.bind(this, recipe)} 
+          onClick={this.handleToggleRecipeDetail.bind(this, idx)} 
+          key={idx} 
+          class="c-user-recipes__list-item"
+      >
         <div class="c-user-recipes__wrapper">
           <img class="c-user-recipes__image" src={imgUrl} alt={recipe.name} />
           <div class="c-user-recipes__info">
@@ -104,6 +127,8 @@ export default class Explore extends React.Component {
     );
   }
 
+
+
   handleAddToCookbook(idx) {
     let newExploreRecipe = this.state.global_recipes[idx];
     let user =  this.props.appState.currentUser;
@@ -114,10 +139,10 @@ export default class Explore extends React.Component {
       // refRecipe: newExploreRecipe._id,
       _id: undefined
     };
-    console.log(copiedRecipeWithCurrUser);
+    // console.log(copiedRecipeWithCurrUser);
     // let removedRecipe = this.state.global_recipes.splice(idx, 1);
     httpClient.newRecipe(copiedRecipeWithCurrUser).then((response) => {
-      console.log('copied new recipe',response);
+      // console.log('copied new recipe',response);
       // this.setState({
       //   global_recipes: this.state.global_recipes
       // });
@@ -158,5 +183,15 @@ export default class Explore extends React.Component {
     }
     else return null;
   }
+
+  // handleToggleRecipeDetail() {
+  //   this.setState({
+  //     recipeDetail: {
+  //       ...this.state.recipeDetail,
+  //       isActive: !this.state.recipeDetail.isActive,
+  //       edit: false
+  //     }
+  //   });
+  // }
 
 }

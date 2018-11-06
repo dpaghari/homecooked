@@ -3,11 +3,14 @@ import React from 'react';
 import Login from '../components/Login';
 import RecipeDetail from '../components/RecipeDetail';
 import RecipeForm from '../components/RecipeForm';
+import RecipePage from './RecipePage';
+ 
 import httpClient from '../../httpClient.js';
 
 import axios from 'axios';
 
-export default class Cookbook extends React.Component {
+export default class Cookbook extends RecipePage {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +47,6 @@ export default class Cookbook extends React.Component {
   }
 
   render() {
-    console.log('cookbook re rendered after changing recipe detail');
     let { appState, updateAppState } = this.props;
     let { recipe, isActive, idx } = this.state.recipeDetail;
     if (appState.currentUser) {
@@ -62,9 +64,7 @@ export default class Cookbook extends React.Component {
               userRecipes={this.state.userRecipes}
               deleteRecipe={this.deleteRecipe.bind(this)}
               editForm={this.handleEditForm.bind(this)}
-              handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(
-                this
-              )}
+              handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this)}
             />
           </div>
           <RecipeForm
@@ -87,6 +87,7 @@ export default class Cookbook extends React.Component {
   }
 
   renderUserRecipes(recipes) {
+    // console.log(this.handleToggleRecipeDetail);
     if (this.state.userRecipes.length) {
       return (
         <section class="c-user-recipes container">
@@ -231,21 +232,21 @@ export default class Cookbook extends React.Component {
     });
   }
 
-  handleToggleRecipeDetail() {
-    this.setState({
-      recipeDetail: {
-        ...this.state.recipeDetail,
-        isActive: !this.state.recipeDetail.isActive,
-        edit: false
-      }
-    });
-  }
+  // handleToggleRecipeDetail() {
+  //   this.setState({
+  //     recipeDetail: {
+  //       ...this.state.recipeDetail,
+  //       isActive: !this.state.recipeDetail.isActive,
+  //       edit: false
+  //     }
+  //   });
+  // }
 
-  handleSetRecipe(recipe) {
-    this.setState({
-      recipeDetail: {
-        recipe
-      }
-    });
-  }
+  // handleSetRecipe(recipe) {
+  //   this.setState({
+  //     recipeDetail: {
+  //       recipe
+  //     }
+  //   });
+  // }
 }
