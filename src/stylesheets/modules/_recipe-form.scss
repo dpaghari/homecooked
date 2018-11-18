@@ -4,12 +4,10 @@
     margin-bottom: 24px;
     text-align: center;
     margin: 0 auto 24px;
-    font-family: $font-stack;
+    font-family: $header-font-stack;
     font-weight: 500;
     display: inline-block;
     padding: 12px 0;
-    border-bottom: 5px solid black;
-    border-top: 5px solid black;
     width: 100%;
     max-width: 300px;
   }
@@ -23,7 +21,6 @@
     text-align: center;
     display: inline-block;
     padding: 12px 24px;
-    // background: $successGreen;
     border: 1px solid $notSoDark;
     color: $notSoDark;
     text-decoration: none;
@@ -34,14 +31,6 @@
     }
   }
 
-  // &__submit {
-  //   font-size: 1rem;
-  //   color: $notSoDark;
-  //   position: absolute;
-  //   right: 24px;
-  //   top: 50%;
-  // }
-
   &__wrapper {
     border-radius: 5px;
     display: flex;
@@ -49,9 +38,17 @@
     justify-content: center;
     align-items: center;
     background: white;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     max-width: 900px;
+    @media screen and (min-width: $tablet) {
+      position: relative;  
+    }
+
     &:hover .c-new-recipe__action {
       opacity: 1;
     }
@@ -62,7 +59,6 @@
 
   &__actions {
     color: $notSoDark;
-
     position: absolute;
     top: 0;
     right: 0;
@@ -73,9 +69,12 @@
 
   &__action {
     color: $notSoDark;
-    opacity: 0;
+    opacity: 1;
     margin: 12px 24px;
     transition: 0.3s opacity;
+    @media screen and (min-width: $mobile) {
+      opacity: 0;
+    }
     &:visited {
       color: $notSoDark;
     }
@@ -87,8 +86,11 @@
     align-items: center;
     width: 100%;
     padding: 24px;
-    min-width: 600px;
     overflow: scroll;
+    @media screen and (min-width: $tablet) {
+      min-width: 600px;  
+    }
+
     fieldset {
       display: flex;
       flex-direction: column;
@@ -139,10 +141,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: auto;
-    margin-top: 24px;
+    margin: 24px auto;
     transition: 0.2s all ease-in-out;
     box-shadow: 1px 1px 0px rgba(0,0,0,.1);
+    @media screen and (min-width: $tablet) {
+      margin-left: auto;
+      margin-top: 24px;  
+    }
+
     &:hover {
       transform: translateY(-1px);
       box-shadow: 0 10px 20px rgba(0,0,0,.1);

@@ -2,11 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import httpClient from '../../httpClient.js'
 
-import { getCookie, setCookie } from '../../util';
-
-// import Footer from './Footer';
-
-
+import Slider from "react-slick";
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -32,14 +28,35 @@ export default class Login extends React.Component {
     })
   }
 
+  // renderSlider() {
+  //   var settings = {
+  //     dots: true,
+  //     infinite: true,
+  //     speed: 500,
+  //     slidesToShow: 1,
+  //     slidesToScroll: 1,
+  //     autoplay: true,
+  //     arrows: false,
+  //   };
+  //   return (
+  //     <Slider {...settings}>
+  //       <div style="background-image: url(/img/splash-1.jpg)"></div>
+  //       <div style="background-image: url(/img/splash-2.jpg)"></div>
+  //       <div style="background-image: url(/img/splash-3.jpg)"></div>
+  //       <div style="background-image: url(/img/splash-4.jpg)"></div>
+  //     </Slider>
+  //   );
+  // }
+
   render() {
     return (
       <section class="c-login">
-        <div class="c-login__header">
-          <h1>Homecooked</h1>
-        </div>
         <div class="c-login__form-wrapper">
           {this.renderLoginForm()}
+        </div>
+        <div class="c-login__header">
+          <h1>Homecooked</h1>
+          <h2>The community's cookbook</h2>
         </div>
       </section>
     );

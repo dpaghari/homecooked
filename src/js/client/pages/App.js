@@ -48,12 +48,20 @@ export default class App extends React.Component {
 
     return (
       <main>
-        <Header
-          updateAppState={this.updateAppState.bind(this)}
-          onLogOut={this.logOutHandler.bind(this)}
-        />
+        {this.renderHeader()}
         {page}
       </main>
+    );
+  }
+
+  renderHeader() {
+    if (!this.state.currentUser) return null;
+    
+    return (
+      <Header
+        updateAppState={this.updateAppState.bind(this)}
+        onLogOut={this.logOutHandler.bind(this)}
+      />
     );
   }
 

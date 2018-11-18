@@ -12,17 +12,17 @@
 }
 
 body {
+  font-family: $font-stack;
+  position: relative;
+}
+
+main {
+  background: white;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  font-family: $font-stack;
-  // background: $backgroundColor;
-}
-
-main {
-  background: white;
 }
 
 .container {

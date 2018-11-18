@@ -57,9 +57,14 @@
 
 .c-user-recipes {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
+  flex-direction: column;
   background: $backgroundColor;
+  @media screen and (min-width: $tablet) {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
 
   &__list {
     list-style-type: none;
@@ -68,7 +73,6 @@
     justify-content: flex-start;
     align-items: center;
     max-width: 960px;
-    // margin: 0 auto;
   }
 
   &__list-item {

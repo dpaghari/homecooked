@@ -349,25 +349,6 @@ export default class RecipeForm extends React.Component {
   handleClickNext() {
     let { currentStep } = this.state;
     if (currentStep < 2 && this.state.error === null) {
-      // if( currentStep === 0) {
-      //   this.saveFieldsToState();
-      //   let isValidated = this.checkFields();
-
-      //   if(isValidated.isValid) {
-
-      //     this.state.currentStep++;
-      //     this.setState({
-      //       currentStep: this.state.currentStep
-      //     });
-      //   }
-      //   else {
-
-      //     this.setState({
-      //       error: isValidated.error
-      //     });
-      //   }
-      // }
-      // else {
       this.state.currentStep++;
       this.setState({
         ...this.state,
