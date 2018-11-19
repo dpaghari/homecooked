@@ -4,6 +4,8 @@
   height: 100%;
   overflow: scroll;
   &__header {
+    display: flex;
+    flex-direction: column;
     background: url("/img/splash-4.jpg");
     background-size: cover;
     background-position: center;
@@ -11,29 +13,40 @@
     width: 60%;
     text-align: center;
     color: white;
-    
-    h1 {
-      font-family: $banner-font-stack;
-      margin: 72px auto 24px;
-      text-shadow: 0px 1px 10px $notSoDark;
-      font-size: 2rem;
-      @media screen and (min-width: $tablet) {
-        font-size: 6rem;
-      }
+    .c-login__subheadline {
+      color: white;
     }
-    h2 {
-      font-family: $header-font-stack;
-      font-size: 1.2rem;
-      @media screen and (min-width: $tablet) {
-        font-size: 1.6rem;
-      }
-    }
+  }
 
+  &__headline {
+    font-family: $banner-font-stack;
+    margin: 24px auto;
+    font-size: 3rem;
+    @media screen and (min-width: $tablet) {
+      margin: 72px auto 24px;
+      font-size: 6rem;
+      text-shadow: 0px 1px 10px $notSoDark;
+    }
   }
+
+  &__subheadline {
+    font-family: $header-font-stack;
+    font-size: 1rem;
+    margin-bottom: 92px;
+    color: $textBlack;
+    @media screen and (min-width: $tablet) {
+      font-size: 1.3rem;
+    }
+  }
+
   &__form-wrapper {
-    width: 40%;
+    width: 100%;
     background: linear-gradient(to bottom, white, $backgroundColor);
+    @media screen and (min-width: $tablet) {
+      width: 40%;
+    }
   }
+
   &__form {
     display: flex;
     margin: auto;
@@ -43,6 +56,7 @@
     align-items: center;
     overflow-y: auto;
     padding: 24px 0;
+    background: linear-gradient(to bottom, #fff, #fcfcfc);
     label {
       width: 60%;
     }
@@ -90,7 +104,7 @@
     padding: 12px;
     margin: 12px auto;
     border: 0;
-    box-shadow: 0px 1px 4px $notSoDark;
+    border-bottom: 1px solid $shadows;
     width: 60%;
     background: transparent;
   }
@@ -99,7 +113,7 @@
     text-align: center;
     color: white;
     padding: 12px 36px;
-    margin: 12px auto;
+    margin: 32px auto;
     border: 1px solid darken($successGreen, 5%);
     font-size: 1.1em;
     cursor: pointer;
@@ -114,5 +128,11 @@
 .c-register {
   &__form {
     @extend .c-login__form;
+  }
+
+  &__link {
+    padding-bottom: 6px;
+    text-decoration: none;
+    border-bottom: 1px solid $shadows;
   }
 }

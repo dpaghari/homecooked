@@ -117,7 +117,6 @@
           display: inline-block;
           width: 50%;
           max-width: 100px;
-          margin: 0px 12px;
         }
         &[name="servingSize"] {
           max-width: 100px;
@@ -125,6 +124,12 @@
       }
     }
   }
+
+  &__cook-time {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__preview {
     display: block;
     width: 80%;

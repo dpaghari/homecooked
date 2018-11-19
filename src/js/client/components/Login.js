@@ -54,9 +54,9 @@ export default class Login extends React.Component {
         <div class="c-login__form-wrapper">
           {this.renderLoginForm()}
         </div>
-        <div class="c-login__header">
-          <h1>Homecooked</h1>
-          <h2>The community's cookbook</h2>
+        <div class="c-login__header h-hide-mobile">
+          <h1 class="c-login__headline">Homecooked</h1>
+          <h2 class="c-login__subheadline">The community's cookbook</h2>
         </div>
       </section>
     );
@@ -69,15 +69,15 @@ export default class Login extends React.Component {
         <form class="c-register__form" onChange={this.onInputChange.bind(this)} onSubmit={this.handleSubmitRegister.bind(this)}>
           <a href="#" onClick={this.handleShowRegister.bind(this)} class="c-register__link">Go Back to Login</a>
           <label for="userName">Username</label>
-          <input class="c-login__input" type="text" ref="newUserName" placeholder="Username" name="name" value={name}/>
+          <input class="c-login__input" type="text" ref="newUserName" name="name" value={name}/>
           <label for="email">Email</label>
-          <input class="c-login__input" type="text" placeholder="Email" name="email" value={email}/>
+          <input class="c-login__input" type="text" name="email" value={email}/>
           <label for="Password">Password</label>
           <input class="c-login__input" type="password" ref="newUserPassword" name="password" value={password}/>
           <label for="confirmNewUserPassword">Confirm Password</label>
           <input class="c-login__input" type="password" ref="confirmNewUserPassword" />
           <label for="location">Location</label>
-          <input class="c-login__input" type="text" placeholder="Location" name="location" value={location}/>
+          <input class="c-login__input" type="text" name="location" value={location}/>
           <label for="newUserPicture">Profile Picture Image URL</label>
           <input class="c-login__input" type="text" ref="newUserPicture" name="imageUrl" value={imageUrl}/>
           <button class="c-login__button" type="submit">Register</button>
@@ -88,8 +88,10 @@ export default class Login extends React.Component {
       return (
         <form class="c-login__form" onChange={this.onInputChange.bind(this)} onSubmit={this.handleSubmitLogin.bind(this)}>
           {this.renderErrorMsg()}
+          <h1 class="c-login__headline h-hide-desktop">Homecooked</h1>
+          <h2 class="c-login__subheadline h-hide-desktop">The community's cookbook</h2>
           <label for="userName">Username</label>
-          <input class="c-login__input" type="text" ref="userName" placeholder="Username" name='name' value={name}/>
+          <input class="c-login__input" type="text" ref="userName" name='name' value={name}/>
           <label for="Password">Password</label>
           <input class="c-login__input" type="password" ref="userPassword" name="password" value={password}/>
           <button class="c-login__button" type="submit">Login</button>

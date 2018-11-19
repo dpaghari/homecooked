@@ -193,7 +193,7 @@ export default class RecipeForm extends React.Component {
             value={imageUrl}
           />
           <label for="recipeCookTime">Cooking Time</label>
-          <div>
+          <div class="c-new-recipe__cook-time">
             <label for="hours">Hours</label>
             <input
               name="hours"

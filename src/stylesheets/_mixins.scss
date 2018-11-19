@@ -22,3 +22,18 @@
     box-shadow: none;
   }
 }
+
+
+.h-hide-mobile {
+  display: none;
+  @media screen and (min-width: $mobile) {
+    display: inherit;
+  }
+}
+
+.h-hide-desktop {
+  display: inherit;
+  @media screen and (min-width: $mobile) {
+    display: none;
+  }
+}
