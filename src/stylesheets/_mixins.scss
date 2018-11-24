@@ -31,6 +31,12 @@
   }
 }
 
+.h-hide-tablet {
+  display: inherit;
+  @media screen and (min-width: $tablet) {
+    display: none;
+  }
+}
 .h-hide-desktop {
   display: inherit;
   @media screen and (min-width: $mobile) {

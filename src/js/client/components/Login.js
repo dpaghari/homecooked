@@ -54,7 +54,7 @@ export default class Login extends React.Component {
         <div class="c-login__form-wrapper">
           {this.renderLoginForm()}
         </div>
-        <div class="c-login__header h-hide-mobile">
+        <div class="c-login__header">
           <h1 class="c-login__headline">Homecooked</h1>
           <h2 class="c-login__subheadline">The community's cookbook</h2>
         </div>
@@ -88,8 +88,8 @@ export default class Login extends React.Component {
       return (
         <form class="c-login__form" onChange={this.onInputChange.bind(this)} onSubmit={this.handleSubmitLogin.bind(this)}>
           {this.renderErrorMsg()}
-          <h1 class="c-login__headline h-hide-desktop">Homecooked</h1>
-          <h2 class="c-login__subheadline h-hide-desktop">The community's cookbook</h2>
+          <h1 class="c-login__headline">Homecooked</h1>
+          <h2 class="c-login__subheadline">The community's cookbook</h2>
           <label for="userName">Username</label>
           <input class="c-login__input" type="text" ref="userName" name='name' value={name}/>
           <label for="Password">Password</label>
