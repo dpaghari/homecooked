@@ -91,7 +91,7 @@ export default class Login extends React.Component {
           <h1 class="c-login__headline">Homecooked</h1>
           <h2 class="c-login__subheadline">The community's cookbook</h2>
           <label for="userName">Username</label>
-          <input class="c-login__input" type="text" ref="userName" name='name' value={name}/>
+          <input class="c-login__input" type="text" ref="userName" name='name' value={name} autoComplete="false" />
           <label for="Password">Password</label>
           <input class="c-login__input" type="password" ref="userPassword" name="password" value={password}/>
           <button class="c-login__button" type="submit">Login</button>

@@ -23,6 +23,10 @@ export default class RecipeDetail extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    console.log("new props", this.props);
+  }
+
   renderDeleteBtn() {
     if (this.props.deleteRecipe && typeof(this.props.deleteRecipe) === "function") { 
       return (
@@ -45,7 +49,6 @@ export default class RecipeDetail extends React.Component {
           class="c-recipe-detail__action"
           href="#"
           onClick={this.props.editForm}
-          onMouseOver={this.handleStateLoadUp.bind(this)}
         >
           <i class="fa fa-edit" />
         </a>
@@ -55,21 +58,15 @@ export default class RecipeDetail extends React.Component {
     }
   }
   renderAddBtn() {
-    console.log(this.props);
-    if (this.props.handleAddToCookbook && typeof(this.props.handleAddToCookbook) === "function") { 
-      return (
-        <a
-          class="c-recipe-detail__action"
-          href="#"
-          onClick={this.props.handleAddToCookbook(this.props.recipeIdx)}
-          onMouseOver={this.handleStateLoadUp.bind(this)}
-        >
-          <i class="fa fa-plus" />
-        </a>
-      );
-    } else {
-      return null;
-    }
+    return (
+      <a
+        class="c-recipe-detail__action"
+        href="#"
+        onClick={this.handleAddToCookbook.bind(this, this.props.recipeIdx)}
+      >
+        <i class="fa fa-plus" />
+      </a>
+    );
   }
 
   render() {
@@ -261,23 +258,16 @@ export default class RecipeDetail extends React.Component {
     });
   }
 
-  handleStateLoadUp() {
-    this.setState({
-      edit: false || this.props.editIsActive,
-      editRecipe: {
-        user: this.props.recipe.user,
-        name: this.props.recipe.name,
-        imageUrl: this.props.recipe.imageUrl,
-        cookingTime: {
-          hours: this.props.recipe.cookingTime.hours,
-          minutes: this.props.recipe.cookingTime.minutes,
-          seconds: this.props.recipe.cookingTime.seconds
-        },
-        servingSize: this.props.recipe.servingSize,
-        description: this.props.recipe.description,
-        ingredients: this.props.recipe.ingredients,
-        instructions: this.props.recipe.instructions
-      }
-    });
+  handleAddToCookbook(idx) {
+    let newExploreRecipe = this.props.globalRecipes[idx];
+    let user = this.props.currentUser;
+
+    let copiedRecipeWithCurrUser = {
+      ...newExploreRecipe,
+      user,
+      _id: undefined
+    };
+    httpClient.newRecipe(copiedRecipeWithCurrUser).then((response) => {
+    }).catch((err) => console.log(err));
   }
 }

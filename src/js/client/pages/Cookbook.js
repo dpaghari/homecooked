@@ -7,10 +7,7 @@ import RecipePage from './RecipePage';
  
 import httpClient from '../../httpClient.js';
 
-import axios from 'axios';
-
 export default class Cookbook extends RecipePage {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -73,7 +70,6 @@ export default class Cookbook extends RecipePage {
             renderIngredientList={this.renderIngredientList}
             isActive={this.state.recipeForm.isActive}
             addNewRecipe={this.addNewRecipe.bind(this)}
-            // updateRecipes={this.updateRecipes.bind(this)}
             handleToggleRecipeForm={this.handleToggleRecipeForm.bind(this)}
             currentUser={this.props.currentUser}
             props={this.props}
@@ -87,7 +83,6 @@ export default class Cookbook extends RecipePage {
   }
 
   renderUserRecipes(recipes) {
-    // console.log(this.handleToggleRecipeDetail);
     if (this.state.userRecipes.length) {
       return (
         <section class="c-user-recipes container">
@@ -150,8 +145,7 @@ export default class Cookbook extends RecipePage {
         : 'c-user-recipes__list-item';
     return (
       <li
-        onMouseOver={() => this.handleSetRecipe(recipe)}
-        onClick={this.handleToggleRecipeDetail.bind(this)}
+        onClick={this.handleToggleRecipeDetail.bind(this, idx, recipe)}
         key={idx}
         class={classList}
       >
@@ -231,22 +225,4 @@ export default class Cookbook extends RecipePage {
       }
     });
   }
-
-  // handleToggleRecipeDetail() {
-  //   this.setState({
-  //     recipeDetail: {
-  //       ...this.state.recipeDetail,
-  //       isActive: !this.state.recipeDetail.isActive,
-  //       edit: false
-  //     }
-  //   });
-  // }
-
-  // handleSetRecipe(recipe) {
-  //   this.setState({
-  //     recipeDetail: {
-  //       recipe
-  //     }
-  //   });
-  // }
 }

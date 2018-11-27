@@ -70,7 +70,6 @@ httpClient.getUser = function(id) {
 // #######################
 
 httpClient.newRecipe = function(data) {
-  console.log(data);
   return this({ method: 'post', url: '/api/recipe/add_recipe', data: data });
 };
 
@@ -83,7 +82,6 @@ httpClient.allUnownedRecipes = function(id) {
     this({ method: 'get', url: `/api/recipe/get_recipes` })
       .then(res => {
         let allRecipes = res.data;
-        console.log(allRecipes);
         resolve(
           allRecipes.filter(el => {
             if (el.user) return el.user._id !== id;

@@ -117,6 +117,10 @@
     border-bottom: 1px solid $shadows;
     width: 60%;
     background: transparent;
+    font-size: 1rem;
+    &:focus {
+      outline: none;
+    }
   }
   &__button {
     background: $successGreen;

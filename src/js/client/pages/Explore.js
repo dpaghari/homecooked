@@ -1,17 +1,15 @@
 import React from 'react';
-import axios from 'axios';
 import Login from '../components/Login';
 import httpClient from '../../httpClient';
 
 import RecipePage from './RecipePage';
 import RecipeDetail from "../components/RecipeDetail";
 
-// export default class Explore extends React.Component {
 export default class Explore extends RecipePage {
   constructor(props) {
     super(props);
     this.state = {
-      global_recipes: [],
+      globalRecipes: [],
       recipeDetail: {
         isActive: false,
         recipe: null,
@@ -31,7 +29,7 @@ export default class Explore extends RecipePage {
   getGlobalRecipes(userId) {
     httpClient.allUnownedRecipes(userId).then((response) => {
       this.setState({
-        global_recipes: response
+        globalRecipes: response
       });
     });
   }
@@ -57,7 +55,8 @@ export default class Explore extends RecipePage {
                 renderInstructionsList={this.renderInstructionsList.bind(this)}
                 userRecipes={this.state.userRecipes}
                 handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this)}
-                handleAddToCookbook={this.handleAddToCookbook.bind(this)}
+                globalRecipes={this.state.globalRecipes}
+                currentUser={this.props.appState.currentUser}
               />
             </section>
           </div>
@@ -70,7 +69,7 @@ export default class Explore extends RecipePage {
   }
 
   renderRecipesList() {
-    let recipes = this.state.global_recipes;
+    let recipes = this.state.globalRecipes;
 
     if(recipes.length > 0) {
       return recipes.map((recipe, idx) => {
@@ -83,25 +82,10 @@ export default class Explore extends RecipePage {
   }
 
   renderRecipe(recipe, idx) {
-    const {
-      name,
-      imageUrl,
-      cookingTime,
-      user,
-      servingSize,
-      description
-    } = recipe;
-    const {
-      hours,
-      minutes,
-      seconds
-    } = cookingTime;
-
     let imgUrl = recipe.imageUrl ? recipe.imageUrl : './img/placeholder-recipe.jpg';
 
     return (
-      <li onMouseOver={this.handleSetRecipe.bind(this, recipe)} 
-          onClick={this.handleToggleRecipeDetail.bind(this, idx)} 
+      <li onClick={this.handleToggleRecipeDetail.bind(this, idx, recipe)} 
           key={idx} 
           class="c-user-recipes__list-item"
       >
@@ -110,11 +94,10 @@ export default class Explore extends RecipePage {
           <div class="c-user-recipes__info">
             <strong class=".c-recipe-detail__recipe-name">{recipe.name}</strong>
             <div class="c-user-recipes__user-lockup">
-              <img src={user.imageUrl} class="c-user-recipes__user-image" />
+              <img src={recipe.user.imageUrl} class="c-user-recipes__user-image" />
               <span class="c-user-recipes__cook-time">
-                {hours}
-                {minutes}
-                {seconds}
+                {recipe.cookingTime.hours}
+                {recipe.cookingTime.minutes}
               </span>
               <span class="c-user-recipes__serving-size">
                 {recipe.servingSize}
@@ -125,36 +108,6 @@ export default class Explore extends RecipePage {
         </div>
       </li>
     );
-  }
-
-
-
-  handleAddToCookbook(idx) {
-    let newExploreRecipe = this.state.global_recipes[idx];
-    let user =  this.props.appState.currentUser;
-
-    let copiedRecipeWithCurrUser = {
-      ...newExploreRecipe,
-      user,
-      // refRecipe: newExploreRecipe._id,
-      _id: undefined
-    };
-    // console.log(copiedRecipeWithCurrUser);
-    // let removedRecipe = this.state.global_recipes.splice(idx, 1);
-    httpClient.newRecipe(copiedRecipeWithCurrUser).then((response) => {
-      // console.log('copied new recipe',response);
-      // this.setState({
-      //   global_recipes: this.state.global_recipes
-      // });
-    }).catch((err) => console.log(err));
-    // newExploreRecipe.followers.push(user._id)
-    // httpClient.addUserToRecipeFollowers({
-    //   ...newExploreRecipe,
-    //   followers: newExploreRecipe.followers
-    // }).then((response) => {
-    //   console.log(response);
-    // }).catch((err) => console.log(err));
-
   }
 
   renderIngredientList(ingredients) {
@@ -183,15 +136,4 @@ export default class Explore extends RecipePage {
     }
     else return null;
   }
-
-  // handleToggleRecipeDetail() {
-  //   this.setState({
-  //     recipeDetail: {
-  //       ...this.state.recipeDetail,
-  //       isActive: !this.state.recipeDetail.isActive,
-  //       edit: false
-  //     }
-  //   });
-  // }
-
 }

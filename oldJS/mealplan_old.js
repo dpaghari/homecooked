@@ -15,13 +15,12 @@ const MealPlan = (function() {
       user_id
     };
     axios.post("/api/get_user_mealplan", data).then((response) => {
-      console.log(response);
       let mealplanInfo = response.data;
       addMealPlanToDOM(mealplanInfo);
       ShoppingList.getShoppingList(mealplanInfo, user_id);
     })
     .catch((err) => {
-      console.log("error", err);
+      
     });
 
   }
@@ -74,10 +73,10 @@ const MealPlan = (function() {
     axios.post("/api/save_meal_plan", {
       mealPlan
     }).then((response) => {
-      // console.log(response.data);
+      
     })
     .catch((err) => {
-      console.log("error", err);
+      
     });
   }
 

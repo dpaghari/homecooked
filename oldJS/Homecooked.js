@@ -46,7 +46,6 @@ const Homecooked = (function() {
   function handleShowShoppingList() {
     // let shoppingListBtn = document.querySelector('.shopping-list');
     // shoppingListBtn.addEventListener('click', function() {
-      // console.log('ay lmao');
       document.querySelector('ul.shoppingList').style.display = 'block';
       document.querySelector('ul.shoppingList').classList.toggle('active');
       document.querySelector('.lightbox').style.display = 'block';
@@ -278,7 +277,6 @@ const Homecooked = (function() {
             window.location.href = redirect;
           })
           .catch((err) => {
-            console.log("error", err);
           });
         }
       });
@@ -309,7 +307,7 @@ const Homecooked = (function() {
             window.location.href = redirect;
           })
           .catch((err) => {
-            console.log("error", err);
+
           });
 
 
@@ -360,7 +358,7 @@ const Homecooked = (function() {
             window.location.href = redirect;
           })
           .catch((err) => {
-            console.log("error", err);
+            
           });
         }
       });

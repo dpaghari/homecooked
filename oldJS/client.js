@@ -3,7 +3,6 @@ const Homecooked = require("./Homecooked.js");
 
 (function() {
   Homecooked.init((appState)=> {
-    console.log("Appstate", appState);
     let { currentUser, loggedIn, currentPage } = appState.data;
 
     let recipes = Homecooked.getMyRecipes(currentUser.user_id);  // returns thenable promise with recipes data

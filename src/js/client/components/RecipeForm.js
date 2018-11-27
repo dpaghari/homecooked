@@ -519,7 +519,6 @@ export default class RecipeForm extends React.Component {
         }
       }
     }
-    console.log(isValid);
     if (isValid) {
       this.setState({
         error: null
