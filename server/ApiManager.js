@@ -36,9 +36,8 @@ var ApiManager = (function(dbWrapper) {
         }
       });
     });
-
-
   }
+
   function authUser(user_info, callback) {
     let { db } = dbWrapper;
     let { user_name, password } = user_info;

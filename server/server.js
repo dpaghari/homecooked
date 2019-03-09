@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
 const logger = require('morgan');
+var session = require('express-session')
+
 
 // Includes
 // const ApiManager = require("./ApiManager.js");
@@ -22,10 +24,23 @@ const initialState = {};
 
 let appState = initialState;
 
+var sess = {
+  secret: 'asuhdude',
+  cookie: {}
+}
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1) // trust first proxy
+  sess.cookie.secure = true // serve secure cookies
+}
+
+app.use(session(sess));
+
 // App Settings
 app.use(express.static(path.join(__dirname + './../public')));
 
 console.log(__dirname);
+
 app.set('view engine', 'pug');
 app.set('views',  './server/views');
 app.use(logger('dev'));
