@@ -22,15 +22,12 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    // const isLoggedIn = getCookie('isLoggedIn') ? JSON.parse(getCookie('isLoggedIn')) : false;
     if (this.state.currentUser) {
       this.setState({
-        // loggedIn: true,
         currentUser: httpClient.getCurrentUser()
       });
     } else {
       this.setState({
-        // loggedIn: false,
         currentUser: null
       });
     }

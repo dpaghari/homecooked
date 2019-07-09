@@ -1,5 +1,5 @@
 const formatNewUser = (req, res, next) => {
-  console.log(req.session);
+  req.body.name = req.body.name.toLowerCase();
   next();
 };
 

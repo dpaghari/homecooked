@@ -40,10 +40,10 @@ export default class Dashboard extends React.Component {
               <i class="fas fa-map-marker"></i>
               <span>{currentUser.location}</span>
             </span>
-            <span class="c-user-info__styles">
+            {/* <span class="c-user-info__styles">
               <i class="fas fa-utensils"></i>
               <span>Asian, Latin, Italian</span>
-            </span>
+            </span> */}
           </div>
           {/*<div class="c-user-info__stats">
             <div class="c-user-info__stat">
