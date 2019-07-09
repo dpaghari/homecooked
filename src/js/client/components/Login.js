@@ -151,9 +151,14 @@ export default class Login extends React.Component {
         }
       });
       if (user){
-        this.props.logInSuccess()
+        this.props.logInSuccess();
+      } else {
+        this.setState({
+          errorMsg: "Invalid Credentials. Please Try Again."
+        });
+        this.refs.userName.focus();
       }
-    })
+    });
   }
 
   handleSubmitRegister(e) {

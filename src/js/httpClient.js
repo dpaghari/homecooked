@@ -28,13 +28,11 @@ httpClient.logIn = function(credentials) {
     url: '/api/users/authenticate',
     data: credentials
   }).then(serverResponse => {
-    const token = serverResponse.data.token;
+    const { token } = serverResponse.data;
     if (token) {
       // sets token as an included header for all subsequent api requests
       this.defaults.headers.common.token = this.setToken(token);
       return jwtDecode(token);
-    } else {
-      return false;
     }
   });
 };

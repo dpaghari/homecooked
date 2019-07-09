@@ -13,7 +13,8 @@ export default class App extends React.Component {
     this.state = {
       token: null,
       currentPage: 'Home',
-      currentUser: httpClient.getCurrentUser()
+      currentUser: httpClient.getCurrentUser(),
+      error: null,
     };
   }
 
@@ -56,7 +57,7 @@ export default class App extends React.Component {
 
   renderHeader() {
     if (!this.state.currentUser) return null;
-    
+
     return (
       <Header
         updateAppState={this.updateAppState.bind(this)}

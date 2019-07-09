@@ -24,11 +24,10 @@ export default class RecipeDetail extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log("new props", this.props);
   }
 
   renderDeleteBtn() {
-    if (this.props.deleteRecipe && typeof(this.props.deleteRecipe) === "function") { 
+    if (this.props.deleteRecipe && typeof(this.props.deleteRecipe) === "function") {
       return (
         <a
           class="c-recipe-detail__action"
@@ -43,7 +42,7 @@ export default class RecipeDetail extends React.Component {
     }
   }
   renderEditBtn() {
-    if (this.props.editForm && typeof(this.props.editForm) === "function") { 
+    if (this.props.editForm && typeof(this.props.editForm) === "function") {
       return (
         <a
           class="c-recipe-detail__action"
