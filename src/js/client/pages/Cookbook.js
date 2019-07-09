@@ -138,7 +138,7 @@ export default class Cookbook extends RecipePage {
     let imgUrl = recipe.imageUrl
       ? recipe.imageUrl
       : './img/placeholder-recipe.jpg';
-    let { hours, minutes, seconds } = recipe.cookingTime;
+    let { hours, minutes } = recipe.cookingTime;
     let classList =
       idx === 0
         ? 'c-user-recipes__list-item--featured'
@@ -156,9 +156,8 @@ export default class Cookbook extends RecipePage {
             <div class="c-user-recipes__user-lockup">
               <img src={profile_picture} class="c-user-recipes__user-image" />
               <span class="c-user-recipes__cook-time">
-                {`${hours} h`}
-                {`${minutes} m`}
-                {`${seconds} s`}
+                {hours && `${hours} h`}
+                {minutes && `${minutes} m`}
               </span>
               <span class="c-user-recipes__serving-size">
                 {`${recipe.servingSize} servings`}
