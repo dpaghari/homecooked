@@ -4,7 +4,7 @@ import Login from '../components/Login';
 import RecipeDetail from '../components/RecipeDetail';
 import RecipeForm from '../components/RecipeForm';
 import RecipePage from './RecipePage';
- 
+
 import httpClient from '../../httpClient.js';
 
 export default class Cookbook extends RecipePage {
@@ -154,7 +154,7 @@ export default class Cookbook extends RecipePage {
           <div class="c-user-recipes__info">
             <strong class=".c-recipe-detail__recipe-name">{recipe.name}</strong>
             <div class="c-user-recipes__user-lockup">
-              <img src={profile_picture} class="c-user-recipes__user-image" />
+              {profile_picture && <img src={profile_picture} class="c-user-recipes__user-image" />}
               <span class="c-user-recipes__cook-time">
                 {hours && `${hours} h`}
                 {minutes && `${minutes} m`}
