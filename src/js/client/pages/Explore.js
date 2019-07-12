@@ -35,7 +35,7 @@ export default class Explore extends RecipePage {
   }
 
   render() {
-    
+
     const { appState, updateAppState } = this.props;
     const { recipe, isActive, idx } = this.state.recipeDetail;
 
@@ -85,25 +85,25 @@ export default class Explore extends RecipePage {
     let imgUrl = recipe.imageUrl ? recipe.imageUrl : './img/placeholder-recipe.jpg';
 
     return (
-      <li onClick={this.handleToggleRecipeDetail.bind(this, idx, recipe)} 
-          key={idx} 
-          class="c-user-recipes__list-item"
+      <li onClick={this.handleToggleRecipeDetail.bind(this, idx, recipe)}
+          key={idx}
+          class="c-recipe-card"
       >
-        <div class="c-user-recipes__wrapper">
-          <img class="c-user-recipes__image" src={imgUrl} alt={recipe.name} />
-          <div class="c-user-recipes__info">
+        <div class="c-recipe-card__wrapper">
+          <img class="c-recipe-card__image" src={imgUrl} alt={recipe.name} />
+          <div class="c-recipe-card__info">
             <strong class=".c-recipe-detail__recipe-name">{recipe.name}</strong>
-            <div class="c-user-recipes__user-lockup">
-              <img src={recipe.user.imageUrl} class="c-user-recipes__user-image" />
-              <span class="c-user-recipes__cook-time">
+            <div class="c-recipe-card__user-lockup">
+              <img src={recipe.user.imageUrl} class="c-recipe-card__user-image" />
+              <span class="c-recipe-card__cook-time">
                 {recipe.cookingTime.hours}
                 {recipe.cookingTime.minutes}
               </span>
-              <span class="c-user-recipes__serving-size">
+              <span class="c-recipe-card__serving-size">
                 {recipe.servingSize}
               </span>
             </div>
-            <p class="c-user-recipes__blurb">{recipe.description}</p>
+            <p class="c-recipe-card__blurb">{recipe.description}</p>
           </div>
         </div>
       </li>
