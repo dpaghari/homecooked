@@ -153,8 +153,8 @@
     margin: 24px auto;
     transition: 0.2s all ease-in-out;
     box-shadow: 1px 1px 0px rgba(0,0,0,.1);
-    background: transparent;
-    z-index: 1;
+    background: none;
+    z-index: 0;
     @media screen and (min-width: $tablet) {
       margin-left: auto;
       margin-top: 24px;
@@ -163,9 +163,8 @@
       transform: translateY(-1px);
       box-shadow: 0 10px 20px rgba(0,0,0,.1);
     }
-
   }
-  &__next:after, &__finish:after {
+  &__next::before, &__finish::before {
       content: "";
       display: block;
       position: absolute;

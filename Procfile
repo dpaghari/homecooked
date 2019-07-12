@@ -1,1 +1,1 @@
-web: node ./server/server.js
+web: npm run pack:prod && node ./server/server.js
