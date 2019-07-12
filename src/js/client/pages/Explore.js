@@ -82,7 +82,21 @@ export default class Explore extends RecipePage {
   }
 
   renderRecipe(recipe, idx) {
-    let imgUrl = recipe.imageUrl ? recipe.imageUrl : './img/placeholder-recipe.jpg';
+    let { appState } = this.props;
+    const profile_picture = appState.currentUser.imageUrl;
+
+    recipe.ingredients =
+      typeof recipe.ingredients === 'string'
+        ? JSON.parse(recipe.ingredients)
+        : recipe.ingredients;
+    recipe.instructions =
+      typeof recipe.instructions === 'string'
+        ? JSON.parse(recipe.instructions)
+        : recipe.instructions;
+    let imgUrl = recipe.imageUrl
+      ? recipe.imageUrl
+      : './img/placeholder-recipe.jpg';
+    let { hours, minutes } = recipe.cookingTime;
 
     return (
       <li onClick={this.handleToggleRecipeDetail.bind(this, idx, recipe)}
@@ -92,15 +106,19 @@ export default class Explore extends RecipePage {
         <div class="c-recipe-card__wrapper">
           <img class="c-recipe-card__image" src={imgUrl} alt={recipe.name} />
           <div class="c-recipe-card__info">
-            <strong class=".c-recipe-detail__recipe-name">{recipe.name}</strong>
+            <div class="c-recipe-card__info-header">
+              <strong class="c-recipe-card__name">{recipe.name}</strong>
+              <div class="c-recipe-card__cook-time">
+                <i class="fa fa-clock"></i>
+                <span style={{ "marginRight": "4px" }}>{hours && `${hours}h`}</span>
+                <span>{minutes && `${minutes}m`}</span>
+              </div>
+            </div>
+
             <div class="c-recipe-card__user-lockup">
-              <img src={recipe.user.imageUrl} class="c-recipe-card__user-image" />
-              <span class="c-recipe-card__cook-time">
-                {recipe.cookingTime.hours}
-                {recipe.cookingTime.minutes}
-              </span>
+              {profile_picture && <img src={profile_picture} class="c-recipe-card__user-image" />}
               <span class="c-recipe-card__serving-size">
-                {recipe.servingSize}
+                {`${recipe.servingSize} servings`}
               </span>
             </div>
             <p class="c-recipe-card__blurb">{recipe.description}</p>

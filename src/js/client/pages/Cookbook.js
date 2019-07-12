@@ -83,10 +83,13 @@ export default class Cookbook extends RecipePage {
   }
 
   renderUserRecipes(recipes) {
+    console.log(this.state.userRecipes);
+    console.log(recipes);
+    if (!recipes) return null;
     return (
       <section class="c-user-recipes container">
         <ul class="c-user-recipes__list">
-          {this.state.userRecipes.length && this.renderRecipesList(recipes)}
+          {this.renderRecipesList(recipes)}
           <a
             onClick={this.handleToggleRecipeForm.bind(this)}
             class="c-cookbook__add-recipe"
