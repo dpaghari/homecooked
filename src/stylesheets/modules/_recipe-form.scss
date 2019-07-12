@@ -46,7 +46,7 @@
     width: 100%;
     max-width: 900px;
     @media screen and (min-width: $tablet) {
-      position: relative;  
+      position: relative;
     }
 
     &:hover .c-new-recipe__action {
@@ -88,7 +88,7 @@
     padding: 24px;
     overflow: scroll;
     @media screen and (min-width: $tablet) {
-      min-width: 600px;  
+      min-width: 600px;
     }
 
     fieldset {
@@ -106,13 +106,16 @@
           font-size: 0.8rem;
         }
       }
-
+      ::placeholder {
+        color: $borderColor;
+      }
       input,
       textarea {
+
         border: 1px solid $borderColor;
         padding: 12px;
         width: 100%;
-        margin-bottom: 12px; 
+        margin-bottom: 12px;
         &[name="hours"], &[name="minutes"] {
           display: inline-block;
           width: 50%;
@@ -137,10 +140,11 @@
   }
 
   &__next, &__finish {
+    position: relative;
     font-size: 1.5rem;
-    color: $notSoDark;
+    color: white;
     padding: 12px 24px;
-    border: 1px solid $notSoDark;
+    border: 2px solid $notSoDark;
     max-width: 200px;
     text-decoration: none;
     display: flex;
@@ -149,16 +153,30 @@
     margin: 24px auto;
     transition: 0.2s all ease-in-out;
     box-shadow: 1px 1px 0px rgba(0,0,0,.1);
+    background: transparent;
+    z-index: 1;
     @media screen and (min-width: $tablet) {
       margin-left: auto;
-      margin-top: 24px;  
+      margin-top: 24px;
     }
-
     &:hover {
       transform: translateY(-1px);
       box-shadow: 0 10px 20px rgba(0,0,0,.1);
     }
+
   }
+  &__next:after, &__finish:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 6px;
+      right: -6px;
+      left: 6px;
+      bottom: -6px;
+      width: 100%;
+      z-index: -1;
+      background: $homecookedRed;
+    }
 
   .c-ingredient-list,
   .c-instruction-list {

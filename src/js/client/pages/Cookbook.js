@@ -83,36 +83,20 @@ export default class Cookbook extends RecipePage {
   }
 
   renderUserRecipes(recipes) {
-    if (this.state.userRecipes.length) {
-      return (
-        <section class="c-user-recipes container">
-          <ul class="c-user-recipes__list">
-            {this.renderRecipesList(recipes)}
-            <a
-              onClick={this.handleToggleRecipeForm.bind(this)}
-              class="c-cookbook__add-recipe"
-              href="#"
-            >
-              <i class="fa fa-plus" />
-            </a>
-          </ul>
-        </section>
-      );
-    } else {
-      return (
-        <section class="c-user-recipes container">
-          <ul class="c-user-recipes__list">
-            <a
-              onClick={this.handleToggleRecipeForm.bind(this)}
-              class="c-cookbook__add-recipe"
-              href="#"
-            >
-              <i class="fa fa-plus" />
-            </a>
-          </ul>
-        </section>
-      );
-    }
+    return (
+      <section class="c-user-recipes container">
+        <ul class="c-user-recipes__list">
+          {this.state.userRecipes.length && this.renderRecipesList(recipes)}
+          <a
+            onClick={this.handleToggleRecipeForm.bind(this)}
+            class="c-cookbook__add-recipe"
+            href="#"
+          >
+            <i class="fa fa-plus" />
+          </a>
+        </ul>
+      </section>
+    );
   }
 
   renderRecipesList(recipes) {
@@ -139,31 +123,35 @@ export default class Cookbook extends RecipePage {
       ? recipe.imageUrl
       : './img/placeholder-recipe.jpg';
     let { hours, minutes } = recipe.cookingTime;
-    let classList =
-      idx === 0
-        ? 'c-user-recipes__list-item--featured'
-        : 'c-user-recipes__list-item';
+    // let classList =
+    //   idx === 0
+    //     ? 'c-recipe-card--featured'
+    //     : 'c-recipe-card';
     return (
       <li
         onClick={this.handleToggleRecipeDetail.bind(this, idx, recipe)}
         key={idx}
-        class={classList}
+        class="c-recipe-card"
       >
-        <div class="c-user-recipes__wrapper">
-          <img class="c-user-recipes__image" src={imgUrl} alt={recipe.name} />
-          <div class="c-user-recipes__info">
-            <strong class=".c-recipe-detail__recipe-name">{recipe.name}</strong>
-            <div class="c-user-recipes__user-lockup">
-              {profile_picture && <img src={profile_picture} class="c-user-recipes__user-image" />}
-              <span class="c-user-recipes__cook-time">
-                {hours && `${hours} h`}
-                {minutes && `${minutes} m`}
-              </span>
-              <span class="c-user-recipes__serving-size">
+        <div class="c-recipe-card__wrapper">
+          <img class="c-recipe-card__image" src={imgUrl} alt={recipe.name} />
+          <div class="c-recipe-card__info">
+            <div class="c-recipe-card__info-header">
+              <strong class="c-recipe-card__name">{recipe.name}</strong>
+              <div class="c-recipe-card__cook-time">
+                <i class="fa fa-clock"></i>
+                <span style={{"marginRight": "4px"}}>{hours && `${hours}h`}</span>
+                <span>{minutes && `${minutes}m`}</span>
+              </div>
+            </div>
+
+            <div class="c-recipe-card__user-lockup">
+              {profile_picture && <img src={profile_picture} class="c-recipe-card__user-image" />}
+              <span class="c-recipe-card__serving-size">
                 {`${recipe.servingSize} servings`}
               </span>
             </div>
-            <p class="c-user-recipes__blurb">{recipe.description}</p>
+            <p class="c-recipe-card__blurb">{recipe.description}</p>
           </div>
         </div>
       </li>

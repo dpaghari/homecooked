@@ -28,8 +28,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 280px;
-    min-height: 350px;
+    width: 100%;
+    max-width: 420px;
+    min-height: 480px;
     text-decoration: none;
     margin: 12px;
     transition: 0.2s all ease-in-out;
@@ -60,75 +61,21 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: $backgroundColor;
   @media screen and (min-width: $tablet) {
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
   }
-
   &__list {
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    max-width: 960px;
-  }
-
-  &__list-item {
-    background: white;
-    min-width: 280px;
-    min-height: 350px;
-    margin: 12px;
-    display: flex;
-    max-width: 280px;
-    border: 1px solid $borderColor;
-    cursor: pointer;
-    transition: 0.2s box-shadow ease-in-out;
-    &--featured {
-      @extend .c-user-recipes__list-item;
-      // background: red;
+    @media screen and (min-width: $tablet) {
+      margin-left: 48px;
+      justify-content: flex-start;
     }
-    &:hover {
-      box-shadow: 0px 4px 10px $borderColor;
-    }
-
-  }
-  &__image {
-    object-fit: cover;
-    width: 100%;
-    min-height: 200px;
-    height: 200px;
-  }
-
-  &__info {
-    padding: 12px;
-  }
-
-  &__user-lockup {
-    margin: 12px auto;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    span {
-      margin: 0px 12px;
-    }
-  }
-
-  &__user-image {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-  }
-
-  &__blurb {
-    color: $notSoDark;
-    font-size: 10px;
-    max-width: 250px;
-    word-wrap: break-word;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 }
 

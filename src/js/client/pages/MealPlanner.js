@@ -12,14 +12,15 @@ export default class MealPlanner extends React.Component {
   }
 
   componentDidMount() {
-    
+
   }
 
   render() {
     return (
     <section className="c-meal-planner">
-      <h1>Meal Planner</h1>
-      
+      <h1 className="c-meal-planner__headline">Meal Planner</h1>
+      <div classname="c-meal-planner__body">
+      </div>
     </section>);
   }
 }

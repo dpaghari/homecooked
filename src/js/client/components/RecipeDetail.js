@@ -13,7 +13,6 @@ export default class RecipeDetail extends React.Component {
         cookingTime: {
           hours: '',
           minutes: '',
-          seconds: ''
         },
         servingSize: '',
         description: '',

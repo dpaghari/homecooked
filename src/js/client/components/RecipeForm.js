@@ -161,6 +161,23 @@ export default class RecipeForm extends React.Component {
       currInt,
       currTag
     } = this.state;
+
+    const HEADER_COPY = [
+      "What\'s cookin good lookin?",
+      "What\'s on the menu?",
+      "Easy does it, Chef Boyardee",
+      "Do you even cook, bro?",
+      ""
+    ];
+    function _getRandomHeader() {
+      const randomHeaderIdx = Math.floor(Math.random() * HEADER_COPY.length - 1);
+      console.log(randomHeaderIdx);
+      return HEADER_COPY[randomHeaderIdx];
+    }
+
+    let headerCopy = _getRandomHeader();
+
+
     const {
       name,
       imageUrl,
@@ -171,7 +188,8 @@ export default class RecipeForm extends React.Component {
     if (currentStep === 0) {
       return (
         <fieldset class="c-new-recipe__step--one">
-          <h4 class="c-new-recipe__heading">Add New Recipe</h4>
+          <h4 class="c-new-recipe__heading">{headerCopy}</h4>
+          <h3 class="c-new-recipe__subheading">Let's add a new recipe</h3>
           <label for="recipeName">Recipe Name</label>
           <input
             name="name"
@@ -394,7 +412,6 @@ export default class RecipeForm extends React.Component {
         cookingTime: {
           hours: '',
           minutes: '',
-          seconds: ''
         },
         servingSize: '',
         description: '',
