@@ -167,7 +167,6 @@ export default class RecipeForm extends React.Component {
       "What\'s on the menu?",
       "Easy does it, Chef Boyardee",
       "Do you even cook, bro?",
-      ""
     ];
     function _getRandomHeader() {
       const randomHeaderIdx = Math.floor(Math.random() * HEADER_COPY.length - 1);

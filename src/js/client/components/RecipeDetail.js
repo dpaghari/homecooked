@@ -56,6 +56,7 @@ export default class RecipeDetail extends React.Component {
     }
   }
   renderAddBtn() {
+    if(!this.props.shouldShowAddBtn) return null;
     return (
       <a
         class="c-recipe-detail__action"

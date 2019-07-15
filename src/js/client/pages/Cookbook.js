@@ -4,6 +4,7 @@ import Login from '../components/Login';
 import RecipeDetail from '../components/RecipeDetail';
 import RecipeForm from '../components/RecipeForm';
 import RecipePage from './RecipePage';
+import RecipeCard from "../components/RecipeCard";
 
 import httpClient from '../../httpClient.js';
 
@@ -62,6 +63,7 @@ export default class Cookbook extends RecipePage {
               deleteRecipe={this.deleteRecipe.bind(this)}
               editForm={this.handleEditForm.bind(this)}
               handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this)}
+              shouldShowAddBtn={false}
             />
           </div>
           <RecipeForm
@@ -83,8 +85,6 @@ export default class Cookbook extends RecipePage {
   }
 
   renderUserRecipes(recipes) {
-    console.log(this.state.userRecipes);
-    console.log(recipes);
     if (!recipes) return null;
     return (
       <section class="c-user-recipes container">
@@ -125,39 +125,18 @@ export default class Cookbook extends RecipePage {
     let imgUrl = recipe.imageUrl
       ? recipe.imageUrl
       : './img/placeholder-recipe.jpg';
-    let { hours, minutes } = recipe.cookingTime;
-    // let classList =
-    //   idx === 0
-    //     ? 'c-recipe-card--featured'
-    //     : 'c-recipe-card';
     return (
-      <li
+      <RecipeCard
         onClick={this.handleToggleRecipeDetail.bind(this, idx, recipe)}
         key={idx}
-        class="c-recipe-card"
-      >
-        <div class="c-recipe-card__wrapper">
-          <img class="c-recipe-card__image" src={imgUrl} alt={recipe.name} />
-          <div class="c-recipe-card__info">
-            <div class="c-recipe-card__info-header">
-              <strong class="c-recipe-card__name">{recipe.name}</strong>
-              <div class="c-recipe-card__cook-time">
-                <i class="fa fa-clock"></i>
-                <span style={{"marginRight": "4px"}}>{hours && `${hours}h`}</span>
-                <span>{minutes && `${minutes}m`}</span>
-              </div>
-            </div>
-
-            <div class="c-recipe-card__user-lockup">
-              {profile_picture && <img src={profile_picture} class="c-recipe-card__user-image" />}
-              <span class="c-recipe-card__serving-size">
-                {`${recipe.servingSize} servings`}
-              </span>
-            </div>
-            <p class="c-recipe-card__blurb">{recipe.description}</p>
-          </div>
-        </div>
-      </li>
+        idx={idx}
+        imgUrl={imgUrl}
+        recipeName={recipe.name}
+        cookTime={recipe.cookingTime}
+        profile_picture={profile_picture}
+        servingSize={recipe.servingSize}
+        description={recipe.description}
+      />
     );
   }
 

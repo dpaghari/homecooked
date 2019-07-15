@@ -4,6 +4,7 @@ import httpClient from '../../httpClient';
 
 import RecipePage from './RecipePage';
 import RecipeDetail from "../components/RecipeDetail";
+import RecipeCard from "../components/RecipeCard";
 
 export default class Explore extends RecipePage {
   constructor(props) {
@@ -33,6 +34,16 @@ export default class Explore extends RecipePage {
       });
     });
   }
+  renderUserRecipes(recipes) {
+    if (!recipes) return null;
+    return (
+      <section class="c-user-recipes container">
+        <ul class="c-user-recipes__list">
+          {this.renderRecipesList(recipes)}
+        </ul>
+      </section>
+    );
+  }
 
   render() {
 
@@ -44,8 +55,7 @@ export default class Explore extends RecipePage {
         <div class="c-explore">
           <h1 class="c-explore__heading">Explore</h1>
           <div class="c-explore__page container">
-            <section class="c-user-recipes container">
-              {this.renderRecipesList()}
+              {this.renderUserRecipes(this.state.globalRecipes)}
               <RecipeDetail
                 recipe={recipe}
                 isActive={isActive}
@@ -57,8 +67,8 @@ export default class Explore extends RecipePage {
                 handleToggleRecipeDetail={this.handleToggleRecipeDetail.bind(this)}
                 globalRecipes={this.state.globalRecipes}
                 currentUser={this.props.appState.currentUser}
+                shouldShowAddBtn={true}
               />
-            </section>
           </div>
         </div>
       );
@@ -99,32 +109,17 @@ export default class Explore extends RecipePage {
     let { hours, minutes } = recipe.cookingTime;
 
     return (
-      <li onClick={this.handleToggleRecipeDetail.bind(this, idx, recipe)}
-          key={idx}
-          class="c-recipe-card"
-      >
-        <div class="c-recipe-card__wrapper">
-          <img class="c-recipe-card__image" src={imgUrl} alt={recipe.name} />
-          <div class="c-recipe-card__info">
-            <div class="c-recipe-card__info-header">
-              <strong class="c-recipe-card__name">{recipe.name}</strong>
-              <div class="c-recipe-card__cook-time">
-                <i class="fa fa-clock"></i>
-                <span style={{ "marginRight": "4px" }}>{hours && `${hours}h`}</span>
-                <span>{minutes && `${minutes}m`}</span>
-              </div>
-            </div>
-
-            <div class="c-recipe-card__user-lockup">
-              {profile_picture && <img src={profile_picture} class="c-recipe-card__user-image" />}
-              <span class="c-recipe-card__serving-size">
-                {`${recipe.servingSize} servings`}
-              </span>
-            </div>
-            <p class="c-recipe-card__blurb">{recipe.description}</p>
-          </div>
-        </div>
-      </li>
+      <RecipeCard
+        onClick={this.handleToggleRecipeDetail.bind(this, idx, recipe)}
+        key={idx}
+        idx={idx}
+        imgUrl={imgUrl}
+        recipeName={recipe.name}
+        cookTime={recipe.cookingTime}
+        profile_picture={profile_picture}
+        servingSize={recipe.servingSize}
+        description={recipe.description}
+      />
     );
   }
 

@@ -3,4 +3,7 @@
   &__heading {
     @extend .c-cookbook__heading;
   }
+  &__page {
+    width: 100%;
+  }
 }
