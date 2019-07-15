@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently 'webpack --mode=development --watch --progress' 'nodemon server/server.js'",
     "pack:dev": "webpack --mode=development --progress",
-    "pack:prod": "webpack --mode=production --progress",
+    "pack:prod": "webpack --mode=production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Daniel Pagharion",
@@ -39,7 +39,8 @@
     "redux-promise": "^0.5.3",
     "redux-promise-middleware": "^4.0.0",
     "redux-thunk": "^2.1.0",
-    "validator": "^6.2.1"
+    "validator": "^6.2.1",
+    "webpack": "^4.6.0"
   },
   "devDependencies": {
     "autoprefixer": "^9.0.1",
@@ -65,7 +66,6 @@
     "sass-loader": "^7.0.1",
     "style-loader": "^0.21.0",
     "waypoints": "^4.0.1",
-    "webpack": "^4.6.0",
     "webpack-cli": "^2.1.5"
   }
 }
