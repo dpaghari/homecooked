@@ -1,1 +1,1 @@
-web: npm install --dev && npm run pack:prod && node ./server/server.js
+web: node ./server/server.js
