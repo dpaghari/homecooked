@@ -8,6 +8,7 @@ export default class RecipeForm extends React.Component {
     super(props);
     this.state = {
       isActive: false || this.props.isActive,
+      headline: "What\'s on the menu?",
       newRecipe: {
         user: {},
         name: '',
@@ -37,7 +38,17 @@ export default class RecipeForm extends React.Component {
   }
 
   componentDidMount() {
+    const HEADER_COPY = [
+      "What\'s cookin good lookin?",
+      "What\'s on the menu?",
+      "Easy does it, Chef Boyardee",
+      "Do you even cook, bro?",
+    ];
+
+    const randomHeaderIdx = Math.abs(Math.floor(Math.random() * HEADER_COPY.length - 1));
+
     this.setState({
+      headline: HEADER_COPY[randomHeaderIdx],
       newRecipe: {
         ...this.state.newRecipe,
         user: this.props.currentUser
@@ -159,24 +170,9 @@ export default class RecipeForm extends React.Component {
       currIng,
       currQty,
       currInt,
-      currTag
+      currTag,
+      headline
     } = this.state;
-
-    const HEADER_COPY = [
-      "What\'s cookin good lookin?",
-      "What\'s on the menu?",
-      "Easy does it, Chef Boyardee",
-      "Do you even cook, bro?",
-    ];
-    function _getRandomHeader() {
-      const randomHeaderIdx = Math.floor(Math.random() * HEADER_COPY.length - 1);
-      console.log(randomHeaderIdx);
-      return HEADER_COPY[randomHeaderIdx];
-    }
-
-    let headerCopy = _getRandomHeader();
-
-
     const {
       name,
       imageUrl,
@@ -187,7 +183,7 @@ export default class RecipeForm extends React.Component {
     if (currentStep === 0) {
       return (
         <fieldset class="c-new-recipe__step--one">
-          <h4 class="c-new-recipe__heading">{headerCopy}</h4>
+          <h4 class="c-new-recipe__heading">{headline}</h4>
           <h3 class="c-new-recipe__subheading">Let's add a new recipe</h3>
           <label for="recipeName">Recipe Name</label>
           <input
