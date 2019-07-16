@@ -178,18 +178,6 @@
       margin: 0 12px;
     }
   }
-  // &__back::before, &__next::before, &__finish::before {
-  //   content: "";
-  //   display: block;
-  //   position: absolute;
-  //   top: 6px;
-  //   right: -6px;
-  //   left: 6px;
-  //   bottom: -6px;
-  //   width: 100%;
-  //   z-index: -1;
-  //   background: $homecookedRed;
-  // }
 
   &__ingredients {
     display: flex;

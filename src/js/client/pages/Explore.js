@@ -94,7 +94,7 @@ export default class Explore extends RecipePage {
   renderRecipe(recipe, idx) {
     let { appState } = this.props;
     const profile_picture = appState.currentUser.imageUrl;
-
+    console.log(recipe, appState);
     recipe.ingredients =
       typeof recipe.ingredients === 'string'
         ? JSON.parse(recipe.ingredients)
