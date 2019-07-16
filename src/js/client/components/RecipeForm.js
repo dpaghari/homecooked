@@ -25,10 +25,11 @@ export default class RecipeForm extends React.Component {
       currIng: '',
       currQty: '',
       currInt: '',
-      currentStep: 0,
+      currentStep: 1,
       currentFields: [],
       error: null
     };
+    this.handleSetFormPage = this.handleSetFormPage.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -228,17 +229,17 @@ export default class RecipeForm extends React.Component {
               max="60"
               value={cookingTime.minutes}
             />
+            <label for="recipeServing">Serves how many?</label>
+            <input
+              name="servingSize"
+              type="number"
+              ref="recipeServing"
+              placeholder="2"
+              required
+              data-validators="isEmpty,trim"
+              value={servingSize}
+            />
           </div>
-          <label for="recipeServing">Serves how many?</label>
-          <input
-            name="servingSize"
-            type="number"
-            ref="recipeServing"
-            placeholder="2"
-            required
-            data-validators="isEmpty,trim"
-            value={servingSize}
-          />
           <label for="recipeDescription">Description</label>
           <textarea
             name="description"
@@ -253,7 +254,7 @@ export default class RecipeForm extends React.Component {
           <a
             href="#"
             onMouseDown={() => this.handleValidator(this.state.newRecipe)}
-            onClick={this.handleClickNext.bind(this)}
+            onClick={() => this.handleSetFormPage(1)}
             class="c-new-recipe__next"
           >Next
             <i class="fas fa-arrow-right" />
@@ -264,25 +265,29 @@ export default class RecipeForm extends React.Component {
       return (
         <fieldset class="c-new-recipe__step--two">
           <h4 class="c-new-recipe__heading">Ingredients</h4>
-          <div class="c-new-recipe__field">
-            <label for="recipeIngredient">Ingredient Name</label>
-            <input
-              name="currIng"
-              type="text"
-              ref="recipeIngredient"
-              placeholder="Ingredient"
-              value={currIng}
-            />
-          </div>
-          <div class="c-new-recipe__field">
-            <label for="recipeIngQty">Ingredient Quantity</label>
-            <input
-              name="currQty"
-              type="text"
-              ref="recipeIngQty"
-              placeholder="Qty"
-              value={currQty}
-            />
+          <div class="c-new-recipe__ingredients">
+            <div class="c-new-recipe__field">
+              <label for="recipeIngQty">Qty</label>
+              <input
+                class="c-new-recipe__ingredientQty"
+                name="currQty"
+                type="text"
+                ref="recipeIngQty"
+                placeholder="Qty"
+                value={currQty}
+              />
+            </div>
+            <div class="c-new-recipe__field">
+              <label for="recipeIngredient">Ingredient Name</label>
+              <input
+                class="c-new-recipe__ingredientName"
+                name="currIng"
+                type="text"
+                ref="recipeIngredient"
+                placeholder="Ingredient"
+                value={currIng}
+              />
+            </div>
           </div>
           <a
             href="#"
@@ -292,13 +297,24 @@ export default class RecipeForm extends React.Component {
             Add Ingredient
             <i class="fa fa-plus" />
           </a>
-          <a
-            href="#"
-            onClick={this.handleClickNext.bind(this)}
-            class="c-new-recipe__next"
-          >Next
-            <i class="fas fa-arrow-right" />
-          </a>
+          <hr/>
+          <div class="c-new-recipe__nav-actions">
+            <a
+              href="#"
+              onClick={() => this.handleSetFormPage(0)}
+              class="c-new-recipe__back"
+            >
+              <i class="fas fa-arrow-left" />
+              Back
+            </a>
+            <a
+              href="#"
+              onClick={() => this.handleSetFormPage(2)}
+              class="c-new-recipe__next"
+            >Next
+              <i class="fas fa-arrow-right" />
+            </a>
+          </div>
         </fieldset>
       );
     } else if (currentStep === 2) {
@@ -320,16 +336,24 @@ export default class RecipeForm extends React.Component {
             Add Instruction
             <i class="fa fa-plus" />
           </a>
-          {/* {<button type="button" onClick={this.handleClickNext.bind(this)} class="c-new-recipe__next">
-            <i class="fas fa-arrow-right"></i>
-          </button>} */}
-          <a
-            href="#"
-            onClick={this.handleAddNewRecipe.bind(this)}
-            class="c-new-recipe__submit c-new-recipe__next"
-          >Finish
+          <hr />
+          <div class="c-new-recipe__nav-actions">
+            <a
+              href="#"
+              onClick={() => this.handleSetFormPage(1)}
+              class="c-new-recipe__back"
+            >
+            <i class="fas fa-arrow-left" />
+            Back
+            </a>
+            <a
+              href="#"
+              onClick={this.handleAddNewRecipe.bind(this)}
+              class="c-new-recipe__submit c-new-recipe__next"
+            >Finish
             <i class="fas fa-clipboard-check" />
-          </a>
+            </a>
+          </div>
         </fieldset>
       );
     }
@@ -359,13 +383,11 @@ export default class RecipeForm extends React.Component {
     }
   }
 
-  handleClickNext() {
-    let { currentStep } = this.state;
-    if (currentStep < 2 && this.state.error === null) {
-      this.state.currentStep++;
+  handleSetFormPage(step) {
+    if (this.state.error === null) {
       this.setState({
         ...this.state,
-        currentStep: this.state.currentStep
+        currentStep: step
       });
     }
   }

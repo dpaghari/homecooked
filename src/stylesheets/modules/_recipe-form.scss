@@ -17,7 +17,7 @@
   }
 
   &__add-button {
-    margin: 0 auto;
+    margin: 24px auto 48px;
     text-align: center;
     display: inline-block;
     padding: 12px 24px;
@@ -55,6 +55,13 @@
     &:hover .c-new-recipe__next {
       opacity: 1;
     }
+  }
+
+  &__nav-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 36px;
   }
 
   &__actions {
@@ -131,6 +138,10 @@
   &__cook-time {
     display: flex;
     flex-direction: column;
+    @media screen and (min-width: $tablet) {
+      flex-direction: row;
+      justify-content: space-around;
+    }
   }
 
   &__preview {
@@ -139,7 +150,7 @@
     text-align: center;
   }
 
-  &__next, &__finish {
+  &__back, &__next, &__finish {
     position: relative;
     font-size: 1.5rem;
     color: white;
@@ -153,7 +164,7 @@
     margin: 24px auto;
     transition: 0.2s all ease-in-out;
     box-shadow: 1px 1px 0px rgba(0,0,0,.1);
-    background: none;
+    background: $homecookedRed;
     z-index: 0;
     @media screen and (min-width: $tablet) {
       margin-left: auto;
@@ -163,19 +174,43 @@
       transform: translateY(-1px);
       box-shadow: 0 10px 20px rgba(0,0,0,.1);
     }
-  }
-  &__next::before, &__finish::before {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 6px;
-      right: -6px;
-      left: 6px;
-      bottom: -6px;
-      width: 100%;
-      z-index: -1;
-      background: $homecookedRed;
+    i {
+      margin: 0 12px;
     }
+  }
+  // &__back::before, &__next::before, &__finish::before {
+  //   content: "";
+  //   display: block;
+  //   position: absolute;
+  //   top: 6px;
+  //   right: -6px;
+  //   left: 6px;
+  //   bottom: -6px;
+  //   width: 100%;
+  //   z-index: -1;
+  //   background: $homecookedRed;
+  // }
+
+  &__ingredients {
+    display: flex;
+    align-items: center;
+    .c-new-recipe__field {
+      &:first-child {
+        width: 25%;
+      }
+      width: 100%;
+    }
+  }
+  &__ingredientName {
+    width: 100%;
+    max-width: 900px;
+    margin-left: 12px;
+
+  }
+  &__ingredientQty {
+    max-width: 48px;
+    margin-left: 12px;
+  }
 
   .c-ingredient-list,
   .c-instruction-list {
@@ -192,4 +227,5 @@
   .c-instruction {
     margin-left: 12px;
   }
+
 }
