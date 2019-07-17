@@ -7,8 +7,27 @@ export default class RecipeCard extends React.Component {
   }
 
   renderOwnerContainer() {
-    const { profile_picture, owner, shouldRenderOwner } = this.props;
+    function _getRandomProfileAvatar() {
+
+      const avatars = [
+        "/img/avatar-1.png",
+        "/img/avatar-2.png",
+        "/img/avatar-3.png",
+        "/img/avatar-4.png",
+        "/img/avatar-5.png",
+        "/img/avatar-6.png",
+      ];
+      const randomIdx = Math.abs(Math.floor(Math.random() * avatars.length - 1));
+      return avatars[randomIdx];
+    }
+
+    let { profile_picture } = this.props;
+    const { owner, shouldRenderOwner } = this.props;
     if (!shouldRenderOwner) return null;
+    if (!profile_picture) {
+      profile_picture = _getRandomProfileAvatar();
+    }
+
     return (
       <div class="c-recipe-card__owner">
         <img src={profile_picture} class="c-recipe-card__user-image" />

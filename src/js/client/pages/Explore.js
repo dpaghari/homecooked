@@ -92,8 +92,6 @@ export default class Explore extends RecipePage {
   }
 
   renderRecipe(recipe, idx) {
-    let { appState } = this.props;
-    console.log("recipe", recipe);
     recipe.ingredients =
       typeof recipe.ingredients === 'string'
         ? JSON.parse(recipe.ingredients)
