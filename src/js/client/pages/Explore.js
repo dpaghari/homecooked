@@ -93,8 +93,7 @@ export default class Explore extends RecipePage {
 
   renderRecipe(recipe, idx) {
     let { appState } = this.props;
-    const profile_picture = appState.currentUser.imageUrl;
-    console.log(recipe, appState);
+    console.log("recipe", recipe);
     recipe.ingredients =
       typeof recipe.ingredients === 'string'
         ? JSON.parse(recipe.ingredients)
@@ -106,19 +105,19 @@ export default class Explore extends RecipePage {
     let imgUrl = recipe.imageUrl
       ? recipe.imageUrl
       : './img/placeholder-recipe.jpg';
-    let { hours, minutes } = recipe.cookingTime;
 
     return (
       <RecipeCard
         onClick={this.handleToggleRecipeDetail.bind(this, idx, recipe)}
         key={idx}
-        idx={idx}
         imgUrl={imgUrl}
         recipeName={recipe.name}
         cookTime={recipe.cookingTime}
-        profile_picture={profile_picture}
+        profile_picture={recipe.user.imageUrl}
         servingSize={recipe.servingSize}
         description={recipe.description}
+        owner={recipe.user.name}
+        shouldRenderOwner={true}
       />
     );
   }

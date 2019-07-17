@@ -136,6 +136,7 @@ export default class Cookbook extends RecipePage {
         profile_picture={profile_picture}
         servingSize={recipe.servingSize}
         description={recipe.description}
+        shouldRenderOwner={false}
       />
     );
   }
