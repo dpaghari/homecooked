@@ -6,12 +6,12 @@ const recipeSchema = new mongoose.Schema({
   name: { type: String },
   imageUrl: { type: String },
   cookingTime: {
-    hours: { type: String, default: 0 },
-    minutes: { type: String, default: 0 }
+    hours: { type: Number, default: 0 },
+    minutes: { type: Number, default: 0 }
   },
   servingSize: { type: String },
   description: { type: String },
-  ingredients: [{ name: String, quantity: String }],
+  ingredients: [{ name: String, quantity: Number }],
   instructions: [{ name: String }],
   tags: [{ name: String }]
 });
