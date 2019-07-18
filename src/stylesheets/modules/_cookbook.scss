@@ -29,11 +29,11 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 420px;
+    max-width: 348px;
     min-height: 480px;
     text-decoration: none;
-    margin: 12px auto;
     transition: 0.2s all ease-in-out;
+    margin: 6px;
 
     &:hover {
       background: #dddddd;
@@ -73,6 +73,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding: 24px 0;
     @media screen and (min-width: $tablet) {
       justify-content: flex-start;
     }

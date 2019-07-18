@@ -1,23 +1,21 @@
 .c-recipe-card {
-  background: white;
-  // min-width: 360px;
-  min-height: 480px;
-  width: 100%;
-  margin: 12px auto;
   display: flex;
-  max-width: 420px;
-  border: 1px solid $borderColor;
-  cursor: pointer;
-  transition: 0.2s box-shadow ease-in-out;
-  @media screen and (min-width: $tablet) {
-      width: 33%;
-    }
   &--featured {
     @extend .c-recipe-card;
     background: red;
   }
-  &:hover {
-    box-shadow: 0px 4px 10px $borderColor;
+
+  &__wrapper {
+    min-height: 480px;
+    cursor: pointer;
+    max-width: 348px;
+    background: white;
+    margin: 6px;
+    border: 1px solid $borderColor;
+    transition: 0.2s box-shadow ease-in-out;
+    &:hover {
+      box-shadow: 0px 4px 10px $borderColor;
+    }
   }
   &__info-header {
     display: flex;
