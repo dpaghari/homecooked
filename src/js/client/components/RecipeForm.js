@@ -25,7 +25,7 @@ export default class RecipeForm extends React.Component {
       currIng: '',
       currQty: '',
       currInt: '',
-      currentStep: 0,
+      currentStep: 1,
       currentFields: [],
       error: null
     };

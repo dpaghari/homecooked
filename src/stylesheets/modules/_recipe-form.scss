@@ -181,12 +181,23 @@
 
   &__ingredients {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    @media screen and (min-width: $tablet) {
+      align-items: center;
+      flex-direction: row;
+    }
     .c-new-recipe__field {
-      &:first-child {
-        width: 25%;
-      }
+      display: flex;
       width: 100%;
+      justify-content: flex-start;
+      label {
+        min-width: 30%;
+      }
+      @media screen and (min-width: $tablet) {
+        &:first-child {
+          width: 25%;
+        }
+      }
     }
   }
   &__ingredientName {

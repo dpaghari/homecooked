@@ -32,7 +32,7 @@
     text-decoration: none;
     transition: 0.2s all ease-in-out;
     margin: 6px;
-    width: 348px;
+    min-width: 348px;
 
     &:hover {
       background: #dddddd;
