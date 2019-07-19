@@ -125,8 +125,8 @@ export default class Explore extends RecipePage {
       return ingredients.map((ingredient, idx) => {
         return (
           <li key={idx} class="c-ingredient">
-            <span>{ingredient.name}</span>
-            <span>{ingredient.quantity}</span>
+            <span class="c-ingredient__qty">{ingredient.quantity}</span>
+            <span class="c-ingredient__name">{ingredient.name}</span>
           </li>
         )
       });
