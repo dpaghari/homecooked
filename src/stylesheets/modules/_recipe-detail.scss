@@ -6,7 +6,6 @@
     align-items: center;
     background: white;
     width: 100%;
-    overflow-y: scroll;
     @media screen and (min-width: $tablet) {
       margin: 0 auto;
       max-width: 90%;
@@ -59,7 +58,6 @@
     width: 100%;
     position: relative;
     z-index: 0;
-    overflow-y: auto;
     @media screen and (min-width: $tablet) {
       margin-top: 0;
       flex-direction: row;
@@ -95,6 +93,7 @@
   &__right {
     @media screen and (min-width: $tablet) {
       width: 45%;
+      overflow-y: auto;
       margin-top: 24px;
     }
 
