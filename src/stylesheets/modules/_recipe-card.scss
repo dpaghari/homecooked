@@ -8,11 +8,12 @@
   &__wrapper {
     min-height: 480px;
     cursor: pointer;
-    max-width: 348px;
     background: white;
     margin: 6px;
     border: 1px solid $borderColor;
     transition: 0.2s box-shadow ease-in-out;
+    width: 348px;
+
     &:hover {
       box-shadow: 0px 4px 10px $borderColor;
     }
