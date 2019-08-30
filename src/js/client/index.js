@@ -12,7 +12,7 @@ import Home from './pages/Home';
 import Cookbook from './pages/Cookbook';
 import Settings from './pages/Settings';
 import Explore from './pages/Explore';
-import MealPlanner from './pages/MealPlanner';
+import GroceryList from './pages/GroceryList';
 
 // const history = syncHistoryWithStore(browserHistory, store);
 
@@ -21,7 +21,7 @@ render(
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
       <Route path="/cookbook" component={Cookbook} />
-      <Route path="/mealplan" component={MealPlanner} />
+      <Route path="/grocery-list" component={GroceryList} />
       <Route path="/settings" component={Settings} />
       <Route path="/explore" component={Explore} />
     </Route>
